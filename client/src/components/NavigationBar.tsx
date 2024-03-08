@@ -9,12 +9,13 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
   if (!isLoggedIn) {
     navRight = (
       <>
-        <Link className="navigation-right" to="/login">
-          Log In
-        </Link>
         <Link className="navigation-right" to="/signup">
           Sign Up
         </Link>
+        <Link className="navigation-right" to="/login">
+          Log In
+        </Link>
+        
       </>
     );
   } else {

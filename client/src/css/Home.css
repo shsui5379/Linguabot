@@ -1,0 +1,19 @@
+#overview {
+    width: 95%;
+    display: inline-flex;
+    justify-content: space-around;
+}
+
+.feature {
+    text-align: left;
+}
+
+.feature-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.feature-description {
+    font-size: 16px;
+}
+
