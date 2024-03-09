@@ -1,18 +1,61 @@
 .navigation-menu {
-    background: #d9d9d9;
-    height: 50px;
+    height: 60px;
+    background-color: #f0f0f0;
 }
 
 .navigation-left {
-    height: 10px;
-    color: #000000;
+    margin: 0;
+    height: 60px;
     text-decoration: none;
-    float: left;
+    float: left    
+}
+
+#logo {
+    font-weight: bold;
+    color: #1D5D9B;
+    font-size: 20px;
+}
+
+.center-link {
+    margin: 0;
+    line-height: 60px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.center-text {
+    margin: 0;
+    line-height: 40px;
+    display: inline-block;
 }
 
 .navigation-right {
-    height:10px;
-    margin: 5px;
+    height: 60px;
+    margin: 0 5px 0 5px;
     text-decoration: none;
     float: right;
+}
+
+#logo {
+    margin-left: 5%;
+}
+
+.rightmost-link {
+    margin-right: 5%;
+}
+
+#signup {
+    width: 100px;
+    background-color:#1D5D9B; 
+    color: #f0f0f0;
+}
+
+#login, #signup {
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#login {
+    width: 100px;
+    color: #4c4c4c;
 }

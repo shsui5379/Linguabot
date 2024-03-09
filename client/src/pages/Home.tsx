@@ -4,12 +4,15 @@ export default function Home() {
   return (
     <>
       <div id="welcome-block">
-        <img id="welcome-image"></img>
-        <h1 id="welcome-title">WELCOME!!!</h1>
-        <h2 id="welcome-subtitle">Something very catchy!!!</h2>
+        <div id="welcome-inner-text">
+          <h1 className="welcome-title" id="upper-title">CHATBOT</h1>
+          <h2 className="welcome-title" id="lower-title">language partner</h2>
+          <p id="welcome-subtitle">Improve your language fluency by chatting with an AI partner!</p>
+        </div>
+        <img id="welcome-image"></img> 
       </div>
       <div id="major-features">
-        <p id="problem">Problem Statement</p>
+        <h3 id="problem">Problem Statement</h3>
         <p id="solution">Solution and Goal</p>
         <div id="overview">
           <div className="feature">

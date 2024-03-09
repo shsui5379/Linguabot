@@ -1,7 +1,31 @@
+html {
+    background-color: #f0f0f0;
+    color: #4c4c4c;
+}
+
 #overview {
     width: 95%;
     display: inline-flex;
     justify-content: space-around;
+}
+
+#welcome-block {
+    height: 500px;
+}
+
+#welcome-inner-text {
+    text-align: left;
+    margin-left: 13%;
+    padding-top: 175px;
+}
+
+#upper-title {
+    margin: 0;
+}
+
+#lower-title {
+    margin-top: 0;
+    font-weight: 400;
 }
 
 .feature {
