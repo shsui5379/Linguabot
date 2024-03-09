@@ -1,0 +1,18 @@
+.navigation-menu {
+    background: #d9d9d9;
+    height: 50px;
+}
+
+.navigation-left {
+    height: 10px;
+    color: #000000;
+    text-decoration: none;
+    float: left;
+}
+
+.navigation-right {
+    height:10px;
+    margin: 5px;
+    text-decoration: none;
+    float: right;
+}
