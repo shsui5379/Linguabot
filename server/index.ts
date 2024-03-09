@@ -1,6 +1,19 @@
 import express from "express";
 import path from "path";
-const app = express();
+const app = express(); 
+const { auth } = require('express-openid-connect');  
+require('dotenv').config()
+
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: process.env.SECRET,
+    baseURL: process.env.BASEURL,
+    clientID: process.env.CLIENTID,
+    issuerBaseURL: process.env.ISSUERBASEURL,
+  };
+  
+app.use(auth(config));
 
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
