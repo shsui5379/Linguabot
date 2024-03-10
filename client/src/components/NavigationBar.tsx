@@ -10,10 +10,10 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
     navRight = (
       <>
         <Link className={`${"navigation-right"} ${"center-link"} ${"rightmost-link"}`} to="/signup" >
-          <p className="center-text" id="signup"> Sign Up </p>          
+          <p className="center-text" id="signup"> SIGN UP </p>          
         </Link>
         <Link className={`${"navigation-right"} ${"center-link"}`} to="/login" >
-          <p className="center-text" id="login"> Log In </p>
+          <p className="center-text" id="login"> LOG IN </p>
         </Link>
         
       </>
@@ -26,10 +26,10 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
           to="/"
           onClick={() => onLogin(false)}
         >
-          <p className="center-text" id="signout"> Sign Out </p>
+          <p className="center-text" id="signout"> SIGN OUT </p>
         </Link>
         <Link className={`${"navigation-left"} ${"center-link"}`} to="/chat">
-          <p className="center-text" id="chatroom"> Chat Room </p>
+          <p className="center-text" id="chatroom"> CHAT ROOM </p>
         </Link>
       </>
     );

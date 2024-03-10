@@ -182,17 +182,37 @@ body {
     background-color: var(--blue);
     color: var(--white);
     height: 60vh;
-}
-
-#join-now-bubble {
     display: flex;
-    height: 300px;
-    width: 95vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #join-now-title {
     font-size: var(--title-font-size);
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--white);
+}
+
+#join-now-subtitle {
+    font-size: var(--subtitle-font-size);
+    margin-top: 1%;
+}
+
+#button {
+    text-decoration: none;
+    line-height: 50px;
+    margin-top: 3%;
+}
+
+#get-started {
+    color: var(--blue);
+    background-color: var(--white);
+    width: 250px;
+    height: 50px;
+    font-size: 18px;    
+    border-radius: 10px;
+    box-shadow: 0 2px 1px 1px #3c3c3c;
+    font-weight: 600;
 }
