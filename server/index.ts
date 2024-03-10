@@ -1,3 +1,6 @@
+// attributions:
+// starter code from https://leejjon.medium.com/create-a-react-app-served-by-express-js-node-js-and-add-typescript-33705be3ceda
+
 import express from "express";
 import path from "path";
 const app = express();
