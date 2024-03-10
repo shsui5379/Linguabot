@@ -1,6 +1,6 @@
-html {
-    background-color: #f0f0f0;
-    color: #4c4c4c;
+body {
+    letter-spacing: 1px;
+    color: #3c3c3c;
 }
 
 #overview {
@@ -10,22 +10,53 @@ html {
 }
 
 #welcome-block {
-    height: 500px;
+    background-color: #1D5D9B;
+    color: #f0f0f0;
+}
+
+#welcome-inner-block {
+    height: 550px;
+    display: inline-flex;
 }
 
 #welcome-inner-text {
     text-align: left;
-    margin-left: 13%;
-    padding-top: 175px;
+    padding-top: 150px;
+    margin: 0 5% 0 5%;
 }
 
 #upper-title {
     margin: 0;
+    letter-spacing: 4px;
+    font-size: 50px;
 }
 
 #lower-title {
     margin-top: 0;
     font-weight: 400;
+    letter-spacing: 2px;
+    font-size: 30px;
+}
+
+#welcome-subtitle {
+    font-size: 20px;
+    font-weight: 100;
+}
+
+#welcome-image {
+    float: right;
+    margin-right: 5%;
+    width: 450px;
+    height: 400px;
+    padding-top: 50px;
+}
+
+#problem {
+    font-size: 24px;
+}
+
+#solution {
+    font-size: 20px;
 }
 
 .feature {
@@ -33,11 +64,16 @@ html {
 }
 
 .feature-title {
+    margin-top: 25%;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .feature-description {
     font-size: 16px;
+}
+
+#major-features {
+    margin: 5% auto 5% auto;
 }
 

@@ -1,6 +1,12 @@
+:root {
+    --blue: #1D5D9B;
+    --white: #f0f0f0;
+}
+
 .navigation-menu {
     height: 60px;
-    background-color: #f0f0f0;
+    background-color: var(--blue);
+    letter-spacing: 1px;
 }
 
 .navigation-left {
@@ -12,8 +18,8 @@
 
 #logo {
     font-weight: bold;
-    color: #1D5D9B;
-    font-size: 20px;
+    color: var(--white);
+    font-size: 25px;
 }
 
 .center-link {
@@ -46,8 +52,8 @@
 
 #signup {
     width: 100px;
-    background-color:#1D5D9B; 
-    color: #f0f0f0;
+    background-color: var(--white); 
+    color: var(--blue);
 }
 
 #login, #signup {
@@ -57,5 +63,5 @@
 
 #login {
     width: 100px;
-    color: #4c4c4c;
+    color: var(--white);
 }
