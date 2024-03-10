@@ -96,8 +96,9 @@ export default function Home() {
 
       {/** Register */}
       <div id="join-now">
-        <div id="join-now-title">Get Chatty!</div>
-        <div id="join-now-subtitle">Join in on the buzz.</div>
+        <div id="join-now-bubble">
+          <div id="join-now-title">Get chatty with Linguabot!</div>
+        </div>
       </div>
     </>
   );

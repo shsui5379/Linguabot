@@ -138,7 +138,6 @@ body {
 
 #feature-display {
     height: auto;
-    margin-bottom: var(--section-margin);
 }
 
 .feature-highlight-overview {
@@ -150,7 +149,7 @@ body {
 
 .feature-image {
     width: 35vw;
-    height: 75vh;
+    height: 60vh;
 }
 
 .feature-highlight {
@@ -158,7 +157,7 @@ body {
 }
 
 .inner-feature-highlight {
-    height: 75vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -174,4 +173,26 @@ body {
 .feature-highlight-description {
     font-size: var(--subtitle-font-size);
     color: var(--subtext-gray)
+}
+
+
+/* Join Now Block */
+
+#join-now {
+    background-color: var(--blue);
+    color: var(--white);
+    height: 60vh;
+}
+
+#join-now-bubble {
+    display: flex;
+    height: 300px;
+    width: 95vw;
+}
+
+#join-now-title {
+    font-size: var(--title-font-size);
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--white);
 }
