@@ -1,0 +1,61 @@
+.lang-unique-button {
+    height: 15vh;
+    border-radius: 10px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 30px; 
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+#lang-select {
+    display: grid;
+    grid-template-columns: 30vw 30vw;
+    column-gap: 5%;
+    height: 500px;
+    justify-content: center;
+}
+
+#lang-select-instruction-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 5% auto 10px auto;
+}
+
+#lang-select-instruction-subtitle {
+    font-size: 20px;
+    margin-bottom: 5%;
+}
+
+.lang-unique-flag {
+    width: var(--flag-size);
+    height: var(--flag-size);
+    border-radius: 100px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+#Japanese-flag, #Korean-flag {
+    border: 1px solid #3c3c3c;
+}
+
+#continue-lang-select {
+    background-color: var(--blue);
+    color: var(--white);
+    width: 15vw;
+    height: 7.5vh;
+    border-radius: 10px;
+    border: none;
+    box-shadow: var(--shadow);
+    margin: auto 17% 5% auto;
+    float: right;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+

@@ -5,6 +5,8 @@
     --title-font-size: 32px;
     --subtitle-font-size: 20px;
     --text-font-size: 16px;
+    --flag-size: 35px;
+    --shadow: 0 2px 1px 2px #3c3c3c;
 }
 
 body { 
@@ -87,18 +89,28 @@ body {
 .language {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .lang-flag {
-    width: 40px;
+    width: var(--flag-size);
+    height: var(--flag-size);
     margin-right: 15px;
-    border-radius: 10px;
+    border-radius: 100px;
+    object-fit: cover;
 }
 
-#japan, #korea {
+#Japanese-home-flag, #Korean-home-flag {
     border: 1px solid var(--subtext-gray);
 }
 
+#English-home {
+    margin-left: var(--section-margin-side);
+}
+
+#Korean-home {
+    margin-right: var(--section-margin-side);
+}
 
 /* Feature Overview*/
 
@@ -213,6 +225,6 @@ body {
     height: 50px;
     font-size: 18px;    
     border-radius: 10px;
-    box-shadow: 0 2px 1px 1px #3c3c3c;
+    box-shadow: var(--shadow);
     font-weight: 600;
 }
