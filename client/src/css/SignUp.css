@@ -2,17 +2,15 @@
     height: 15vh;
     border-radius: 10px;
     font-size: 18px;
-    letter-spacing: 1px;
     font-weight: bold;
+    letter-spacing: 1px;
     text-align: left;
     padding-left: 30px; 
     box-shadow: var(--shadow);
     cursor: pointer;
     display: flex;
     align-items: center;
-    background-size: cover;
-    background-position: 50%;
-    background-color: rgba(255,255,255,0.9);
+    background: 50% / cover no-repeat rgba(255,255,255,0.9);
     background-blend-mode: lighten;
 }
 

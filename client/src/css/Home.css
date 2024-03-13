@@ -76,6 +76,7 @@ body {
 
 
 /* Languages Offered */
+
 #languages-offered {
     margin: 1%;
     width: 95vw;    
@@ -111,6 +112,7 @@ body {
 #Korean-home {
     margin-right: var(--section-margin-side);
 }
+
 
 /* Feature Overview*/
 
