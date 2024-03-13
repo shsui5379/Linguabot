@@ -4,7 +4,7 @@ import "../css/SignUp.css"
 export default function SignUp() {
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map(item => 
-    <button className="lang-unique-button" id={item} style={{backgroundImage:`url("")`}}>
+    <button className="lang-unique-button" id={item} style={{backgroundImage:`url(${require("../assets/flags/" + item + ".png")})`}}>
       <img className="lang-unique-flag" 
            id={item + '-flag'}
            src={require("/src/assets/flags/" + item +".png")}
