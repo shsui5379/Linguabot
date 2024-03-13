@@ -6,8 +6,7 @@
   "scripts": {
     "start": "cd ./server && npm run start",
     "build": "cd ./server && npm i && npm run build && cd ../client && npm i && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-react": "cd ./client && npm run start"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC"

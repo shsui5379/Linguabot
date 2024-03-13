@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+import { messageObject, ChatSession } from "./ChatSession"
+
 const app = express();
 
 // This code makes sure that any request that does not matches a static file
