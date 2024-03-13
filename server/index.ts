@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import { messageObject, ChatSession } from "./ChatSession"
+import { MessageObject, ChatSession } from "./ChatSession";
 
 const app = express();
 

@@ -1,16 +1,16 @@
 import OpenAI from "openai";
 require("dotenv").config();
 
-type messageObject = OpenAI.Chat.Completions.ChatCompletionMessageParam;
+type MessageObject = OpenAI.Chat.Completions.ChatCompletionMessageParam;
 
 class ChatSession {
   /**
    * Constructs a ChatSession object with a given message history
    *
    * @param messages The current message history of the session, with each message conforming to
-   * the messageObject type
+   * the MessageObject type
    */
-  constructor(messages: messageObject[]) {
+  constructor(messages: MessageObject[]) {
     this.#messageHistory = messages;
   }
 
@@ -20,7 +20,7 @@ class ChatSession {
    * @param configurationMessage A string containing instructions for the chatbot
    */
   configure(configurationMessage: string) {
-    this.#messageHistory.unshift({ role: "system", content: configurationMessage })
+    this.#messageHistory.unshift({ role: "system", content: configurationMessage });
   }
 
   /**
@@ -48,10 +48,10 @@ class ChatSession {
   }
 
   static #client: OpenAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY }); // Client for interfacing with the OpenAI API
-  #messageHistory: messageObject[] = []; // Stores the message history for a particular chat session
+  #messageHistory: MessageObject[] = []; // Stores the message history for a particular chat session
 
   // TODO: implement quota checking for future scaling
   // TODO: implement error case checking
-}
+};
 
-export { messageObject, ChatSession };
+export { MessageObject, ChatSession };
