@@ -1,8 +1,3 @@
-:root {
-    --blue: #1D5D9B;
-    --white: #fff;
-}
-
 .navigation-menu {
     height: 65px;
     background-color: var(--blue);

@@ -1,6 +1,7 @@
 .lang-unique-button {
     height: 15vh;
     border-radius: 10px;
+    border: 2px solid #3c3c3c;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 1px;
@@ -12,6 +13,13 @@
     align-items: center;
     background: 50% / cover no-repeat rgba(255,255,255,0.9);
     background-blend-mode: lighten;
+}
+
+.active {
+    border: 3px solid var(--blue);
+    box-shadow: 0 2px 1px 1px var(--blue);
+    color: var(--blue);
+    background: 50% / cover no-repeat rgba(240, 241, 255, 0.9);
 }
 
 #lang-select {

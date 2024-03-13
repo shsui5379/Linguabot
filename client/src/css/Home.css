@@ -1,4 +1,6 @@
 :root {
+    --blue: #1D5D9B;
+    --white: #fff;
     --subtext-gray: #757575;
     --section-margin-side: 10vw;
     --section-margin: 12vw;
@@ -6,7 +8,7 @@
     --subtitle-font-size: 20px;
     --text-font-size: 16px;
     --flag-size: 35px;
-    --shadow: 0 2px 1px 2px #3c3c3c;
+    --shadow: 0 2px 1px 1px #3c3c3c;
 }
 
 body { 
