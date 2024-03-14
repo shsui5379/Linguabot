@@ -5,11 +5,7 @@ import { Language } from "../types/Language"
 
 const sequelize = new Sequelize.Sequelize(process.env.POSTGRES_URL!);
 
-try {
-    sequelize.authenticate();
-} catch (error) {
-    console.error("Error connecting to database: ", error);
-}
+sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
 
 class UserDatabase extends Sequelize.Model { };
 
