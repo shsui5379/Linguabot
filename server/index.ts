@@ -2,6 +2,8 @@ import express from "express";
 import path from "path";
 const app = express();
 
+import "dotenv/config";
+
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
 // going to make sure that the correct content will be loaded.
