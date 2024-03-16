@@ -13,7 +13,9 @@ const config = {
     issuerBaseURL: process.env.ISSUERBASEURL,
   };
   
-app.use(auth(config));
+app.use(auth(config)); 
+
+app.use(express.static(path.join(__dirname, '../client/build'))); 
 
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
@@ -27,9 +29,10 @@ app.use((req, res, next) => {
         res.header('Pragma', 'no-cache');
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     }
-});
-app.use(express.static(path.join(__dirname, '../client/build')));
-// Start the server
+}); 
+
+
+// Start the server 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
