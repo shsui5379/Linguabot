@@ -16,10 +16,7 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
     navRight = (
       <>
         <a className={`${"navigation-right"} ${"center-link"} ${"rightmost-link"}`} 
-          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?
-          response_type=code&
-          client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&
-          redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
+          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
           <p className="center-text" id="signup"> SIGN UP </p>           
         </a>
         <a className={`${"navigation-right"} ${"center-link"}`} onClick={handleLogin} >
