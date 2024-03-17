@@ -21,3 +21,5 @@ Class representing a user
   - post-MVP stretch goal
 - delete(): void
   - deletes the user
+- toJSON(): Object
+  - a JSON fit for transmission
