@@ -39,26 +39,26 @@ class User {
 
     set firstName(newName: string) {
         this.#firstName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error(e) });
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#userId, e) });
     }
 
     set lastName(newName: string) {
         this.#lastName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error(e) });
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#userId, e) });
     }
 
     set userLanguage(newLanguage: Language) {
         this.#userLanguage = newLanguage;
-        this.#databaseRecord.save().catch((e: Error) => { console.error(e) });
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#userId, e) });
     }
 
     set targetLanguage(newLanguages: Language[]) {
         this.#targetLanguages = newLanguages;
-        this.#databaseRecord.save().catch((e: Error) => { console.error(e) });
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#userId, e) });
     }
 
     delete(): void {
-        this.#databaseRecord.destroy().catch((e: Error) => { console.error(e) });
+        this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#userId, e) });
     }
 
     toJSON(): Object {
