@@ -1,7 +1,7 @@
 import express from "express";
 import path from "path";
 const app = express();  
-const router = require("./routes/routes.js") 
+const router = require("./routes/routes.ts") 
 const { auth } = require('express-openid-connect');  
 require('dotenv').config()
 
