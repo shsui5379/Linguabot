@@ -1,8 +1,11 @@
 import express from "express";
 import path from "path";
-const app = express(); 
+const app = express();  
+const router = require("./routes/routes.js") 
 const { auth } = require('express-openid-connect');  
 require('dotenv').config()
+
+app.set('view engine', 'ejs');
 
 const config = {
     authRequired: false,
@@ -11,9 +14,10 @@ const config = {
     baseURL: process.env.BASEURL,
     clientID: process.env.CLIENTID,
     issuerBaseURL: process.env.ISSUERBASEURL,
-  };
+  }; 
   
-app.use(auth(config)); 
+app.use(auth(config));  
+app.use('/', router);
 
 app.use(express.static(path.join(__dirname, '../client/build'))); 
 
