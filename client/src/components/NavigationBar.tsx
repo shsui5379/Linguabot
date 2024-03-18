@@ -9,26 +9,27 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
   if (!isLoggedIn) {
     navRight = (
       <>
-        <Link className="navigation-right" to="/login">
-          Log In
+        <Link className={`${"navigation-right"} ${"center-link"} ${"rightmost-link"}`} to="/signup" >
+          <p className="center-text" id="signup"> SIGN UP </p>          
         </Link>
-        <Link className="navigation-right" to="/signup">
-          Sign Up
+        <Link className={`${"navigation-right"} ${"center-link"}`} to="/login" >
+          <p className="center-text" id="login"> LOG IN </p>
         </Link>
+        
       </>
     );
   } else {
     navRight = (
       <>
         <Link
-          className="navigation-right"
+          className={`${"navigation-left"} ${"center-link"}`}
           to="/"
           onClick={() => onLogin(false)}
         >
-          Sign Out
+          <p className="center-text" id="signout"> SIGN OUT </p>
         </Link>
-        <Link className="navigation-right" to="/chat">
-          Chat Room
+        <Link className={`${"navigation-left"} ${"center-link"}`} to="/chat">
+          <p className="center-text" id="chatroom"> CHAT ROOM </p>
         </Link>
       </>
     );
@@ -36,12 +37,16 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
 
   return (
     <div className="navigation-menu">
-      <Link className="navigation-left" to="/">
+      <Link 
+        className={`${"navigation-left"} ${"center-link"}`} 
+        id="logo"
+        to="/"
+      >
         Linguabot
       </Link>
       {navRight}
       <Link
-        className="navigation-right"
+        className={`${"navigation-right"} ${"center-link"}`}
         to="/home"
         onClick={() => onLogin(true)}
       >

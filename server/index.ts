@@ -1,8 +1,13 @@
+// attributions:
+// starter code from https://leejjon.medium.com/create-a-react-app-served-by-express-js-node-js-and-add-typescript-33705be3ceda
+
 import express from "express";
 import path from "path";
 import { MessageObject, ChatSession } from "./ChatSession";
 
 const app = express();
+
+import "dotenv/config";
 
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
