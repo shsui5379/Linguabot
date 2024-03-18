@@ -1,9 +1,14 @@
+// attributions:
+// starter code from https://leejjon.medium.com/create-a-react-app-served-by-express-js-node-js-and-add-typescript-33705be3ceda
+
 import express from "express";
 import path from "path";
-const app = express();  
-const router = require("./routes/routes.ts") 
-const { auth } = require('express-openid-connect');  
-require('dotenv').config()
+import { MessageObject, ChatSession } from "./ChatSession";
+import "dotenv/config";
+
+const app = express();
+const router = require("./routes/routes.ts")
+const { auth } = require('express-openid-connect');
 
 app.set('view engine', 'ejs');
 
@@ -14,12 +19,12 @@ const config = {
     baseURL: process.env.BASEURL,
     clientID: process.env.CLIENTID,
     issuerBaseURL: process.env.ISSUERBASEURL,
-  }; 
-  
-app.use(auth(config));  
+};
+
+app.use(auth(config));
 app.use('/', router);
 
-app.use(express.static(path.join(__dirname, '../client/build'))); 
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
@@ -33,7 +38,7 @@ app.use((req, res, next) => {
         res.header('Pragma', 'no-cache');
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     }
-}); 
+});
 
 
 // Start the server 

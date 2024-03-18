@@ -5,6 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faListCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
+  /** Used to display flags of supported languages */
+  const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
+  var displayed_languages = [languages.map(item => 
+    <p className="language" id={item + "-home"}>
+      <img className="lang-flag" 
+           id={item + "-home-flag"}
+           src={require("/src/assets/flags/" + item +".png")}
+           alt={item}></img>
+      {item}
+    </p>
+  )];
+  
   return (
     <>
     {/** Title */}
@@ -20,44 +32,13 @@ export default function Home() {
       </div>
 
       {/** Languages Offered */}
-      <div id="languages-offered">
-        <p className={`${"language"} ${"margin-left"}`}>
-          <img className="lang-flag" 
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Spain_%28Civil%29.svg/2560px-Flag_of_Spain_%28Civil%29.svg.png"
-               alt="Spain"></img>
-          Spanish
-        </p>
-        <p className="language">
-          <img className="lang-flag" 
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/2560px-Flag_of_France.svg.png"
-               alt="France"></img>
-          French
-        </p>
-        <p className="language">
-          <img className="lang-flag" 
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/255px-Flag_of_the_People%27s_Republic_of_China.svg.png"
-               alt="China"></img>
-          Mandarin
-        </p>
-        <p className="language">
-          <img className="lang-flag" id="japan" 
-               src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg"
-               alt="Japan"></img>
-          Japanese
-        </p>
-        <p className={`${"language"} ${"margin-right"}`}>
-          <img className="lang-flag" id="korea" 
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1200px-Flag_of_South_Korea.svg.png"
-               alt="Korea"></img>
-          Korean
-        </p>
-      </div>
+      <div id="languages-offered">{displayed_languages}</div>
 
       {/** Major Feature Overview */}
       <div id="major-features">
         <h3 id="problem">Struggling to find a language practice partner?</h3>
-        <p id="solution">Look no further! Linguabot uses GPT technology to help 
-                        you practice <br></br>communication skills by simulating real-life conversations.</p>
+        <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
+                         <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div className={`${"feature"} ${"margin-left"}`}>
             <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>

@@ -10,8 +10,5 @@
     "start-react": "cd ./client && npm run start"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@types/express": "^4.17.21"
-  }
+  "license": "ISC"
 }
