@@ -3,6 +3,8 @@
 
 import express from "express";
 import path from "path";
+import { MessageObject, ChatSession } from "./ChatSession";
+
 const app = express();
 
 import "dotenv/config";
