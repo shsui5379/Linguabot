@@ -4,10 +4,27 @@
 import express from "express";
 import path from "path";
 import { MessageObject, ChatSession } from "./ChatSession";
+import "dotenv/config";
 
 const app = express();
+const router = require("./routes/routes.ts")
+const { auth } = require('express-openid-connect');
 
-import "dotenv/config";
+app.set('view engine', 'ejs');
+
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: process.env.SECRET,
+    baseURL: process.env.BASEURL,
+    clientID: process.env.CLIENTID,
+    issuerBaseURL: process.env.ISSUERBASEURL,
+};
+
+app.use(auth(config));
+app.use('/', router);
+
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 // This code makes sure that any request that does not matches a static file
 // in the build folder, will just serve index.html. Client side routing is
@@ -22,8 +39,9 @@ app.use((req, res, next) => {
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     }
 });
-app.use(express.static(path.join(__dirname, '../client/build')));
-// Start the server
+
+
+// Start the server 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}`);
