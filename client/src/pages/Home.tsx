@@ -1,5 +1,6 @@
 // Home component
 import "../css/Home.css"
+import NavigationBar from "../components/NavigationBar";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faListCheck } from '@fortawesome/free-solid-svg-icons'
@@ -19,6 +20,7 @@ export default function Home() {
   
   return (
     <>
+    <NavigationBar />
     {/** Title */}
       <div id="welcome-block">
         <div id="welcome-inner-block">

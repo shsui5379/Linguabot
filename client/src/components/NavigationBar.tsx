@@ -1,9 +1,11 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../css/NavigationBar.css"; 
 
 // Navigation bar component
 // the isLoggedIn property is supposed to temporary simulate authentication. Remove it later
-export default function NavigationBar({ isLoggedIn, onLogin }) {
+export default function NavigationBar() {
+  const [loginStatus, setLoginStatus] = useState(false);
   // Determine the correct things to display on the right side of the navigation bar
   let navRight = null; 
 
@@ -12,7 +14,7 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
     window.location.href = 'http://localhost:8080/login';
   };
   
-  if (!isLoggedIn) {
+  if (!loginStatus) {
     navRight = (
       <>
         <a className={`${"navigation-right"} ${"center-link"} ${"rightmost-link"}`} 
@@ -30,7 +32,7 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
         <Link
           className={`${"navigation-left"} ${"center-link"}`}
           to="/"
-          onClick={() => onLogin(false)}
+          // onClick={() => onLogin(false)}
         >
           <p className="center-text" id="signout"> SIGN OUT </p>
         </Link>
@@ -54,7 +56,7 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
       <Link
         className={`${"navigation-right"} ${"center-link"}`}
         to="/home"
-        onClick={() => onLogin(true)}
+        // onClick={() => onLogin(true)}
       >
         TEMPAUTH
       </Link>

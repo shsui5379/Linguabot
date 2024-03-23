@@ -7,7 +7,7 @@
     --title-font-size: 32px;
     --subtitle-font-size: 20px;
     --text-font-size: 16px;
-    --flag-size: 35px;
+    --flag-size: 30px;
     --shadow: 0 2px 1px 1px #3c3c3c;
 }
 
@@ -42,7 +42,7 @@ body {
 }
 
 #welcome-inner-block {
-    height: 75vh;
+    height: 80vh;
     display: inline-flex;
 }
 
@@ -94,6 +94,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 0px;
 }
 
 .lang-flag {

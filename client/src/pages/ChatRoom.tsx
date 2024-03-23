@@ -12,10 +12,8 @@ export default function ChatRoom() {
   return(
   <>
     <div id="side-conversations">
-      <p id="side-conversations-title">Conversations</p>
-
+      <button id="side-conversations-add">Create New Chat</button>
       <div id="saved-conversations">{saved_conversations}</div>
-      {/* <button id="side-conversations-add">Create New Chat</button> */}
     </div>
     <div id="chat">
       <div id="chat-text">
