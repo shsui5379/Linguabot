@@ -22,7 +22,6 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
         <a className={`${"navigation-right"} ${"center-link"}`} onClick={handleLogin} >
           <p className="center-text" id="login"> LOG IN </p>
         </a>
-        
       </>
     );
   } else {
@@ -58,6 +57,12 @@ export default function NavigationBar({ isLoggedIn, onLogin }) {
         onClick={() => onLogin(true)}
       >
         TEMPAUTH
+      </Link>
+      <Link
+        className={`${"navigation-right"} ${"center-link"}`}
+        to="/chat"
+      >
+        Chat
       </Link>
     </div>
   );
