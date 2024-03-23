@@ -24,6 +24,7 @@ body {
     margin-right: var(--section-margin-side);
 }
 
+
 .float-left {
     float: left;
 }
@@ -50,25 +51,25 @@ body {
     padding-top: 125px;
 }
 
-#welcome-block h1 {
+#upper-title {
     margin: 0;
     letter-spacing: 4px;
     font-size: 60px;
 }
 
-#welcome-block h2 {
+#lower-title {
     margin-top: 0;
     font-weight: 400;
     letter-spacing: 2px;
     font-size: var(--title-font-size);
 }
 
-#welcome-block p {
+#welcome-subtitle {
     font-size: var(--subtitle-font-size);
     font-weight: 100;
 }
 
-#welcome-block img {
+#welcome-image {
     float: right;
     width: 70vh;
     height: 75vh;
@@ -121,16 +122,6 @@ body {
     margin: var(--section-margin) auto var(--section-margin) auto;
 }
 
-#major-features h3 {
-    font-size: var(--title-font-size);
-    font-weight: 600;
-}
-
-#major-features p {
-    font-size: var(--subtitle-font-size);
-    color: var(--subtext-gray);
-}
-
 #overview {
     width: 95vw;
     display: inline-flex;
@@ -138,12 +129,22 @@ body {
     margin-top: 5%;
 }
 
-#overview h4 {
-    font-weight: bold;
-    font-size: var(--subtitle-font-size);
+#problem {
+    font-size: var(--title-font-size);
+    font-weight: 600;
 }
 
-#overview p {
+#solution {
+    font-size: var(--subtitle-font-size);
+    color: var(--subtext-gray);
+}
+
+.feature-title {
+    font-size: var(--subtitle-font-size);
+    font-weight: bold;
+}
+
+.feature-description {
     font-size: var(--text-font-size);
     color: var(--subtext-gray);
 }
@@ -162,7 +163,7 @@ body {
     text-align: left;
 }
 
-.feature-highlight-overview img {
+.feature-image {
     width: 35vw;
     height: 60vh;
 }
@@ -171,19 +172,21 @@ body {
     width: 35vw;
 }
 
-.feature-highlight div {
+.inner-feature-highlight {
     height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.feature-highlight h3{
+.feature-highlight-title {
+    font-weight: 600;
+    font-size: var(--title-font-size);
     letter-spacing: 1px;
     margin: 0;
 }
 
-.feature-highlight p {
+.feature-highlight-description {
     font-size: var(--subtitle-font-size);
     color: var(--subtext-gray)
 }
@@ -201,17 +204,16 @@ body {
     align-items: center;
 }
 
-#join-now h3 {
+#join-now-title {
     font-size: var(--title-font-size);
     font-weight: bold;
     letter-spacing: 1px;
     color: var(--white);
 }
 
-#join-now h4 {
+#join-now-subtitle {
     font-size: var(--subtitle-font-size);
     margin-top: 1%;
-    font-weight: normal;
 }
 
 #button {
@@ -220,7 +222,7 @@ body {
     margin-top: 3%;
 }
 
-#button p {
+#get-started {
     color: var(--blue);
     background-color: var(--white);
     width: 250px;

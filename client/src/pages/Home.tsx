@@ -23,11 +23,11 @@ export default function Home() {
       <div id="welcome-block">
         <div id="welcome-inner-block">
           <div id="welcome-inner-text">
-            <h1>CHATBOT</h1>
-            <h2>language partner</h2>
-            <p>Improve your language fluency by chatting with Linguabot!</p>
+            <h1 className="welcome-title" id="upper-title">CHATBOT</h1>
+            <h2 className="welcome-title" id="lower-title">language partner</h2>
+            <p id="welcome-subtitle">Improve your language fluency by chatting with Linguabot!</p>
           </div>
-          <img alt="Robot welcome" src="https://kioku-space.com/images/chatbot.webp"></img> 
+          <img id="welcome-image" alt="Robot welcome" src="https://kioku-space.com/images/chatbot.webp"></img> 
         </div>
       </div>
 
@@ -36,21 +36,21 @@ export default function Home() {
 
       {/** Major Feature Overview */}
       <div id="major-features">
-        <h3>Struggling to find a language practice partner?</h3>
-        <p>Look no further! Linguabot uses GPT technology to help you practice 
+        <h3 id="problem">Struggling to find a language practice partner?</h3>
+        <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
                          <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
-          <div className="margin-left">
-            <h4><FontAwesomeIcon icon={faLanguage} /> Language Selection</h4>
-            <p>Select a target language <br></br>to practice with the bot!</p>
+          <div className={`${"feature"} ${"margin-left"}`}>
+            <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>
+            <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
           </div>
-          <div>
-            <h4><FontAwesomeIcon icon={faRobot} /> Bot Behavior</h4>
-            <p>Choose between conversation <br></br>or grammar mode!</p>
+          <div className="feature">
+            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> Bot Behavior</p>
+            <p className="feature-description">Choose between conversation <br></br>or grammar mode!</p>
           </div>
-          <div className="margin-right">
-            <h4><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</h4>
-            <p>Create new conversations or <br></br>pick up from where you left off!</p>
+          <div className={`${"feature"} ${"margin-right"}`}>
+            <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>
+            <p className="feature-description">Create new conversations or <br></br>pick up from where you left off!</p>
           </div>
         </div>
       </div>
@@ -58,13 +58,13 @@ export default function Home() {
       {/** Highlighted Features */}
       <div id="feature-display">
         <div className="feature-highlight-overview">
-          <img className={`${"float-left"} ${"margin-left"}`} 
+          <img className={`${"feature-image"} ${"float-left"} ${"margin-left"}`} 
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
           <div className={`${"feature-highlight"} ${"float-right"} ${"margin-right"}`}>
-            <div>
-              <h3>Customize Your Learning Partner</h3>
-              <p>
+            <div className="inner-feature-highlight">
+              <p className="feature-highlight-title">Customize Your Learning Partner</p>
+              <p className="feature-highlight-description">
                 <b>Conversational Mode:</b> Linguabot will respond to your messages in your target language, regardless of any mistakes!
                 Talk about any topic and ask it any questions! <br></br><br></br>
 
@@ -75,26 +75,26 @@ export default function Home() {
         </div>
         <div className="feature-highlight-overview">
           <div className={`${"feature-highlight"} ${"float-left"} ${"margin-left"}`}>
-            <div>
-              <h3>Organize Your Conversations</h3>
-              <p>
+            <div className="inner-feature-highlight">
+              <p className="feature-highlight-title">Organize Your Conversations</p>
+              <p className="feature-highlight-description">
                 Start a new conversation, pick up from where you last left off, or remove a saved conversation! <br></br><br></br>
                 You can save up to <b>10 chats</b> with each one lasting up to 30 days if it's not used. 
               </p>
             </div>
           </div>
-          <img className={`${"float-right"} ${"margin-right"}`} 
+          <img className={`${"feature-image"} ${"float-right"} ${"margin-right"}`} 
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
         </div>
         <div className="feature-highlight-overview">
-          <img className={`${"float-left"} ${"margin-left"}`} 
+          <img className={`${"feature-image"} ${"float-left"} ${"margin-left"}`} 
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
           <div className={`${"feature-highlight"} ${"float-right"} ${"margin-right"}`}>
-            <div>
-              <h3>Feature 3</h3>
-              <p>Feature description in detail</p>
+            <div className="inner-feature-highlight">
+              <p className="feature-highlight-title">Feature 3</p>
+              <p className="feature-highlight-description">Feature description in detail</p>
             </div> 
           </div>
         </div>
@@ -102,10 +102,10 @@ export default function Home() {
 
       {/** Register */}
       <div id="join-now">
-        <h3>Improve your fluency with Linguabot!</h3>
-        <h4>Don't wait any longer to find a language partner.</h4>
+        <div id="join-now-title">Improve your fluency with Linguabot!</div>
+        <div id="join-now-subtitle">Don't wait any longer to find a language partner.</div>
         <Link id="button" to="/signup">
-          <p>GET STARTED</p>          
+          <p id="get-started">GET STARTED</p>          
         </Link>
       </div>
     </>
