@@ -16,15 +16,18 @@ export default function ChatRoom() {
       <div id="saved-conversations">{saved_conversations}</div>
     </div>
     <div id="chat">
-      <div id="chat-text">
-        <input type="text"
-              id="user-text"
-              name="user-text"
-              required-minlength="1"
-              placeholder="Type something...">
-        </input>
-        <img></img>
+      <div id="chat-wrapper">
+        <form id="chat-text">
+          <input type="text"
+                id="user-text"
+                name="user-text"
+                required-minlength="1"
+                placeholder="Type something...">
+          </input>
+          <input type="button" id="user-text-send" value="send"></input>
+        </form>
       </div>
+      
     </div>
   </>
   );

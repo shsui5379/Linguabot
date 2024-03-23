@@ -9,42 +9,78 @@
     overflow: auto;
 }
 
+#side-conversations-add, .conversation-overview {
+    width: 90%;
+    text-align: left;
+    padding-left: 25px;
+    border-radius: 5px;
+}
+
 #side-conversations-add {
-    height: 40px;
-    width: 80%;
-    margin: 25px auto 50px auto;
+    height: 50px;
+    margin: 25px auto 40px auto;
     border-radius: 10px;
     border: 1px solid var(--white);
     color: var(--white);
     background-color: var(--blue);
 }
 
-button:hover {
+.conversation-overview {
+    height: 40px;
+    margin-bottom: 10px;
+    border: 1px solid var(--white);
+    background-color: var(--white);
+    color: #4b4b4b;
+}
+
+button:hover, #user-text-send {
     cursor: pointer;
 }
 
 #chat {
     height: 100%;
-    width: 100%;
+    width: 80%;
     margin-left: 20%;
     position: fixed;
+    justify-content: center;
+}
+
+#chat-wrapper {
+    height: 50px;
+    width: 80%;
+    margin-left: 20%;
+    margin-bottom: 30px;
+    position: fixed;
+    left: 0%;
+    bottom:0%;
     display: flex;
     justify-content: center;
 }
 
 #chat-text {
+    height: 45px;
     width: 80%;
-    margin-left: 20%;
-    margin-bottom: 35px;
-    position: fixed;
-    left: 0%;
-    bottom:0%;
+    border-radius: 5px;
+    border: 1px solid #3b3b3b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #user-text {
-    width: 80%;
-    height: 15px;
+    height: 35px;
     font-size: 16px;
-    padding: 15px 25px 15px 25px;
-    border-radius: 10px;
+    width: 100%;
+    border: none;
+    padding-left: 25px;
+}
+
+#user-text-send {
+    width: 40px;
+    height: 25px;
+    margin-right: 25px;
+}
+
+input:focus {
+    outline: none;
 }
