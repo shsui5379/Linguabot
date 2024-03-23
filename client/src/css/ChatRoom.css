@@ -1,3 +1,54 @@
-#manage-bar {
+#side-conversations {
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    background-color: var(--blue);
+    color: var(--white);
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+#side-conversations-title {
+    font-size: var(--subtitle-font-size);
+    text-align: left;
+    padding-left: 20%;
+}
+
+/* 
+#side-conversations-add {
+    height: 25px;
+    position: fixed;
+    bottom: 0%;
+    margin-bottom: 35px;
+} */
+
+button:hover {
+    cursor: pointer;
+}
+
+#chat {
+    height: 100%;
+    width: 100%;
+    margin-left: 20%;
+    position: fixed;
     display: flex;
+    justify-content: center;
+}
+
+#chat-text {
+    width: 80%;
+    margin-left: 20%;
+    margin-bottom: 35px;
+    position: fixed;
+    left: 0%;
+    bottom:0%;
+}
+
+#user-text {
+    width: 80%;
+    height: 25px;
+    font-size: 16px;
+    padding: 15px 25px 15px 25px;
+    border-radius: 10px;
 }

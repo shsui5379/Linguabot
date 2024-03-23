@@ -15,6 +15,7 @@
     font-weight: bold;
     color: var(--white);
     font-size: 25px;
+    margin-left: 5%;
 }
 
 .center-link {
@@ -37,10 +38,6 @@
     float: right;
 }
 
-#logo {
-    margin-left: 5%;
-}
-
 .rightmost-link {
     margin-right: 5%;
 }
@@ -55,7 +52,7 @@
 #login, #signup {
     border-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
 }
 

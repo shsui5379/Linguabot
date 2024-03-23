@@ -51,13 +51,13 @@ body {
     padding-top: 125px;
 }
 
-#upper-title {
+#welcome-title-upper {
     margin: 0;
     letter-spacing: 4px;
     font-size: 60px;
 }
 
-#lower-title {
+#welcome-title-lower {
     margin-top: 0;
     font-weight: 400;
     letter-spacing: 2px;
@@ -84,8 +84,9 @@ body {
     width: 95vw;    
     display: inline-flex;
     justify-content: space-between;
-    font-weight: bold;
-    letter-spacing: 2px;
+    font-weight: 600;
+    font-size: var(--text-font-size);
+    letter-spacing: 1px;
     color: var(--subtext-gray);
 }
 
@@ -182,13 +183,12 @@ body {
 .feature-highlight-title {
     font-weight: 600;
     font-size: var(--title-font-size);
-    letter-spacing: 1px;
     margin: 0;
 }
 
 .feature-highlight-description {
     font-size: var(--subtitle-font-size);
-    color: var(--subtext-gray)
+    color: var(--subtext-gray);
 }
 
 
@@ -207,7 +207,6 @@ body {
 #join-now-title {
     font-size: var(--title-font-size);
     font-weight: bold;
-    letter-spacing: 1px;
     color: var(--white);
 }
 

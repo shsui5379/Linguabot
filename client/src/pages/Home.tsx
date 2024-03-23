@@ -23,8 +23,8 @@ export default function Home() {
       <div id="welcome-block">
         <div id="welcome-inner-block">
           <div id="welcome-inner-text">
-            <h1 className="welcome-title" id="upper-title">CHATBOT</h1>
-            <h2 className="welcome-title" id="lower-title">language partner</h2>
+            <h1 className="welcome-title" id="welcome-title-upper">CHATBOT</h1>
+            <h2 className="welcome-title" id="welcome-title-lower">language partner</h2>
             <p id="welcome-subtitle">Improve your language fluency by chatting with Linguabot!</p>
           </div>
           <img id="welcome-image" alt="Robot welcome" src="https://kioku-space.com/images/chatbot.webp"></img> 
