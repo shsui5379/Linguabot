@@ -6,7 +6,7 @@
     --section-margin-side: 10vw;
     --section-margin: 12vw;
     --title-font-size: 32px;
-    --subtitle-font-size: 20px;
+    --subtitle-font-size: 19px;
     --text-font-size: 16px;
     --flag-size: 30px;
     --shadow: 0 2px 1px 1px var(--dark-gray);
@@ -55,7 +55,7 @@ body {
 #welcome-title-upper {
     margin: 0;
     letter-spacing: 4px;
-    font-size: 60px;
+    font-size: 55px;
 }
 
 #welcome-title-lower {

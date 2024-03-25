@@ -7,6 +7,7 @@
     position: fixed;
     height: 100vh;
     overflow: auto;
+    box-shadow: 1px 0 2px 1px gray;
 }
 
 #side-conversations-add, .conversation-overview {
@@ -14,6 +15,8 @@
     text-align: left;
     padding-left: 25px;
     border-radius: 5px;
+    font-size: 14px;
+
 }
 
 #side-conversations-add {
@@ -76,7 +79,7 @@ button:hover, #user-text-send {
 
 #user-text-type {
     height: 35px;
-    font-size: 16px;
+    font-size: 14px;
     width: 100%;
     border: none;
     padding-left: 25px;
@@ -86,7 +89,7 @@ button:hover, #user-text-send {
     width: 40px;
     height: 25px;
     margin-right: 25px;
-    font-size: 20px;
+    font-size: 18px;
     transform: rotate(15deg);
     background-color: transparent;
     border: none;
@@ -98,10 +101,10 @@ button:hover, #user-text-send {
     height: fit-content;
     width: 80%;
     margin-left: 20%;
-    margin-bottom: 125px;
+    margin-bottom: 120px;
     position: fixed;
     left: 0%;
-    bottom:0%;
+    bottom: 0%;
     display: flex;
     justify-content: center;
 }
@@ -119,6 +122,7 @@ button:hover, #user-text-send {
     text-align: left;
     border-radius: 5px;
     padding: 10px;
+    font-size: 16px;
 }
 
 .user-text {
@@ -131,5 +135,4 @@ button:hover, #user-text-send {
     background-color: #1d5c9bd3;
     color: var(--white);
     box-shadow: 1px 1px 2px 1px gray;
-
 }
