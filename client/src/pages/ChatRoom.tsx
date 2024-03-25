@@ -1,7 +1,7 @@
 // Chat room component
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../css/ChatRoom.css";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default function ChatRoom() {
   var conversations_list = ["chat 1", "chat 2"];
@@ -13,20 +13,31 @@ export default function ChatRoom() {
   
   return(
   <>
+  {/** Side panel for saved conversations and creating a new chat */}
     <div id="side-conversations">
-      <button id="side-conversations-add">Create New Chat</button>
+      <button id="side-conversations-add"><FontAwesomeIcon icon={faPlus} id="side-conversations-plus"/> Create New Chat</button>
       <div id="saved-conversations">{saved_conversations}</div>
     </div>
+
     <div id="chat">
-      <div id="chat-messages">
-        {/* <div className="bot-text">bonjour</div>
-        <div className="user-text">hola</div> */}
+      {/** Text messages */}
+      <div id="chat-messages-wrapper">
+        <div id="chat-messages">
+          <div className="text">
+            <p className="user-text">tell me hi in french</p>
+          </div>
+          <div className="text">
+            <p className="bot-text">bonjourrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</p>
+          </div>
+        </div>
       </div>
+
+      {/** Input and send message box */}
       <div id="chat-text-wrapper">
         <form id="chat-text">
           <input type="text"
-                id="user-text-submit"
-                name="user-text-submit"
+                id="user-text-type"
+                name="user-text-type"
                 required-minlength="1"
                 placeholder="Type something...">
           </input>
