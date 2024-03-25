@@ -10,6 +10,10 @@ export default function ChatRoom() {
       <button className="conversation-overview">{item}</button>
     </div>
   )];
+
+  function retrieveMessages() {
+    /** Get the messages here */
+  }
   
   return(
   <>
@@ -41,7 +45,7 @@ export default function ChatRoom() {
                 required-minlength="1"
                 placeholder="Type something...">
           </input>
-          <button id="user-text-send"><FontAwesomeIcon icon={faPaperPlane}/></button>
+          <button id="user-text-send" onClick={retrieveMessages}><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
       </div>
     </div>
