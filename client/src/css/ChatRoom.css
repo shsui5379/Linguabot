@@ -45,7 +45,7 @@ button:hover, #user-text-send {
     justify-content: center;
 }
 
-#chat-wrapper {
+#chat-text-wrapper {
     height: 50px;
     width: 80%;
     margin-left: 20%;
@@ -61,13 +61,13 @@ button:hover, #user-text-send {
     height: 45px;
     width: 80%;
     border-radius: 5px;
-    border: 1px solid #3b3b3b;
+    border: 1px solid var(--dark-gray);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#user-text {
+#user-text-submit {
     height: 35px;
     font-size: 16px;
     width: 100%;
@@ -75,12 +75,17 @@ button:hover, #user-text-send {
     padding-left: 25px;
 }
 
+input:focus {
+    outline: none;
+}
+
 #user-text-send {
     width: 40px;
     height: 25px;
     margin-right: 25px;
-}
-
-input:focus {
-    outline: none;
+    font-size: 20px;
+    transform: rotate(15deg);
+    background-color: transparent;
+    border: none;
+    color: var(--dark-gray);
 }

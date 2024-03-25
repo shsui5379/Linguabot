@@ -1,5 +1,7 @@
 // Chat room component
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../css/ChatRoom.css";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function ChatRoom() {
   var conversations_list = ["chat 1", "chat 2"];
@@ -16,18 +18,21 @@ export default function ChatRoom() {
       <div id="saved-conversations">{saved_conversations}</div>
     </div>
     <div id="chat">
-      <div id="chat-wrapper">
+      <div id="chat-messages">
+        {/* <div className="bot-text">bonjour</div>
+        <div className="user-text">hola</div> */}
+      </div>
+      <div id="chat-text-wrapper">
         <form id="chat-text">
           <input type="text"
-                id="user-text"
-                name="user-text"
+                id="user-text-submit"
+                name="user-text-submit"
                 required-minlength="1"
                 placeholder="Type something...">
           </input>
-          <input type="button" id="user-text-send" value="send"></input>
+          <button id="user-text-send"><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
       </div>
-      
     </div>
   </>
   );
