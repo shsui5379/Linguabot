@@ -1,16 +1,40 @@
+import React, { useState, useEffect  } from 'react';
 import { Link } from "react-router-dom";
-import "../css/NavigationBar.css"; 
+import "../css/NavigationBar.css";  
 
 // Navigation bar component
 // the isLoggedIn property is supposed to temporary simulate authentication. Remove it later
-export default function NavigationBar({ isLoggedIn, onLogin }) {
+export default function NavigationBar({ onLogin }) {
   // Determine the correct things to display on the right side of the navigation bar
   let navRight = null; 
 
   // Redirect users to the Auth0 login page
   const handleLogin = () => {
     window.location.href = 'http://localhost:8080/login';
-  };
+  }; 
+ 
+  // Set login status to false initally 
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  // Set logged in status after callback from login
+  useEffect(() => { 
+    async function fetchLoginStatus() {
+      try {
+        const response = await fetch('http://localhost:8080/status');
+        const data =  await response.text(); 
+        if (data == 'Logged in') {
+          setLoggedIn(true); 
+        } else {
+          setLoggedIn(false);
+        }
+      } catch (error) {
+        console.error('Error fetching login status:', error);
+        setLoggedIn(false); // Default to false if there's an error
+      }
+    } 
+    fetchLoginStatus();
+  }, []); 
+
   
   if (!isLoggedIn) {
     navRight = (
