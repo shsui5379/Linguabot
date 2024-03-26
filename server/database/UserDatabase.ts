@@ -3,9 +3,7 @@ import Sequelize from "sequelize";
 import User from "../types/User";
 import { Language } from "../types/Language"
 
-const sequelize = new Sequelize.Sequelize(process.env.POSTGRES_URL!);
-
-sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
+const sequelize = new Sequelize.Sequelize(process.env.POSTGRES_URL!, { logging: false });
 
 class UserDatabase extends Sequelize.Model { };
 
@@ -35,12 +33,18 @@ UserDatabase.init({
     }
 }, { sequelize });
 
-sequelize.sync({ alter: true }).catch((error) => { console.error("Error syncing database model: ", error) });
-
 // post-MVP stretch goal: UserDatabase.hasMany(NotesDatabase);
 // post-MVP stretch goal: UserDatabase.hasMany(ConversationHistoryDatabase);
 //                        foreignKey: "userId"
 
+async function initialize() {
+    await sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
+    await sequelize.sync({ alter: true }).catch((error) => { console.error("Error syncing database model: ", error) });
+}
+
+async function close() {
+    await sequelize.close();
+}
 
 /**
  * Fetches a User object by its ID
@@ -96,4 +100,4 @@ async function createUser(userId: string, firstName: string, lastName: string, s
 }
 
 
-export default { fetchUser, createUser };
+export default { fetchUser, createUser, initialize, close };
