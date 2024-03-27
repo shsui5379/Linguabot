@@ -1,73 +1,66 @@
 import { Language } from "../types/Language";
 
 class User {
-    #firstName: string;
-    #lastName: string;
     #databaseRecord: any;
-    #userLanguage: Language;
-    #targetLanguages: Language[];
-    #userId: string;
 
     constructor(databaseRecord: any) {
-        this.#firstName = databaseRecord.firstName;
-        this.#lastName = databaseRecord.lastName;
         this.#databaseRecord = databaseRecord;
-        this.#userLanguage = databaseRecord.userLanaguge;
-        this.#targetLanguages = databaseRecord.targetLanguages;
-        this.#userId = databaseRecord.userId;
     }
 
-    get firstName() {
-        return this.#firstName;
+    get firstName(): string {
+        return this.#databaseRecord.firstName;
     }
 
-    get lastName() {
-        return this.#lastName;
+    get lastName(): string {
+        return this.#databaseRecord.lastName;
     }
 
-    get userLanguage() {
-        return this.#userLanguage;
+    get userLanguage(): Language {
+        return this.#databaseRecord.userLanguage;
     }
 
-    get targetLanguages() {
-        return this.#targetLanguages;
+    get targetLanguages(): Language[] {
+        return this.#databaseRecord.targetLanguages;
     }
 
-    get userId() {
-        return this.#userId;
+    get userId(): string {
+        return this.#databaseRecord.userId;
     }
 
     set firstName(newName: string) {
-        this.#firstName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#userId, e) });
+        if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
+        this.#databaseRecord.firstName = newName;
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#databaseRecord.userId, e) });
     }
 
     set lastName(newName: string) {
-        this.#lastName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#userId, e) });
+        if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
+        this.#databaseRecord.lastName = newName;
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#databaseRecord.userId, e) });
     }
 
     set userLanguage(newLanguage: Language) {
-        this.#userLanguage = newLanguage;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#userId, e) });
+        this.#databaseRecord.userLanguage = newLanguage;
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#databaseRecord.userId, e) });
     }
 
     set targetLanguage(newLanguages: Language[]) {
-        this.#targetLanguages = newLanguages;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#userId, e) });
+        if (newLanguages.length === 0) throw new Error("Must set at least one target language");
+        this.#databaseRecord.targetLanguages = newLanguages;
+        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
     }
 
     delete(): void {
-        this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#userId, e) });
+        this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.userId, e) });
     }
 
     toJSON(): Object {
         return {
-            firstName: this.#firstName,
-            lastName: this.#lastName,
-            userLanguage: this.#userLanguage,
-            targetLanguages: this.#targetLanguages,
-            userId: this.#userId
+            firstName: this.firstName,
+            lastName: this.lastName,
+            userLanguage: this.userLanguage,
+            targetLanguages: this.targetLanguages,
+            userId: this.userId
         };
     }
 
