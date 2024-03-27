@@ -19,11 +19,30 @@ UserDatabase.init({
     userLanguage: {
         type: Sequelize.DataTypes.STRING,
         allowNull: false,
-        defaultValue: "English"
+        defaultValue: "English",
+        validate: {
+            is: new RegExp("English|Spanish|French|Mandarin|Japanese|Korean")
+        }
     },
     targetLanguages: {
         type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            min: 1,
+            isValidLanguage: function (value) {
+                if (!value) return value;
+
+                let values = (Array.isArray(value)) ? value : [value];
+
+                values.forEach(function (val) {
+                    if (!(new RegExp("English|Spanish|French|Mandarin|Japanese|Korean").test(val))) {
+                        throw new Error("Invalid language.");
+                    }
+                });
+                return value;
+            }
+
+        }
     },
     userId: {
         type: Sequelize.DataTypes.STRING,
