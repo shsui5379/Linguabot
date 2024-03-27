@@ -4,25 +4,28 @@
     letter-spacing: 1px;
 }
 
-.navigation-left {
+#logo {
     margin: 0;
     height: 60px;
     text-decoration: none;
-    float: left    
-}
-
-#logo {
+    float: left;
+    margin: 0;
+    line-height: 60px;
+    vertical-align: middle;
     font-weight: bold;
     color: var(--white);
     font-size: 24px;
     margin-left: 5%;
 }
 
-.center-link {
+.navlink {
     margin: 0;
     line-height: 60px;
-    display: inline-block;
     vertical-align: middle;
+    height: 60px;
+    margin: 0 5px 0 5px;
+    text-decoration: none;
+    float: right;
 }
 
 .center-text {
@@ -31,14 +34,7 @@
     display: inline-block;
 }
 
-.navigation-right {
-    height: 60px;
-    margin: 0 5px 0 5px;
-    text-decoration: none;
-    float: right;
-}
-
-.rightmost-link {
+#navlink-rightmost {
     margin-right: 5%;
 }
 
