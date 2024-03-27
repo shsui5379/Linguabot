@@ -1,6 +1,5 @@
 import "dotenv/config";
 import UserDatabase from "./UserDatabase";
-import { rejects } from "assert";
 
 beforeAll(async () => await UserDatabase.initialize());
 
