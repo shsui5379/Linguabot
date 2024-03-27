@@ -42,15 +42,15 @@ export default function Home() {
         <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
                          <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
-          <div className={`${"feature"} ${"margin-left"}`}>
+          <div id="feature-left">
             <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>
             <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
           </div>
-          <div className="feature">
+          <div>
             <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> Bot Behavior</p>
             <p className="feature-description">Choose between conversation <br></br>or grammar mode!</p>
           </div>
-          <div className={`${"feature"} ${"margin-right"}`}>
+          <div id="feature-right">
             <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>
             <p className="feature-description">Create new conversations or <br></br>pick up from where you left off!</p>
           </div>
@@ -60,10 +60,10 @@ export default function Home() {
       {/** Highlighted Features */}
       <div id="feature-display">
         <div className="feature-highlight-overview">
-          <img className={`${"feature-image"} ${"float-left"} ${"margin-left"}`} 
+          <img className="feature-image-left"
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
-          <div className={`${"feature-highlight"} ${"float-right"} ${"margin-right"}`}>
+          <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
               <p className="feature-highlight-title">Customize Your Learning Partner</p>
               <p className="feature-highlight-description">
@@ -76,7 +76,7 @@ export default function Home() {
           </div>
         </div>
         <div className="feature-highlight-overview">
-          <div className={`${"feature-highlight"} ${"float-left"} ${"margin-left"}`}>
+          <div className="feature-highlight-left">
             <div className="inner-feature-highlight">
               <p className="feature-highlight-title">Organize Your Conversations</p>
               <p className="feature-highlight-description">
@@ -85,15 +85,15 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <img className={`${"feature-image"} ${"float-right"} ${"margin-right"}`} 
+          <img className="feature-image-right" 
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
         </div>
         <div className="feature-highlight-overview">
-          <img className={`${"feature-image"} ${"float-left"} ${"margin-left"}`} 
+          <img className="feature-image-left"
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
-          <div className={`${"feature-highlight"} ${"float-right"} ${"margin-right"}`}>
+          <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
               <p className="feature-highlight-title">Feature 3</p>
               <p className="feature-highlight-description">Feature description in detail</p>
