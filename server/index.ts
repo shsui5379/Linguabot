@@ -3,11 +3,11 @@
 
 import express from "express";
 import path from "path";
-import { MessageObject, ChatSession } from "./chat/ChatSession";
 import "dotenv/config";
 
 const app = express();
-const router = require("./routes/routes.ts")
+const router = require("./routes/routes.ts");
+const chat = require("./routes/chat");
 const { auth, requiresAuth } = require('express-openid-connect');
 
 app.set('view engine', 'ejs');
@@ -24,6 +24,7 @@ const config = {
 app.use(auth(config)); 
 
 app.use('/', router);
+app.use("/chat", chat);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
