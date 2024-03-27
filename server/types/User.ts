@@ -50,8 +50,8 @@ class User {
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
     }
 
-    delete(): void {
-        this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.userId, e) });
+    async delete() {
+        await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.userId, e) });
     }
 
     toJSON(): Object {
