@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../css/NavigationBar.css";  
 
 // Navigation bar component
-// the isLoggedIn property is supposed to temporary simulate authentication. Remove it later
 export default function NavigationBar() {
   // Determine the correct things to display on the right side of the navigation bar
   let navRight = null; 
@@ -41,36 +40,30 @@ export default function NavigationBar() {
       <>
         <a className="navlink" id="navlink-rightmost" 
           href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
-          <p className="center-text" id="signup"> SIGN UP </p>           
+          <p className="nav-button-filled"> SIGN UP </p>           
         </a>
         <a className="navlink" onClick={handleLogin} >
-          <p className="center-text" id="login"> LOG IN </p>
+          <p className="nav-button-white"> LOG IN </p>
         </a>
       </>
     );
   } else {
     navRight = (
       <>
+        <Link className="navlink" id="navlink-rightmost"  to="/">
+          <p className="nav-button-filled"> LOG OUT </p>
+        </Link>
         <Link className="navlink" to="/chat">
-          <p className="center-text" id="chatroom"> CHAT ROOM </p>
+          <p className="nav-button-white"> CHAT </p>
         </Link>
-        <Link
-          className="navlink"
-          to="/"
-          // onClick={() => onLogin(false)}
-        >
-          <p className="center-text" id="signout"> SIGN OUT </p>
-        </Link>
+        
       </>
     );
   }
 
   return (
     <div className="navigation-menu">
-      <Link 
-        id="logo"
-        to="/"
-      >
+      <Link id="logo" to="/">
         Linguabot
       </Link>
       {navRight}

@@ -23,31 +23,28 @@
     text-decoration: none;
 }
 
-.center-text {
-    margin: 0;
-    line-height: 40px;
-    display: inline-block;
-}
-
 #navlink-rightmost {
     margin-right: 5%;
 }
 
-#signup {
+.nav-button-filled {
     width: 100px;
     background-color: var(--white); 
     color: var(--blue);
     box-shadow: 0 2px 1px 1px #3c3c3c;
 }
 
-#login, #signup {
+.nav-button-white, .nav-button-filled {
+    margin: 0;
+    line-height: 40px;
+    display: inline-block;
     border-radius: 10px;
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;
 }
 
-#login {
+.nav-button-white {
     width: 100px;
     color: var(--white);
 }
