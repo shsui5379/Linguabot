@@ -44,14 +44,14 @@ class User {
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#databaseRecord.userId, e) });
     }
 
-    set targetLanguage(newLanguages: Language[]) {
+    set targetLanguages(newLanguages: Language[]) {
         if (newLanguages.length === 0) throw new Error("Must set at least one target language");
         this.#databaseRecord.targetLanguages = newLanguages;
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
     }
 
-    delete(): void {
-        this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.userId, e) });
+    async delete() {
+        await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.userId, e) });
     }
 
     toJSON(): Object {
