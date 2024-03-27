@@ -16,6 +16,10 @@ export default function ChatRoom() {
 
   function retrieveMessages() {
     /** Get the messages here */
+  } 
+
+  const handleLogout = () => { 
+    window.location.href = '/logout'
   }
   
   return(
@@ -31,10 +35,10 @@ export default function ChatRoom() {
             <FontAwesomeIcon icon={faHouse} /> 
             <span className="tooltiptext">Return Home</span>
           </Link>
-          <Link className="sidebar-nav-link" to="/"> 
+          <div className="sidebar-nav-link" onClick={handleLogout}> 
             <FontAwesomeIcon icon={faRightFromBracket} /> 
             <span className="tooltiptext">Log Out</span>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
