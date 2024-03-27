@@ -1,5 +1,6 @@
 // Sign up component
 import "../css/SignUp.css"
+import NavigationBar from "../components/NavigationBar";
 import { SetStateAction, useState } from "react"
 
 export default function SignUp() {
@@ -25,6 +26,7 @@ export default function SignUp() {
   )];
   return(
   <>
+    <NavigationBar />
     <p id="lang-select-instruction-title">Please select your target language.</p>
     <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
     
