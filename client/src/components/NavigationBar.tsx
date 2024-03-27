@@ -10,7 +10,7 @@ export default function NavigationBar({ onLogin }) {
 
   // Redirect users to the Auth0 login page
   const handleLogin = () => {
-    window.location.href = 'http://localhost:8080/login';
+    window.location.href = '/login';
   }; 
  
   // Set login status to false initally 
@@ -20,7 +20,7 @@ export default function NavigationBar({ onLogin }) {
   useEffect(() => { 
     async function fetchLoginStatus() {
       try {
-        const response = await fetch('http://localhost:8080/status');
+        const response = await fetch('/status');
         const data =  await response.text(); 
         if (data == 'Logged in') {
           setLoggedIn(true); 
