@@ -21,7 +21,7 @@ export default function NavigationBar() {
       try {
         const response = await fetch('/status');
         const data =  await response.text(); 
-        if (data == 'Logged in') {
+        if (data === 'Logged in') {
           setLoggedIn(true); 
         } else {
           setLoggedIn(false);
@@ -50,13 +50,12 @@ export default function NavigationBar() {
   } else {
     navRight = (
       <>
-        <Link className="navlink" id="navlink-rightmost"  to="/">
+        <Link className="navlink" id="navlink-rightmost" to="/">
           <p className="nav-button-filled"> LOG OUT </p>
         </Link>
         <Link className="navlink" to="/chat">
           <p className="nav-button-white"> CHAT </p>
         </Link>
-        
       </>
     );
   }

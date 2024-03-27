@@ -1,13 +1,16 @@
 // Chat room component
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../css/ChatRoom.css";
-import { faPaperPlane, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function ChatRoom() {
-  var conversations_list = ["chat 1", "chat 2"];
-  var saved_conversations = [conversations_list.map(item =>
-    <div className="conversation">
-      <button className="conversation-overview">{item}</button>
+  /** Saved chats */
+  var chats_list = ["chat 1", "chat 2"];
+  var saved_chats = [chats_list.map(item =>
+    <div className="chat">
+      <button className="chat-overview">{item}</button>
     </div>
   )];
 
@@ -17,13 +20,20 @@ export default function ChatRoom() {
   
   return(
   <>
-  {/** Side panel for saved conversations and creating a new chat */}
-    <div id="side-conversations">
-      <button id="side-conversations-add"><FontAwesomeIcon icon={faPlus} id="side-conversations-plus"/> Create New Chat</button>
-      <div id="saved-conversations">{saved_conversations}</div>
+  {/** Side panel for saved chats and creating a new chat */}
+    <div id="sidebar">
+      <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
+      {saved_chats}
+      
+      <div id="sidebar-nav-wrapper">
+        <div id="sidebar-nav">
+          <Link className="sidebar-nav-link" to="/"> <FontAwesomeIcon icon={faHouse} /> </Link>
+          <Link className="sidebar-nav-link" to="/"> <FontAwesomeIcon icon={faRightFromBracket} /> </Link>
+        </div>
+      </div>
     </div>
 
-    <div id="chat">
+    <div id="chat-box">
       {/** Text messages */}
       <div id="chat-messages-wrapper">
         <div id="chat-messages">
