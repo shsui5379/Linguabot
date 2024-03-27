@@ -10,7 +10,11 @@ export default function NavigationBar() {
   // Redirect users to the Auth0 login page
   const handleLogin = () => {
     window.location.href = '/login';
-  }; 
+  };  
+
+  const handleLogout = () => {
+    window.location.href = '/logout'; 
+  }
  
   // Set login status to false initally 
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -50,8 +54,8 @@ export default function NavigationBar() {
   } else {
     navRight = (
       <>
-        <Link className="navlink" id="navlink-rightmost" to="/">
-          <p className="nav-button-filled"> LOG OUT </p>
+        <Link className="navlink" id="navlink-rightmost"  to="/">
+          <p className="nav-button-filled" onClick={handleLogout}> LOG OUT </p>
         </Link>
         <Link className="navlink" to="/chat">
           <p className="nav-button-white"> CHAT </p>
