@@ -27,8 +27,14 @@ export default function ChatRoom() {
       
       <div id="sidebar-nav-wrapper">
         <div id="sidebar-nav">
-          <Link className="sidebar-nav-link" to="/"> <FontAwesomeIcon icon={faHouse} /> </Link>
-          <Link className="sidebar-nav-link" to="/"> <FontAwesomeIcon icon={faRightFromBracket} /> </Link>
+          <Link className="sidebar-nav-link" to="/"> 
+            <FontAwesomeIcon icon={faHouse} /> 
+            <span className="tooltiptext">Return Home</span>
+          </Link>
+          <Link className="sidebar-nav-link" to="/"> 
+            <FontAwesomeIcon icon={faRightFromBracket} /> 
+            <span className="tooltiptext">Log Out</span>
+          </Link>
         </div>
       </div>
     </div>
