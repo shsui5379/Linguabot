@@ -10,6 +10,7 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported languages. If your partner changes the language they are speaking, respond in that language as well."));
   const [inputMessage, setInputMessage] = useState('');
+  const [blankInput, setBlankInput] = useState(" ");
 
   /** Saved chats */
   var chats_list = ["chat 1", "chat 2"];
@@ -23,6 +24,8 @@ export default function ChatRoom() {
   let initial_message = "Hello, I'm Linguabot, your personal conversational partner. What would you like to talk about today?"
 
   async function retrieveMessages() {
+    setBlankInput("");
+
     let updated_history = new ChatSession();
     updated_history.messageHistory = messages.messageHistory;
     let response = await updated_history.send(inputMessage);
@@ -59,6 +62,9 @@ export default function ChatRoom() {
       {/** Text messages */}
       <div id="chat-messages-wrapper">
         <div id="chat-messages">
+          <div className="text">
+            <p className="bot-text">{initial_message}</p>
+          </div>
           {messages.messageHistory.map((message, index) => {
             // Skip the configuration message
             if (index === 0)
@@ -69,9 +75,6 @@ export default function ChatRoom() {
               </div>
             );
           })}
-          <div className="text">
-            <p className="bot-text">{initial_message}</p>
-          </div>
         </div>
       </div>
 
@@ -83,7 +86,8 @@ export default function ChatRoom() {
                 name="user-text-type"
                 required-minlength="1"
                 placeholder="Type something..."
-                onChange={(event) => setInputMessage(event.target.value)}>
+                value={blankInput}
+                onChange={(event) => {setInputMessage(event.target.value); setBlankInput(event.target.value);}}>
           </input>
           <button id="user-text-send" onClick={async () => await retrieveMessages()}><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>

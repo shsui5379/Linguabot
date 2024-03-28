@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatRoom from "./pages/ChatRoom.tsx";
 import Home from "./pages/Home.tsx";
-import LogIn from "./pages/LogIn.tsx";
+import UserName from "./pages/UserName.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import UserHome from "./pages/UserHome.tsx";
 import "./App.css";
@@ -12,7 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />;
-          <Route path="/login" element={<LogIn />} />;
+          <Route path="/name" element={<UserName/>} />;
           <Route path="/signup" element={<SignUp />} />;
           <Route path="/home" element={<UserHome />} />;
           <Route path="/chat" element={<ChatRoom />} />;

@@ -182,7 +182,7 @@ button:hover, #user-text-send {
 #chat-messages {
     width: 80%;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
 
 .user-text, .bot-text {

@@ -47,8 +47,8 @@ export default function Home() {
             <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
           </div>
           <div>
-            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> Bot Behavior</p>
-            <p className="feature-description">Choose between conversation <br></br>or grammar mode!</p>
+            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
+            <p className="feature-description">Linguabot will chat with you only in your target language!</p>
           </div>
           <div id="feature-right">
             <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>
@@ -65,12 +65,10 @@ export default function Home() {
                alt="Feature"></img>
           <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
-              <p className="feature-highlight-title">Customize Your Learning Partner</p>
+              <p className="feature-highlight-title">Chat with Your Language Partner</p>
               <p className="feature-highlight-description">
-                <b>Conversational Mode:</b> Linguabot will respond to your messages in your target language, regardless of any mistakes!
-                Talk about any topic and ask it any questions! <br></br><br></br>
-
-                <b>Correctional Mode:</b> Improve your grammar and spellling! Linguabot will provide you feedback for any mistakes.
+                Linguabot will respond to your messages in your target language, regardless of any mistakes.
+                Talk about any topic and ask it any questions! 
               </p>
             </div>
           </div>
