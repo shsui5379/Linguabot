@@ -7,10 +7,8 @@ require("dotenv").config();
 const openai_client: OpenAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 // Make sure that incoming requests are authorized
-router.use(async (req, res, next) => {
-    let response = await fetch("/auth", req);
-    if (response.isAuthenticated) {
-        req.user = response.user;
+router.use((req, res, next) => {
+    if (req.oidc.isAuthenticated()) {
         next();
     }
     else {
@@ -19,21 +17,23 @@ router.use(async (req, res, next) => {
 });
 
 // For getting the preferences of a user (i.e native language, language being learned, etc)
-router.get("/preferences", async (req, res) => {
-    let user = await UserDatabase.fetchUser(req.user.sid);
-    res.json({
-        userLanguage: user.userLanguage,
-        targetLanguages: user.targetLanguages
+router.get("/preferences", (req, res) => {
+    UserDatabase.fetchUser(req.oidc.user.sid).then((user) => {
+        res.json({
+            userLanguage: user.userLanguage,
+            targetLanguages: user.targetLanguages
+        });
     });
 });
 
-// For getting a chatbot response
-router.post("/send", async (req, res) => {
-    let completions = await openai_client.chat.completions.create({
+// Returns a ChatMessage object as the response
+router.post("/send", (req, res) => {
+    openai_client.chat.completions.create({
         messages: req.body,
         model: "gpt-3.5-turbo"
+    }).then((completions) => {
+        res.json(completions.choices[0].message);
     });
-    res.json(completions.choices[0].message);
 });
 
 module.exports = router;

@@ -3,9 +3,14 @@ import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-
+import { useState } from "react";
+import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
+  // States for keeping track of message history and current input message
+  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported languages. If your partner changes the language they are speaking, respond in that language as well."));
+  const [inputMessage, setInputMessage] = useState('');
+
   /** Saved chats */
   var chats_list = ["chat 1", "chat 2"];
   var saved_chats = [chats_list.map(item =>
@@ -14,8 +19,15 @@ export default function ChatRoom() {
     </div>
   )];
 
-  function retrieveMessages() {
-    /** Get the messages here */
+  // Conditionally determine this in the future based on stored user preferences
+  let initial_message = "Hello, I'm Linguabot, your personal conversational partner. What would you like to talk about today?"
+
+  async function retrieveMessages() {
+    let updated_history = new ChatSession();
+    updated_history.messageHistory = messages.messageHistory;
+    let response = await updated_history.send(inputMessage);
+    setMessages(updated_history);
+    return response;
   } 
 
   const handleLogout = () => { 
@@ -41,25 +53,33 @@ export default function ChatRoom() {
       {/** Text messages */}
       <div id="chat-messages-wrapper">
         <div id="chat-messages">
+          {messages.messageHistory.map((message, index) => {
+            // Skip the configuration message
+            if (index === 0)
+              return <></>;
+            return (
+              <div className="text">
+                <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+              </div>
+            );
+          })}
           <div className="text">
-            <p className="user-text">tell me hi in french</p>
-          </div>
-          <div className="text">
-            <p className="bot-text">bonjourrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</p>
+            <p className="bot-text">{initial_message}</p>
           </div>
         </div>
       </div>
 
       {/** Input and send message box */}
       <div id="chat-text-wrapper">
-        <form id="chat-text">
+        <form id="chat-text" onSubmit={(event) => event.preventDefault()}>
           <input type="text"
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder="Type something...">
+                placeholder="Type something..."
+                onChange={(event) => setInputMessage(event.target.value)}>
           </input>
-          <button id="user-text-send" onClick={retrieveMessages}><FontAwesomeIcon icon={faPaperPlane}/></button>
+          <button id="user-text-send" onClick={async () => await retrieveMessages()}><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
       </div>
     </div>

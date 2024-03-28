@@ -22,9 +22,10 @@ const config = {
 };
 
 app.use(auth(config)); 
+app.use(express.json({strict: false}));
 
 app.use('/', router);
-app.use("/chat", chat);
+app.use("/api/chat", chat);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
