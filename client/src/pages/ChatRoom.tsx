@@ -10,7 +10,6 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported languages. If your partner changes the language they are speaking, respond in that language as well."));
   const [inputMessage, setInputMessage] = useState('');
-  const [blankInput, setBlankInput] = useState(" ");
 
   /** Saved chats */
   var chats_list = ["chat 1", "chat 2"];
@@ -24,12 +23,11 @@ export default function ChatRoom() {
   let initial_message = "Hello, I'm Linguabot, your personal conversational partner. What would you like to talk about today?"
 
   async function retrieveMessages() {
-    setBlankInput("");
-
     let updated_history = new ChatSession();
     updated_history.messageHistory = messages.messageHistory;
     let response = await updated_history.send(inputMessage);
     setMessages(updated_history);
+    setInputMessage('');
     return response;
   } 
 
@@ -86,8 +84,8 @@ export default function ChatRoom() {
                 name="user-text-type"
                 required-minlength="1"
                 placeholder="Type something..."
-                value={blankInput}
-                onChange={(event) => {setInputMessage(event.target.value); setBlankInput(event.target.value);}}>
+                value={inputMessage}
+                onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
           <button id="user-text-send" onClick={async () => await retrieveMessages()}><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
