@@ -1,3 +1,12 @@
+:root {
+    --text-blue: #4478ac;
+    --transparent-triangle-side: 10px solid transparent;
+    --gray-triangle-side: 10px solid #c4c4c4;
+    --white-traingle-side: 10px solid var(--white);
+    --blue-traingle-side: 10px solid var(--text-blue);
+    --triangle-distance: -19px;
+}
+
 /* Sidebar */
 #sidebar {
     margin: 0;
@@ -55,8 +64,41 @@
     font-size: 20px;
     color: var(--white);
     text-decoration: none;
+    position: relative;
+    display: inline-block;
     cursor: pointer;
 }
+
+.tooltiptext {
+    width:max-content;
+    color: var(--white);
+    background-color: black;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1;
+    bottom: 120%;
+    left: -30px;
+    visibility: hidden;
+    position: absolute;
+}
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.sidebar-nav-link:hover .tooltiptext {
+    visibility: visible;
+}
+  
 
 /* Saved chats */
 .chat-overview {
@@ -156,6 +198,35 @@ button:hover, #user-text-send {
 .user-text {
     float: right;
     box-shadow: -1px 1px 2px 1px gray;
+    position: relative;
+}
+
+/* Outer triangle that creates the gray outline*/
+.user-text:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--gray-triangle-side);
+    border-left: var(--gray-triangle-side);
+    border-right: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    right: var(--triangle-distance);
+    top: 5px;
+}
+
+/* Inner white triangle */
+.user-text:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--white-traingle-side);
+    border-left: var(--white-traingle-side);
+    border-right: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    right: -15px;
+    top: 6px;
 }
 
 .bot-text {
@@ -163,4 +234,19 @@ button:hover, #user-text-send {
     background-color: #1d5c9bd3;
     color: var(--white);
     box-shadow: 1px 1px 2px 1px gray;
+    position: relative;
+}
+
+/* Blue triangle */
+.bot-text:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--blue-traingle-side);
+    border-right: var(--blue-traingle-side);
+    border-left: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    left: var(--triangle-distance);
+    top: 6px;
 }
