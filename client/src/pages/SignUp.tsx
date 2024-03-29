@@ -13,8 +13,8 @@ export default function SignUp() {
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const userLanguage = {
-      userLanguage : selected
+    const targetLanguage = {
+      targetLanguage : selected
     }
 
     try {
@@ -23,7 +23,7 @@ export default function SignUp() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userLanguage),
+        body: JSON.stringify(targetLanguage),
       });
 
       const data = await response.json();
