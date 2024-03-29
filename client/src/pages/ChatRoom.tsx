@@ -8,7 +8,7 @@ import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
-  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported languages. If your partner changes the language they are speaking, respond in that language as well."));
+  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported language. Only respond back to the user in the selected language."));
   const [inputMessage, setInputMessage] = useState('');
 
   /** Saved chats */
@@ -60,9 +60,6 @@ export default function ChatRoom() {
       {/** Text messages */}
       <div id="chat-messages-wrapper">
         <div id="chat-messages">
-          <div className="text">
-            <p className="bot-text">{initial_message}</p>
-          </div>
           {messages.messageHistory.map((message, index) => {
             // Skip the configuration message
             if (index === 0)
@@ -72,7 +69,10 @@ export default function ChatRoom() {
                 <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
               </div>
             );
-          })}
+          }).reverse()}
+          <div className="text">
+            <p className="bot-text">{initial_message}</p>
+          </div>
         </div>
       </div>
 
