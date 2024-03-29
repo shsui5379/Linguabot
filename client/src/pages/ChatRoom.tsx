@@ -3,7 +3,7 @@ import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
@@ -22,12 +22,21 @@ export default function ChatRoom() {
   // Conditionally determine this in the future based on stored user preferences
   let initial_message = "Hello, I'm Linguabot, your personal conversational partner. What would you like to talk about today?"
 
-  async function retrieveMessages() {
-    let updated_history = new ChatSession();
-    updated_history.messageHistory = messages.messageHistory;
-    let response = await updated_history.send(inputMessage);
-    setMessages(updated_history);
-    return response;
+  // Fetch a response if the user has sent a message
+  useEffect(() => {
+    async function fetchResponse() {
+      let response = await messages.receive();
+      setMessages(new ChatSession(messages.messageHistory));
+      return response;
+    }
+
+    fetchResponse();
+  }, [messages]);
+
+  async function sendMessage() {
+    let updated_messages = new ChatSession(messages.messageHistory);
+    updated_messages.send(inputMessage);
+    setMessages(updated_messages);
   } 
 
   const handleLogout = () => { 
@@ -85,7 +94,7 @@ export default function ChatRoom() {
                 placeholder="Type something..."
                 onChange={(event) => setInputMessage(event.target.value)}>
           </input>
-          <button id="user-text-send" onClick={async () => await retrieveMessages()}><FontAwesomeIcon icon={faPaperPlane}/></button>
+          <button id="user-text-send" onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
       </div>
     </div>
