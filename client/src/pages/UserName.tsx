@@ -6,7 +6,7 @@ export default function UserName() {
     <>
     <NavigationBar/>
     <div id="name-page">
-      <p>Please enter your name</p>
+      <p id="name-instruction">Please enter your name</p>
 
       <form id="name-form">
         <input type="text"

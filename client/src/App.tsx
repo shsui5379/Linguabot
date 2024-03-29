@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatRoom from "./pages/ChatRoom.tsx";
 import Home from "./pages/Home.tsx";
 import UserName from "./pages/UserName.tsx";
-import SignUp from "./pages/SignUp.tsx";
+import SelectLanguage from "./pages/SelectLanguage.tsx";
 import UserHome from "./pages/UserHome.tsx";
 import "./App.css";
 
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />;
           <Route path="/name" element={<UserName/>} />;
-          <Route path="/signup" element={<SignUp />} />;
+          <Route path="/language" element={<SelectLanguage />} />;
           <Route path="/home" element={<UserHome />} />;
           <Route path="/chat" element={<ChatRoom />} />;
         </Routes>
