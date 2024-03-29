@@ -60,5 +60,5 @@ expect
 ## Condition: at least one of the body data is invalid (no name, invalid language, too long name, etc)
 expect
 ```json
-{"error":{}}
+{"error":{<the error reason>}}
 ```

@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     try {
         result = await UserDatabase.createUser(req.oidc.user.sub, req.body.firstName, req.body.lastName, req.body.sourceLanguage, req.body.targetLanguages);
     } catch (e) {
-        return res.status(422).json({ error: e });
+        return res.status(422).json({ error: e.message });
     }
 
     if (!result[1]) { // already existing user
