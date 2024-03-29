@@ -104,9 +104,10 @@ export default function Home() {
       <div id="join-now">
         <div id="join-now-title">Improve your fluency with Linguabot!</div>
         <div id="join-now-subtitle">Don't wait any longer to find a language partner.</div>
-        <Link id="button" to="/signup">
-          <p id="get-started">GET STARTED</p>          
-        </Link>
+        <a id="get-started-button"
+          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
+          GET STARTED   
+        </a>
       </div>
     </>
   );

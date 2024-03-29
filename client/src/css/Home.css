@@ -224,16 +224,13 @@ body {
     margin-top: 1%;
 }
 
-#button {
+#get-started-button {
     text-decoration: none;
     line-height: 50px;
     margin-top: 3%;
-}
-
-#get-started {
     color: var(--blue);
     background-color: var(--white);
-    width: 250px;
+    width: 200px;
     height: 50px;
     font-size: 18px;    
     border-radius: 10px;
