@@ -1,13 +1,42 @@
 // Sign up component
 import "../css/SignUp.css"
-import NavigationBar from "../components/NavigationBar";
-import { SetStateAction, useState } from "react"
+import NavigationBar from "../components/NavigationBar"; 
+import { default as UserDatabase } from "../../../server/database/UserDatabase"; 
+import { SetStateAction, useState, useEffect, MouseEvent } from "react"
 
 export default function SignUp() {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(""); 
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
-  }
+  } 
+
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    const userLanguage = {
+      userLanguage : selected
+    }
+
+    try {
+      const response = await fetch('/targetLanguage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userLanguage),
+      });
+
+      const data = await response.json();
+      // Handle success, update state, show notifications, etc. 
+      console.log('Success:', data);
+      
+    } catch (error) {
+      // Handle errors, show error messages, etc. 
+      console.error('Error:', error);  
+    } 
+  };  
+
+
 
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map((item) => 
@@ -31,7 +60,7 @@ export default function SignUp() {
     <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
     
     <div id="lang-select">{rendered_languages}</div>
-    <button id="continue-lang-select">CONTINUE</button>
+    <button id="continue-lang-select" onClick={handleSubmit}>CONTINUE</button>
   </>
   );
 }
