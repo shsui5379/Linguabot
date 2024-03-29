@@ -8,7 +8,7 @@ import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
-  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported languages. If your partner changes the language they are speaking, respond in that language as well."));
+  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported language. Only respond back to the user in the selected language."));
   const [inputMessage, setInputMessage] = useState('');
 
   /** Saved chats */
@@ -32,13 +32,14 @@ export default function ChatRoom() {
           <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
         </div>
       );
-    });
+    }).reverse();
   }
 
   async function onFormSubmit(event) {
     event.preventDefault();
     let updated_messages = new ChatSession(messages.messageHistory);
     updated_messages.send(inputMessage);
+    setInputMessage('');
     setMessages(updated_messages);
     updated_messages = new ChatSession(updated_messages.messageHistory);
     let response = await updated_messages.receive();
@@ -90,7 +91,8 @@ export default function ChatRoom() {
                 name="user-text-type"
                 required-minlength="1"
                 placeholder="Type something..."
-                onChange={(event) => setInputMessage(event.target.value)}>
+                value={inputMessage}
+                onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
           <button id="user-text-send"><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
