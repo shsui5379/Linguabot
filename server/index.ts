@@ -11,6 +11,8 @@ const router = require("./routes/routes.ts")
 import user from "./routes/user";
 const { auth } = require('express-openid-connect');
 
+import UserDatabase from "./database/UserDatabase";
+
 app.set('view engine', 'ejs');
 
 const config = {
@@ -21,6 +23,10 @@ const config = {
     clientID: process.env.CLIENTID,
     issuerBaseURL: process.env.ISSUERBASEURL,
 };
+
+(async () => {
+    await UserDatabase.initialize();
+})();
 
 app.use(auth(config));
 app.use('/', router);
