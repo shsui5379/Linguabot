@@ -8,7 +8,10 @@ import "dotenv/config";
 
 const app = express();
 const router = require("./routes/routes.ts")
+import user from "./routes/user";
 const { auth } = require('express-openid-connect');
+
+import UserDatabase from "./database/UserDatabase";
 
 app.set('view engine', 'ejs');
 
@@ -21,8 +24,14 @@ const config = {
     issuerBaseURL: process.env.ISSUERBASEURL,
 };
 
+(async () => {
+    await UserDatabase.initialize();
+})();
+
 app.use(auth(config));
 app.use('/', router);
+app.use(express.json());
+app.use("/api/user", user);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 

@@ -27,24 +27,24 @@ class User {
         return this.#databaseRecord.userId;
     }
 
-    set firstName(newName: string) {
+    async setFirstName(newName: string) {
         if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
         this.#databaseRecord.firstName = newName;
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#databaseRecord.userId, e) });
     }
 
-    set lastName(newName: string) {
+    async setLastName(newName: string) {
         if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
         this.#databaseRecord.lastName = newName;
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#databaseRecord.userId, e) });
     }
 
-    set userLanguage(newLanguage: Language) {
+    async setUserLanguage(newLanguage: Language) {
         this.#databaseRecord.userLanguage = newLanguage;
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#databaseRecord.userId, e) });
     }
 
-    set targetLanguages(newLanguages: Language[]) {
+    async setTargetLanguages(newLanguages: Language[]) {
         if (newLanguages.length === 0) throw new Error("Must set at least one target language");
         this.#databaseRecord.targetLanguages = newLanguages;
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
