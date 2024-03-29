@@ -5,6 +5,9 @@ import UserDatabase from "../database/UserDatabase";
 
 /**
  * Create a new User
+ * 
+ * Input: firstName, lastName, sourceLanguage, targetLanguages from body
+ * Output: toJSON() output of resulting user
  */
 router.post("/", async (req, res) => {
     if (!req.oidc.isAuthenticated()) {
@@ -28,6 +31,8 @@ router.post("/", async (req, res) => {
 
 /**
  * Get a User
+ * 
+ * Output: toJSON() output of resulting user
  */
 router.get("/", async (req, res) => {
     if (!req.oidc.isAuthenticated()) {
