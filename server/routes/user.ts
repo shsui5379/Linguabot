@@ -104,4 +104,33 @@ router.patch("/", async (req, res) => {
     return res.json(user.toJSON());
 });
 
+/**
+ * Deletes a User
+ * 
+ * Input: userId from req.oidc.user.sub
+ */
+router.delete("/", async (req, res) => {
+    if (!req.oidc.isAuthenticated()) {
+        return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    let user;
+
+    try {
+        user = await UserDatabase.fetchUser(req.oidc.user.sub);
+
+        await user.delete();
+
+        // todo for @kevinfASC6: insert whatever needed for auth0 side
+    } catch (e) {
+        return res.status(422).json({ error: e.message });
+    }
+
+    if (user === null) {
+        return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200);
+});
+
 export default router;

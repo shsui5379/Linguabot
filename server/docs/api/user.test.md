@@ -200,3 +200,30 @@ expect
 ```json
 {"error":"User not found"}
 ```
+
+# test cases for DELETE /api/user
+```js
+fetch("/api/user", {
+    method: "DELETE",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    "redirect": "follow",
+    referrerPolicy: "no-referrer"
+});
+```
+## Condition: logged in, user exist
+expect success 200
+## Condition: not logged in
+expect
+```json
+{"error":"Not authenticated"}
+```
+## Condition: user doesn't exist
+expect
+```json
+{"error":"User not found"}
+```
