@@ -48,7 +48,7 @@ export default function Home() {
           </div>
           <div>
             <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
-            <p className="feature-description">Linguabot will chat with you only in your target language!</p>
+            <p className="feature-description">Linguabot will chat with <br></br> you only in your target language!</p>
           </div>
           <div id="feature-right">
             <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>

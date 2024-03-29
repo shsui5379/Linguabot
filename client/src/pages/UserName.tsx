@@ -1,29 +1,28 @@
 // Name component: asks user for their name
 import "../css/UserName.css"
 import NavigationBar from "../components/NavigationBar";
+import { Link } from "react-router-dom";
 export default function UserName() {
   return(
     <>
     <NavigationBar/>
     <div id="name-page">
-      <p id="name-instruction">Please enter your name</p>
+      <p id="name-instruction">Enter your name</p>
 
       <form id="name-form">
         <input type="text"
               id="first-name"
               name="first-name"
               required-minlength="1"
-              placeholder="First name"
-              value="">
+              placeholder="First name">
         </input>
         <input type="text"
               id="last-name"
               name="last-name"
               required-minlength="1"
-              placeholder="Last name"
-              value="">
+              placeholder="Last name">
         </input>
-        <button id="name-form-continue">Continue</button>
+        <Link id="name-form-continue" to="/language">CONTINUE</Link>
       </form>
     </div>
     </>

@@ -1,6 +1,7 @@
 // Sign up component
 import "../css/SelectLanguage.css"
 import NavigationBar from "../components/NavigationBar";
+import { Link } from "react-router-dom";
 import { SetStateAction, useState } from "react"
 
 export default function SelectLanguage() {
@@ -27,11 +28,11 @@ export default function SelectLanguage() {
   return(
   <>
     <NavigationBar />
-    <p id="lang-select-instruction-title">Please select your target language.</p>
+    <p id="lang-select-instruction-title">Select your target language.</p>
     <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
     
     <div id="lang-select">{rendered_languages}</div>
-    <button id="continue-lang-select">CONTINUE</button>
+    <Link id="continue-lang-select" to="/chat">CONTINUE</Link>
   </>
   );
 }

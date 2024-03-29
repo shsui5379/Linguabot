@@ -1,14 +1,15 @@
 /* Buttons with a unique language */
 .lang-unique-button {
-    height: 15vh;
+    height: 100px;
     border-radius: 10px;
-    border: 2px solid #3c3c3c;
-    font-size: 18px;
+    border: none;
+    font-size: 16px;
     font-weight: bold;
+    color: var(--dark-gray);
     letter-spacing: 1px;
     text-align: left;
     padding-left: 30px; 
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 2px 2px #3c3c3cdc;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -25,7 +26,7 @@
 
 #lang-select {
     display: grid;
-    grid-template-columns: 27vw 27vw;
+    grid-template-columns: 25vw 25vw;
     column-gap: 5%;
     height: 450px;
     justify-content: center;
@@ -53,23 +54,26 @@
 }
 
 #Japanese-flag, #Korean-flag {
-    border: 1px solid #3c3c3c;
+    border: 1px solid var(--dark-gray);
 }
 
 /* Continue button */
 #continue-lang-select {
-    background-color: var(--blue);
     color: var(--white);
-    width: 15vw;
-    height: 7.5vh;
-    border-radius: 10px;
+    background-color: var(--blue);
+    width: 13vw;
+    height: 50px;
     border: none;
-    box-shadow: var(--shadow);
-    margin: auto 20.5% 5% auto;
+    border-radius: 10px;
+    margin: auto 22.5% 5% auto;
     float: right;
-    cursor: pointer;
+    font-size: 15px;
     letter-spacing: 1px;
-    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 
