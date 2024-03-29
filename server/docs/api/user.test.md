@@ -217,6 +217,7 @@ fetch("/api/user", {
 ```
 ## Condition: logged in, user exist
 expect success 200
+running GET /api/user should result in the user not found case
 ## Condition: not logged in
 expect
 ```json
