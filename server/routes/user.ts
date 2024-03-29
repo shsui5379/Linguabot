@@ -118,16 +118,20 @@ router.delete("/", async (req, res) => {
 
     try {
         user = await UserDatabase.fetchUser(req.oidc.user.sub);
-
-        await user.delete();
-
-        // todo for @kevinfASC6: insert whatever needed for auth0 side
     } catch (e) {
         return res.status(422).json({ error: e.message });
     }
 
     if (user === null) {
         return res.status(404).json({ error: "User not found" });
+    }
+
+    try {
+        await user.delete();
+
+        // todo for @kevinfASC6: insert whatever needed for auth0 side
+    } catch (e) {
+        return res.status(422).json({ error: e.message });
     }
 
     return res.sendStatus(200);
