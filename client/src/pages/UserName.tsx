@@ -15,7 +15,7 @@ export default function UserName() {
     }; 
 
     try {
-      const response = await fetch('/names', {
+      const response = await fetch('/api/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

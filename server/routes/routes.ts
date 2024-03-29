@@ -5,18 +5,10 @@ const router = express.Router();
 
 router.use(bodyParser.json()) 
 
-let names = []; 
-let language = []; 
-let sourceLanguage = "English"; 
-
 //gets user information after they log in
 router.get("/auth", (req, res) => { 
     res.json({
-        userId : req.oidc.user.sub, 
-        firstName : names[0], 
-        lastName : names[1], 
-        sourceLanguage : sourceLanguage, 
-        targetLanguage : language,
+        userId : req.oidc.user
     }); 
 })  
 
@@ -27,28 +19,6 @@ router.get('/status', (req, res) => {
     )
   });
 
-// POST route to handle incoming name data
-router.post('/names', (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName; 
-  // Store the received names
-  names.push(firstName, lastName);
-  res.json({ 
-    'firstName' : firstName, 
-    'lastName' : lastName,
-  });
-}); 
-
-
-// POST route to handle incoming language data
-router.post('/targetLanguage', (req, res) => {
-  const targetLanguage = req.body.targetLanguage;
-  language.push(targetLanguage)
-  res.json({ 
-    'targetLanguage' :  targetLanguage 
-  });
-});  
-
 /**
  * Create a new User
  */
@@ -57,21 +27,33 @@ router.post("/api/user", async (req, res) => {
       return res.status(401).json({ error: "Not authenticated" });
   }
 
-  let result;
+  let result; 
+  if (req.oidc.user.sub && req.body.firstName &&  req.body.lastName &&  req.body.sourceLanguage &&  req.body.targetLanguages) {
+    try {
+        result = await UserDatabase.createUser(req.oidc.user.sub, req.body.firstName, req.body.lastName, req.body.sourceLanguage, req.body.targetLanguages);
+    } catch (e) {
+        return res.status(422).json({ error: e });
+    } 
+  
 
-  try {
-      result = await UserDatabase.createUser(req.oidc.user.sub, names[0], names[1], sourceLanguage, language);
-  } catch (e) {
-      return res.status(422).json({ error: e });
+    if (!result[1]) { // already existing user
+        return res.status(409).json(result[0].toJSON());
+    }  
+
+    return res.status(201).json(result[0].toJSON());
   }
+});  
 
-  if (!result[1]) { // already existing user
-      return res.status(409).json(result[0].toJSON());
-  }
-
-  return res.status(201).json(result[0].toJSON());
-}); 
-
+router.get('/api/user', (req, res) => {
+  res.json({
+    userId : req.oidc.user.sub, 
+    firstName : req.body.firstName, 
+    lastName : req.body.lastName, 
+    sourceLanguage : req.body.sourceLanguage, 
+    targetLanguages : req.body.targetLanguages,
+  })
+})
+ 
 
 
 module.exports = router;

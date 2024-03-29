@@ -13,12 +13,13 @@ export default function SignUp() {
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const targetLanguage = {
-      targetLanguage : selected
+    const targetLanguage = { 
+      sourceLanguage : "English", 
+      targetLanguages : selected
     }
 
     try {
-      const response = await fetch('/targetLanguage', {
+      const response = await fetch('/api/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
