@@ -3,7 +3,7 @@ import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
@@ -22,22 +22,29 @@ export default function ChatRoom() {
   // Conditionally determine this in the future based on stored user preferences
   let initial_message = "Hello, I'm Linguabot, your personal conversational partner. What would you like to talk about today?"
 
-  // Fetch a response if the user has sent a message
-  useEffect(() => {
-    async function fetchResponse() {
-      let response = await messages.receive();
-      setMessages(new ChatSession(messages.messageHistory));
-      return response;
-    }
+  function getMessages() {
+    return messages.messageHistory.map((message, index) => {
+      // Skip the configuration message
+      if (index === 0)
+        return <></>;
+      return (
+        <div className="text">
+          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+        </div>
+      );
+    });
+  }
 
-    fetchResponse();
-  }, [messages]);
-
-  async function sendMessage() {
+  async function onFormSubmit(event) {
+    event.preventDefault();
     let updated_messages = new ChatSession(messages.messageHistory);
     updated_messages.send(inputMessage);
     setMessages(updated_messages);
-  } 
+    updated_messages = new ChatSession(updated_messages.messageHistory);
+    let response = await updated_messages.receive();
+    setMessages(updated_messages);
+    return response;
+  }
 
   const handleLogout = () => { 
     window.location.href = '/logout'
@@ -68,16 +75,7 @@ export default function ChatRoom() {
       {/** Text messages */}
       <div id="chat-messages-wrapper">
         <div id="chat-messages">
-          {messages.messageHistory.map((message, index) => {
-            // Skip the configuration message
-            if (index === 0)
-              return <></>;
-            return (
-              <div className="text">
-                <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
-              </div>
-            );
-          })}
+          {getMessages()}
           <div className="text">
             <p className="bot-text">{initial_message}</p>
           </div>
@@ -86,7 +84,7 @@ export default function ChatRoom() {
 
       {/** Input and send message box */}
       <div id="chat-text-wrapper">
-        <form id="chat-text" onSubmit={(event) => event.preventDefault()}>
+        <form id="chat-text" onSubmit={(event) => onFormSubmit(event)}>
           <input type="text"
                 id="user-text-type"
                 name="user-text-type"
@@ -94,7 +92,7 @@ export default function ChatRoom() {
                 placeholder="Type something..."
                 onChange={(event) => setInputMessage(event.target.value)}>
           </input>
-          <button id="user-text-send" onClick={sendMessage}><FontAwesomeIcon icon={faPaperPlane}/></button>
+          <button id="user-text-send"><FontAwesomeIcon icon={faPaperPlane}/></button>
         </form>
       </div>
     </div>
