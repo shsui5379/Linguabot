@@ -100,3 +100,103 @@ expect
 ```json
 {"error":"User not found"}
 ```
+
+# tests for PATCH /api/user
+## Condition: updating all properties
+```js
+fetch("/api/user", {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    "redirect": "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({firstName: "John", lastName: "Doe", sourceLanguage: "Mandarin", targetLanguages: ["French", "Japanese"]})
+});
+```
+expect
+```json
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "userLanguage": "Mandarin",
+    "targetLanguages": [
+        "French",
+        "Japanese"
+    ],
+    "userId": "auth0|a-unique-identifier"
+}
+```
+## Condition: not logged in
+expect
+```json
+{"error":"Not authenticated"}
+```
+## Condition: updating some properties
+```js
+fetch("/api/user", {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    "redirect": "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({firstName: "Jane"})
+});
+```
+expect
+```json
+{
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "userLanguage": "Mandarin",
+    "targetLanguages": [
+        "French",
+        "Japanese"
+    ],
+    "userId": "auth0|a-unique-identifier"
+}
+```
+## Condition: updating nothing
+```js
+fetch("/api/user", {
+    method: "PATCH",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    "redirect": "follow",
+    referrerPolicy: "no-referrer"
+});
+```
+expect
+```json
+{
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "userLanguage": "Mandarin",
+    "targetLanguages": [
+        "French",
+        "Japanese"
+    ],
+    "userId": "auth0|a-unique-identifier"
+}
+```
+## Condition: invalid input (failing validation for a property)
+expect
+```json
+{"error":"Must set at least one target language"} //example sample reason
+```
+## Condition: user never signed up
+expect
+```json
+{"error":"User not found"}
+```
