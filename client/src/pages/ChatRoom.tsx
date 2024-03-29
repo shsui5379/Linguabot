@@ -35,6 +35,18 @@ export default function ChatRoom() {
     }).reverse();
   }
 
+  /**
+   * @returns A promise pending on a user's target languages
+   */
+  async function fetchTargetLanguage() {
+    let response = await fetch("/api/user", {
+      method: "GET"
+    })
+    let user = await response.json();
+    return user.targetLanguages;
+  }
+
+  // Handles form submission
   async function onFormSubmit(event) {
     event.preventDefault();
     let updated_messages = new ChatSession(messages.messageHistory);

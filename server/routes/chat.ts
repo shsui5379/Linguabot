@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 
 // For getting the preferences of a user (i.e native language, language being learned, etc)
 router.get("/preferences", (req, res) => {
-    UserDatabase.fetchUser(req.oidc.user.sid).then((user) => {
+    UserDatabase.fetchUser(req.oidc.user.sub).then((user) => {
         res.json({
             userLanguage: user.userLanguage,
             targetLanguages: user.targetLanguages
