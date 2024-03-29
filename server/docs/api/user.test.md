@@ -62,3 +62,41 @@ expect
 ```json
 {"error":{<the error reason>}}
 ```
+
+# tests for GET /api/user
+```js
+fetch("/api/user", {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    "redirect": "follow",
+    referrerPolicy: "no-referrer"
+});
+```
+## Condition: user exists:
+expect
+```json
+{
+    "firstName": "S",
+    "lastName": "H",
+    "userLanguage": "English",
+    "targetLanguages": [
+        "Spanish"
+    ],
+    "userId": "auth0|a-unique-identifier"
+}
+```
+## Condition: not logged in
+expect
+```json
+{"error":"Not authenticated"}
+```
+## Condition: user doesn't exist
+expect
+```json
+{"error":"User not found"}
+```
