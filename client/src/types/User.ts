@@ -28,6 +28,10 @@ class User {
             referrerPolicy: "no-referrer",
         });
 
+        if (response.status === 401) {
+            throw new Error("Not authenticated");
+        }
+
         if (response.status === 404 || response.status === 422) {
             throw new Error("User doesn't exist");
         }
@@ -68,6 +72,10 @@ class User {
 
         let data = await response.json();
 
+        if (response.status === 401) {
+            throw new Error("Not authenticated");
+        }
+
         if (response.status === 422) {
             throw new Error(data.error);
         }
@@ -105,6 +113,10 @@ class User {
         });
 
         let data = await response.json();
+
+        if (response.status === 401) {
+            throw new Error("Not authenticated");
+        }
 
         if (response.status === 422 || response.status === 404) {
             throw new Error(data.error);
@@ -175,6 +187,10 @@ class User {
             "redirect": "follow",
             referrerPolicy: "no-referrer"
         });
+
+        if (response.status === 401) {
+            throw new Error("Not authenticated");
+        }
 
         if (response.status === 404) {
             throw new Error("User not found");
