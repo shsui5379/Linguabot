@@ -9,7 +9,7 @@
     float: left;
     line-height: 60px;
     vertical-align: middle;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: var(--white);
     text-decoration: none;
@@ -35,11 +35,11 @@
 
 .nav-button-white, .nav-button-filled {
     margin: 0;
-    line-height: 40px;
+    line-height: 38px;
     display: inline-block;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
 }
 

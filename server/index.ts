@@ -6,10 +6,10 @@ import path from "path";
 import "dotenv/config";
 
 const app = express();
-const router = require("./routes/routes.ts")
-import user from "./routes/user";
+const router = require("./routes/routes.ts");
 import chat from "./routes/chat"
-const { auth } = require('express-openid-connect');
+import user from "./routes/user";
+const { auth, requiresAuth } = require('express-openid-connect');
 
 import UserDatabase from "./database/UserDatabase";
 
@@ -28,12 +28,16 @@ const config = {
     await UserDatabase.initialize();
 })();
 
-app.use(auth(config)); 
-app.use(express.json());
+app.use(auth(config));
+app.use(express.json({ strict: false }));
 
 app.use('/', router);
-app.use('/api/chat', chat);
+app.use("/api/chat", chat);
 app.use("/api/user", user);
+
+(async () => {
+    await UserDatabase.initialize();
+})();
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 

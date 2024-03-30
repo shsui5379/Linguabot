@@ -5,10 +5,10 @@
     --dark-gray: #3c3c3c;
     --section-margin-side: 10vw;
     --section-margin: 12vw;
-    --title-font-size: 32px;
-    --subtitle-font-size: 19px;
-    --text-font-size: 16px;
-    --flag-size: 30px;
+    --title-font-size: 30px;
+    --subtitle-font-size: 18px;
+    --text-font-size: 14px;
+    --flag-size: 28px;
 }
 
 body { 
@@ -232,7 +232,7 @@ body {
     background-color: var(--white);
     width: 200px;
     height: 50px;
-    font-size: 18px;    
+    font-size: 16px;    
     border-radius: 10px;
     font-weight: 600;
 }
