@@ -13,7 +13,7 @@ Wraps around Sequelize. Has User Model to perform userdata related database oper
 - ALL ARE ASYNC!!!
 - fetchUser(userId: string): User | null
   - return the associated User if found
-- createUser(userId: string, firstName: string, lastName: string, sourceLanguage: Language, targetLanguages[]: Language): [user: User, newlyCreated: bool]
+- createUser(userId: string, firstName: string, lastName: string, userLanguage: Language, targetLanguages[]: Language): [user: User, newlyCreated: bool]
   - attempts to create the user and return it. If it already exists, will return the preexiting User and notify via newlyCreated = 0
 - initialize(): void
   - initializes database connections and model
