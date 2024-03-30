@@ -2,37 +2,49 @@ import { ChatMessage } from "../../../server/types/ChatMessage";
 
 class ChatSession {
   /**
-   * Constructs a ChatSession object with a given message history
+   * Constructs a ChatSession object with a given message history.
    *
-   * @param messages The current message history of the session, with each message conforming to
-   *                 the MessageObject type
-   * @param configurationMessage The configuration message to initialize the bot with
+   * @param messages The current message history of a session, with each message conforming to
+   *                 the ChatMessage type. If it already contains a configuration message, then
+   *                 the configurationMessage argument should be empty.
+   * @param configurationMessage A configuration message for the chatbot
    */
-  constructor(messages: ChatMessage[] = [], configurationMessage: string = "") {
-    this.messageHistory = messages;
-    if (this.messageHistory.length !== 0 && this.messageHistory[0].role === "system")
+  constructor(messages: ChatMessage[], configurationMessage: string = "") {
+    if (configurationMessage.length !== 0)
+      this.messageHistory = [{role: "system", content: configurationMessage}, ...messages];
+    else
+      this.messageHistory = [...messages];
+  }
+
+  /**
+   * Configures the chatbot behavior when responding to a conversation
+   * 
+   * @param configurationMessage A string containing instructions for the chatbot
+   */
+  configure(configurationMessage: string) {
+    if (this.messageHistory.length === 0)
+      this.messageHistory.push({role: "system", content: configurationMessage});
+    else if (this.messageHistory[0].role === "system")
       this.messageHistory[0].content = configurationMessage;
     else
       this.messageHistory.unshift({role: "system", content: configurationMessage});
   }
 
   /**
-   * Configures the chatbot behavior when responding to the conversation
-   * 
-   * @param configurationMessage A string containing instructions for the chatbot
+   * Sends a user message in a conversation, but does not fetch a response yet
+   *
+   * @param message The message sent by the user
    */
-  configure(configurationMessage: string) {
-    this.messageHistory[0].content = configurationMessage;
+  send(message: string) {
+    this.messageHistory.push({ role: "user", content: message });
   }
 
   /**
-   * Sends a message and returns the chatbot response back
-   *
-   * @param message The message sent by the user
-   * @returns A promise pending on the chatbot response
+   * Fetch a response for the messages comprising a conversation
+   * 
+   * @returns A promise pending on the bot response
    */
-  async send(message: string) {
-    this.messageHistory.push({ role: "user", content: message });
+  async receive() {
     let response = await fetch("/api/chat/send", {
       method: 'POST',
       headers: {"Content-Type": "application/json"},
@@ -40,7 +52,6 @@ class ChatSession {
     });
     let data: ChatMessage = await response.json();
     this.messageHistory.push(data);
-    return data.content;
   }
 
   messageHistory: ChatMessage[];

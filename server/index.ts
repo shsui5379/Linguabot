@@ -7,7 +7,7 @@ import "dotenv/config";
 
 const app = express();
 const router = require("./routes/routes.ts");
-const chat = require("./routes/chat");
+import chat from "./routes/chat"
 import user from "./routes/user";
 const { auth, requiresAuth } = require('express-openid-connect');
 
@@ -24,8 +24,12 @@ const config = {
     issuerBaseURL: process.env.ISSUERBASEURL,
 };
 
-app.use(auth(config)); 
-app.use(express.json({strict: false}));
+(async () => {
+    await UserDatabase.initialize();
+})();
+
+app.use(auth(config));
+app.use(express.json({ strict: false }));
 
 app.use('/', router);
 app.use("/api/chat", chat);
