@@ -3,13 +3,13 @@
 
 import express from "express";
 import path from "path";
-import { MessageObject, ChatSession } from "./ChatSession";
 import "dotenv/config";
 
 const app = express();
-const router = require("./routes/routes.ts")
+const router = require("./routes/routes.ts");
+const chat = require("./routes/chat");
 import user from "./routes/user";
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 import UserDatabase from "./database/UserDatabase";
 
@@ -24,14 +24,16 @@ const config = {
     issuerBaseURL: process.env.ISSUERBASEURL,
 };
 
+app.use(auth(config)); 
+app.use(express.json({strict: false}));
+
+app.use('/', router);
+app.use("/api/chat", chat);
+app.use("/api/user", user);
+
 (async () => {
     await UserDatabase.initialize();
 })();
-
-app.use(auth(config));
-app.use('/', router);
-app.use(express.json());
-app.use("/api/user", user);
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 

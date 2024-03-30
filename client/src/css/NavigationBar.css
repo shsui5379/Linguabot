@@ -4,61 +4,46 @@
     letter-spacing: 1px;
 }
 
-.navigation-left {
-    margin: 0;
-    height: 60px;
-    text-decoration: none;
-    float: left    
-}
-
 #logo {
+    margin: 0 0 0 5%;
+    float: left;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 24px;
     font-weight: bold;
     color: var(--white);
-    font-size: 25px;
-}
-
-.center-link {
-    margin: 0;
-    line-height: 60px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.center-text {
-    margin: 0;
-    line-height: 40px;
-    display: inline-block;
-}
-
-.navigation-right {
-    height: 60px;
-    margin: 0 5px 0 5px;
     text-decoration: none;
+}
+
+.navlink {
+    margin: 0 5px 0 5px;
     float: right;
+    line-height: 60px;
+    vertical-align: middle;
+    text-decoration: none;
 }
 
-#logo {
-    margin-left: 5%;
-}
-
-.rightmost-link {
+#navlink-rightmost {
     margin-right: 5%;
 }
 
-#signup {
+.nav-button-filled {
     width: 100px;
     background-color: var(--white); 
     color: var(--blue);
-    box-shadow: 0 2px 1px 1px #3c3c3c;
 }
 
-#login, #signup {
+.nav-button-white, .nav-button-filled {
+    margin: 0;
+    line-height: 40px;
+    display: inline-block;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
+    cursor: pointer;
 }
 
-#login {
+.nav-button-white {
     width: 100px;
     color: var(--white);
 }

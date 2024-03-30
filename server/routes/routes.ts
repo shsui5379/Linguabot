@@ -1,5 +1,5 @@
-var express = require("express"); 
-var router = express.Router(); 
+const express = require("express");
+const router = express.Router();
 
 router.get("/auth", (req, res) => { 
     console.log(req.oidc.isAuthenticated());
@@ -10,6 +10,12 @@ router.get("/auth", (req, res) => {
         user : req.oidc.user
     }); 
 })  
+
+router.get('/status', (req, res) => {
+    res.send(
+      req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
+    )
+  });
 
 
 

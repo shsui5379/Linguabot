@@ -1,0 +1,39 @@
+#name-instruction {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 5% auto 5% auto;
+}
+
+#name-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#name-form input {
+    width: 30%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-left: 20px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#name-form-continue {
+    margin-top: 3%;
+    color: var(--white);
+    background-color: var(--blue);
+    width: 12vw;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
