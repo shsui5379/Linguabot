@@ -1,6 +1,7 @@
 // Name component: asks user for their name
 import "../css/UserName.css"
 import NavigationBar from "../components/NavigationBar";
+import { Link } from "react-router-dom";
 import { useState } from "react"
 export default function UserName() {
   const [firstName, setFirstName] = useState('');

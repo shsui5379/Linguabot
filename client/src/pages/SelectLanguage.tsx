@@ -1,9 +1,9 @@
 // Sign up component
-import "../css/SignUp.css"
+import "../css/SelectLanguage.css"
 import NavigationBar from "../components/NavigationBar";
 import { SetStateAction, useState, useEffect, MouseEvent } from "react"
 
-export default function SignUp() {
+export default function SelectLanguage() {
   const [selected, setSelected] = useState("");
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
@@ -37,7 +37,7 @@ export default function SignUp() {
       // replace with library call 
 
       // Handle success, update state, show notifications, etc.
-      console.log('Success:', data);
+      console.log('Success:');
 
     } catch (error) {
       // Handle errors, show error messages, etc.
