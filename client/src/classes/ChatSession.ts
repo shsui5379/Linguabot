@@ -31,7 +31,7 @@ class ChatSession {
   }
 
   /**
-   * Sends a user message a conversation, but does not fetch a response yet
+   * Sends a user message in a conversation, but does not fetch a response yet
    *
    * @param message The message sent by the user
    */
@@ -52,7 +52,6 @@ class ChatSession {
     });
     let data: ChatMessage = await response.json();
     this.messageHistory.push(data);
-    return data.content;
   }
 
   messageHistory: ChatMessage[];

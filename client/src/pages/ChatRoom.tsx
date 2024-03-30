@@ -38,25 +38,24 @@ export default function ChatRoom() {
   /**
    * @returns A promise pending on a user's target languages
    */
-  async function fetchTargetLanguage() {
+  async function fetchTargetLanguages() {
     let response = await fetch("/api/user", {
       method: "GET"
-    })
+    });
     let user = await response.json();
     return user.targetLanguages;
   }
 
   // Handles form submission
-  async function onFormSubmit(event) {
+  async function handleFormSubmit(event) {
     event.preventDefault();
     let updated_messages = new ChatSession(messages.messageHistory);
     updated_messages.send(inputMessage);
     setInputMessage('');
     setMessages(updated_messages);
     updated_messages = new ChatSession(updated_messages.messageHistory);
-    let response = await updated_messages.receive();
+    await updated_messages.receive();
     setMessages(updated_messages);
-    return response;
   }
 
   const handleLogout = () => { 
@@ -97,7 +96,7 @@ export default function ChatRoom() {
 
       {/** Input and send message box */}
       <div id="chat-text-wrapper">
-        <form id="chat-text" onSubmit={(event) => onFormSubmit(event)}>
+        <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
           <input type="text"
                 id="user-text-type"
                 name="user-text-type"
