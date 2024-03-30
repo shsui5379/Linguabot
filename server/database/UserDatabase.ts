@@ -89,11 +89,11 @@ async function fetchUser(userId: string): Promise<User | null> {
  * @param userId The user ID to assign
  * @param firstName The first name to assign
  * @param lastName The last name to assign
- * @param sourceLanguage The language that the user wants their interface to be in
+ * @param userLanguage The language that the user wants their interface to be in
  * @param targetLanguages The languages that the user wants to learn
  * @returns Array where index 0 is the user that was described by the parameters. Index 1 is whether the user is just newly created in the database.
  */
-async function createUser(userId: string, firstName: string, lastName: string, sourceLanguage: Language, targetLanguages: Language[]): Promise<[User, boolean] | null> {
+async function createUser(userId: string, firstName: string, lastName: string, userLanguage: Language, targetLanguages: Language[]): Promise<[User, boolean] | null> {
     if (userId.length === 0) throw new Error("User Id cannot have 0 length");
     if (firstName.length === 0 || firstName.length > 255) throw new Error("First name length must be between 0 and 255 characters long");
     if (lastName.length === 0 || lastName.length > 255) throw new Error("Last name length must be between 0 and 255 characters long");
@@ -105,14 +105,14 @@ async function createUser(userId: string, firstName: string, lastName: string, s
             defaults: {
                 firstName: firstName,
                 lastName: lastName,
-                userLanguage: sourceLanguage,
+                userLanguage: userLanguage,
                 targetLanguages: targetLanguages
             }
         });
 
         return [new User(instance), justCreated];
     } catch (error) {
-        console.error("Error creating user", firstName, lastName, userId, sourceLanguage, targetLanguages, error)
+        console.error("Error creating user", firstName, lastName, userId, userLanguage, targetLanguages, error)
     }
 
     return null;

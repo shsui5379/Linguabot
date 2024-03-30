@@ -10,7 +10,7 @@ fetch("/api/user", {
     },
     "redirect": "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify({firstName: "S", lastName: "H", sourceLanguage: "English", targetLanguages: ["Spanish"]})
+    body: JSON.stringify({firstName: "S", lastName: "H", userLanguage: "English", targetLanguages: ["Spanish"]})
 });
 ```
 ## Condition: logged in, first ever resgistration: expected result:
@@ -41,7 +41,7 @@ fetch("/api/user", {
     },
     "redirect": "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify({firstName: "Jane", lastName: "Doe", sourceLanguage: "Korean", targetLanguages: ["Mandarin", "Spanish"]})
+    body: JSON.stringify({firstName: "Jane", lastName: "Doe", userLanguage: "Korean", targetLanguages: ["Mandarin", "Spanish"]})
 });
 ```
 expect
@@ -114,7 +114,7 @@ fetch("/api/user", {
     },
     "redirect": "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify({firstName: "John", lastName: "Doe", sourceLanguage: "Mandarin", targetLanguages: ["French", "Japanese"]})
+    body: JSON.stringify({firstName: "John", lastName: "Doe", userLanguage: "Mandarin", targetLanguages: ["French", "Japanese"]})
 });
 ```
 expect

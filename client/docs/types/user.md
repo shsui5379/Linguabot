@@ -9,16 +9,16 @@ Client-side object to represent a User. Communicates with /api/user endpoint.
   - length: 1-255
 - #lastName: string
   - length: 1-255
-- #sourceLanguage: Language
+- #userLanguage: Language
 - #targetLanguage: Language[]
   - length: 1+
 
 ## Methods
-- private constructor(userId: string, firstName: string, lastName: string, sourceLanguage: Language, targetLanguage: Language[])
+- private constructor(userId: string, firstName: string, lastName: string, userLanguage: Language, targetLanguage: Language[])
 - static async fetchUser(): User | null
   - calls GET /api/user
   - use response body to construct and return an User instance
-- static async createUser(firstName: string, lastName: string, sourceLanguage: Language, targetLanguage: Language[]): User
+- static async createUser(firstName: string, lastName: string, userLanguage: Language, targetLanguage: Language[]): User
   - calls POST /api/user
   - use response body to construct and return an User instance
 - get methods for all properties
