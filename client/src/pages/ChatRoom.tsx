@@ -12,7 +12,7 @@ export default function ChatRoom() {
   const [inputMessage, setInputMessage] = useState('');
 
   /** Saved chats */
-  var chats_list = ["chat 1", "chat 2"];
+  var chats_list = ["comment ca va?", "mes amis sont tres popula..."];
   var saved_chats = [chats_list.map(item =>
     <div className="chat">
       <button className="chat-overview">{item}</button>

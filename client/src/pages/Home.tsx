@@ -84,10 +84,10 @@ export default function Home() {
             </div>
           </div>
           <img className="feature-image-right" 
-               src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
+               src={require("../assets/features/saved-conversations.png")}
                alt="Feature"></img>
         </div>
-        <div className="feature-highlight-overview">
+        {/* <div className="feature-highlight-overview">
           <img className="feature-image-left"
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
@@ -98,7 +98,7 @@ export default function Home() {
                 and include a note if you'd like. You can go to your Notes page to look back at it later!</p>
             </div> 
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/** Register */}

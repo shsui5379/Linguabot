@@ -4,13 +4,13 @@
     --subtext-gray: #757575;
     --dark-gray: #3c3c3c;
     --section-margin-side: 10vw;
-    --section-margin: 12vw;
+    --section-margin: 15vw;
     --title-font-size: 30px;
     --subtitle-font-size: 18px;
     --text-font-size: 14px;
     --flag-size: 28px;
     --feature-image-width: 35vw;
-    --feature-image-height: 55vh;
+    --feature-image-height: 45vh;
 }
 
 body { 
@@ -185,7 +185,7 @@ body {
 }
 
 .inner-feature-highlight {
-    height: 60vh;
+    height: var(--feature-image-height);
     display: flex;
     flex-direction: column;
     justify-content: center;

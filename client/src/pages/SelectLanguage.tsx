@@ -1,6 +1,5 @@
 // Sign up component
 import "../css/SelectLanguage.css"
-import NavigationBar from "../components/NavigationBar";
 import { SetStateAction, useState, useEffect, MouseEvent } from "react"
 
 export default function SelectLanguage() {
