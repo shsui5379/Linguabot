@@ -8,7 +8,7 @@ import { ChatSession } from "../classes/ChatSession";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
-  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational partner for your supported language. Only respond back to the user in the selected language."));
+  const [messages, setMessages] = useState(new ChatSession([], "You are a conversational language partner. Only respond back to the user in " + fetchTargetLanguages() + ". Do not ever respond back in another language even if the user switches language."));
   const [inputMessage, setInputMessage] = useState('');
 
   /** Saved chats */

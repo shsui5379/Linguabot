@@ -93,8 +93,9 @@ export default function Home() {
                alt="Feature"></img>
           <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
-              <p className="feature-highlight-title">Feature 3</p>
-              <p className="feature-highlight-description">Feature description in detail</p>
+              <p className="feature-highlight-title">Save Messages and Add Notes</p>
+              <p className="feature-highlight-description">Want to save a message Linguabot sent? Add it to your favorites list
+                and include a note if you'd like. You can go to your Notes page to look back at it later!</p>
             </div> 
           </div>
         </div>
