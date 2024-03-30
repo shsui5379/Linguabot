@@ -1,0 +1,270 @@
+:root {
+    --text-blue: #4478ac;
+    --transparent-triangle-side: 10px solid transparent;
+    --gray-triangle-side: 10px solid #c4c4c4;
+    --white-traingle-side: 10px solid var(--white);
+    --blue-traingle-side: 10px solid var(--text-blue);
+    --triangle-distance: -19px;
+}
+
+/* Sidebar */
+#sidebar {
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    height: 100vh;
+    color: var(--white);
+    background-color: var(--blue);
+    box-shadow: 1px 0 2px 1px gray;
+    position: fixed;
+    overflow: auto;
+}
+
+#sidebar-addchat, .chat-overview {
+    width: 90%;
+    padding-left: 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: left;
+}
+
+#sidebar-addchat {
+    height: 50px;
+    margin: 25px auto 40px auto;
+    border-radius: 10px;
+    border: 1px solid var(--white);
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+#sidebar-plus {
+    padding-right: 10px;
+}
+
+
+/* Navigation links at bottom of sidebar */
+#sidebar-nav-wrapper {
+    width: 20%;
+    height: 50px;
+    margin-bottom: 30px;
+    position: fixed;
+    left: 0%;
+    bottom:0%;
+    display: flex;
+    justify-content: center;
+}
+
+#sidebar-nav {
+    width: 100px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-nav-link {
+    font-size: 20px;
+    color: var(--white);
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltiptext {
+    width:max-content;
+    color: var(--white);
+    background-color: black;
+    text-align: center;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 1;
+    bottom: 120%;
+    left: -30px;
+    visibility: hidden;
+    position: absolute;
+}
+
+.tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.sidebar-nav-link:hover .tooltiptext {
+    visibility: visible;
+}
+  
+
+/* Saved chats */
+.chat-overview {
+    height: 40px;
+    margin-bottom: 10px;
+    border: 1px solid var(--white);
+    background-color: var(--white);
+    color: #4b4b4b;
+}
+
+input:focus {
+    outline: none;
+}
+
+button:hover, #user-text-send {
+    cursor: pointer;
+}
+
+/* Right section: send messages */
+#chat-text-wrapper {
+    height: 50px;
+    width: 80%;
+    margin-left: 20%;
+    margin-bottom: 30px;
+    position: fixed;
+    left: 0%;
+    bottom:0%;
+    display: flex;
+    justify-content: center;
+}
+
+#chat-text {
+    height: 45px;
+    width: 80%;
+    border-radius: 5px;
+    border: 1px solid var(--dark-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#user-text-type {
+    height: 35px;
+    font-size: 14px;
+    width: 100%;
+    border: none;
+    padding-left: 25px;
+}
+
+#user-text-send {
+    width: 40px;
+    height: 25px;
+    margin-right: 25px;
+    font-size: 18px;
+    transform: rotate(15deg);
+    background-color: transparent;
+    border: none;
+    color: var(--dark-gray);
+}
+
+/* Text messages */
+#chat-messages-wrapper {
+    height: 100%;
+    width: 80%;
+    margin-left: 20%;
+    margin-bottom: 120px;
+    left: 0%;
+    bottom: 0%;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#chat-messages {
+    width: 100%;
+    max-height: 82%;
+    padding-right: 8%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-x: hidden;
+}
+
+#chat-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey; 
+    border-radius: 10px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: var(--blue); 
+    border-radius: 10px;
+}
+
+#chat-messages::-webkit-scrollbar-button { 
+    display:none;
+}
+
+.user-text, .bot-text {
+    max-width: 40%;
+    overflow-wrap: break-word;
+    height: fit-content;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.user-text {
+    margin-right: 3%;
+    float: right;
+    box-shadow: -1px 1px 2px 1px gray;
+    position: relative;
+}
+
+/* Outer triangle that creates the gray outline*/
+.user-text:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--gray-triangle-side);
+    border-left: var(--gray-triangle-side);
+    border-right: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    right: var(--triangle-distance);
+    top: 5px;
+}
+
+/* Inner white triangle */
+.user-text:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--white-traingle-side);
+    border-left: var(--white-traingle-side);
+    border-right: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    right: -15px;
+    top: 6px;
+}
+
+.bot-text {
+    margin-left: 3%;
+    float: left;
+    color: var(--white);
+    background-color: #1d5c9bd3;
+    box-shadow: 1px 1px 2px 1px gray;
+    position: relative;
+}
+
+/* Blue triangle */
+.bot-text:after {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-top: var(--blue-traingle-side);
+    border-right: var(--blue-traingle-side);
+    border-left: var(--transparent-triangle-side);
+    border-bottom: var(--transparent-triangle-side);
+    left: var(--triangle-distance);
+    top: 6px;
+}
