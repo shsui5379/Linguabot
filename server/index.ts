@@ -24,8 +24,12 @@ const config = {
     issuerBaseURL: process.env.ISSUERBASEURL,
 };
 
+(async () => {
+    await UserDatabase.initialize();
+})();
+
 app.use(auth(config)); 
-app.use(express.json({strict: false}));
+app.use(express.json());
 
 app.use('/', router);
 app.use("/api/chat", chat);
