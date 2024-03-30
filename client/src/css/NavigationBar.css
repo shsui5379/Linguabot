@@ -31,7 +31,6 @@
     width: 100px;
     background-color: var(--white); 
     color: var(--blue);
-    box-shadow: 0 2px 1px 1px #3c3c3c;
 }
 
 .nav-button-white, .nav-button-filled {

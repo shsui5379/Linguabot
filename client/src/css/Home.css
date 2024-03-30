@@ -9,7 +9,6 @@
     --subtitle-font-size: 19px;
     --text-font-size: 16px;
     --flag-size: 30px;
-    --shadow: 0 2px 1px 1px var(--dark-gray);
 }
 
 body { 
@@ -111,7 +110,7 @@ body {
 #overview {
     width: 95vw;
     display: inline-flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 5%;
 }
 
@@ -225,19 +224,15 @@ body {
     margin-top: 1%;
 }
 
-#button {
+#get-started-button {
     text-decoration: none;
     line-height: 50px;
     margin-top: 3%;
-}
-
-#get-started {
     color: var(--blue);
     background-color: var(--white);
-    width: 250px;
+    width: 200px;
     height: 50px;
     font-size: 18px;    
     border-radius: 10px;
-    box-shadow: var(--shadow);
     font-weight: 600;
 }

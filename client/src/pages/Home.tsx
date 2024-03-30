@@ -48,7 +48,7 @@ export default function Home() {
           </div>
           <div>
             <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
-            <p className="feature-description">Linguabot will chat with you only in your target language!</p>
+            <p className="feature-description">Linguabot will chat with <br></br> you only in your target language!</p>
           </div>
           <div id="feature-right">
             <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>
@@ -104,9 +104,10 @@ export default function Home() {
       <div id="join-now">
         <div id="join-now-title">Improve your fluency with Linguabot!</div>
         <div id="join-now-subtitle">Don't wait any longer to find a language partner.</div>
-        <Link id="button" to="/signup">
-          <p id="get-started">GET STARTED</p>          
-        </Link>
+        <a id="get-started-button"
+          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
+          GET STARTED   
+        </a>
       </div>
     </>
   );
