@@ -6,7 +6,7 @@ import UserDatabase from "../database/UserDatabase";
 /**
  * Create a new User
  * 
- * Input: firstName, lastName, sourceLanguage, targetLanguages from body
+ * Input: firstName, lastName, userLanguage, targetLanguages from body
  *        userId from req.oidc.user.sub
  * Output: toJSON() output of resulting user
  */
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
     let result;
 
     try {
-        result = await UserDatabase.createUser(req.oidc.user.sub, req.body.firstName, req.body.lastName, req.body.sourceLanguage, req.body.targetLanguages);
+        result = await UserDatabase.createUser(req.oidc.user.sub, req.body.firstName, req.body.lastName, req.body.userLanguage, req.body.targetLanguages);
     } catch (e) {
         return res.status(422).json({ error: e.message });
     }
@@ -59,7 +59,7 @@ router.get("/", async (req, res) => {
 /**
  * Updates a User
  * 
- * Input: firstName, lastName, sourceLanguage, targetLanguages from body
+ * Input: firstName, lastName, userLanguage, targetLanguages from body
  *        remark: may omit properties that don't need to be updated
  *        userId from req.oidc.user.sub
  * Output: toJSON() content of resulting user
@@ -90,8 +90,8 @@ router.patch("/", async (req, res) => {
             await user.setLastName(req.body.lastName);
         }
 
-        if (req.body.hasOwnProperty("sourceLanguage") && req.body.sourceLanguage !== user.sourceLanguage) {
-            await user.setUserLanguage(req.body.sourceLanguage);
+        if (req.body.hasOwnProperty("userLanguage") && req.body.userLanguage !== user.userLanguage) {
+            await user.setUserLanguage(req.body.userLanguage);
         }
 
         if (req.body.hasOwnProperty("targetLanguages") && JSON.stringify(req.body.targetLanguages) !== JSON.stringify(user.targetLanguages)) {

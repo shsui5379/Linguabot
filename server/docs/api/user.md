@@ -6,7 +6,7 @@ API to communicate about basic user data
 ## Methods
 - POST /api/user
   - purpose: creates a new User
-  - request body shall have: firstName, lastName, sourceLanguage, targetLanguages
+  - request body shall have: firstName, lastName, userLanguage, targetLanguages
   - if !req.oidc.isAuthenticated(): status 401 (not authorized)
   - UserDatabase.createUser().  use req.oidc.user.sid for userId
   - if createUser() throws an error: status 422 (unprocessable content) and return reason as response
@@ -21,7 +21,7 @@ API to communicate about basic user data
   - if fetchUser() is success: return User.JSON()'s content as response body
 - PATCH /api/user
   - purpose: modifies a User
-  - request body shall have: only the fields (firstName, lastName, sourceLanguage, targetLanguages) that needs to be updated
+  - request body shall have: only the fields (firstName, lastName, userLanguage, targetLanguages) that needs to be updated
   - if !req.oidc.isAuthenticated(): status 401 (not authorized)
   - UserDatabase.fetchUser().  use req.oidc.user.sid for userId
   - if fetchUser() is null or throws: status 404 (not found)
