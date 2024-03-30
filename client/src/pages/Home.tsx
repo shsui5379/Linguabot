@@ -61,7 +61,7 @@ export default function Home() {
       <div id="feature-display">
         <div className="feature-highlight-overview">
           <img className="feature-image-left"
-               src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
+               src={require("../assets/features/chat.png")}
                alt="Feature"></img>
           <div className="feature-highlight-right">
             <div className="inner-feature-highlight">

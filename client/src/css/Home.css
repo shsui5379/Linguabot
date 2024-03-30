@@ -9,6 +9,8 @@
     --subtitle-font-size: 18px;
     --text-font-size: 14px;
     --flag-size: 28px;
+    --feature-image-width: 35vw;
+    --feature-image-height: 55vh;
 }
 
 body { 
@@ -157,27 +159,27 @@ body {
 }
 
 .feature-image-right {
-    width: 35vw;
-    height: 60vh;
+    width: var(--feature-image-width);
+    height: var(--feature-image-height);
     float: right;
     margin-right: var(--section-margin-side);
 }
 
 .feature-image-left {
-    width: 35vw;
-    height: 60vh;
+    width: var(--feature-image-width);
+    height: var(--feature-image-height);
     float: left;
     margin-left: var(--section-margin-side);
 }
 
 .feature-highlight-right {
-    width: 35vw;
+    width: var(--feature-image-width);
     float: right;
     margin-right: var(--section-margin-side);
 }
 
 .feature-highlight-left {
-    width: 35vw;
+    width: var(--feature-image-width);
     float: left;
     margin-left: var(--section-margin-side);
 }

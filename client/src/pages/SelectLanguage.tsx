@@ -45,8 +45,6 @@ export default function SelectLanguage() {
     }
   };
 
-
-
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map((item) =>
     <button className={`lang-unique-button ${item === selected ? "active" : ""}`}
@@ -64,7 +62,6 @@ export default function SelectLanguage() {
   )];
   return (
     <>
-      <NavigationBar />
       <p id="lang-select-instruction-title">Please select your target language.</p>
       <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
 

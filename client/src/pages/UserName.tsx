@@ -33,10 +33,8 @@ export default function UserName() {
 
   return(
     <>
-      <NavigationBar />
       <div id="name-page">
         <p id="name-instruction">Enter your name</p>
-
         <form id="name-form" onSubmit={handleSubmit}>
           <input type="text"
             id="first-name"
