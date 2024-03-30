@@ -15,18 +15,15 @@ export default function UserName() {
     }; 
 
     try {
-      const response = await fetch('/api/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData),
-      });
+      localStorage.setItem('myData', JSON.stringify(userData));
 
-      const data = await response.json();
-      // Handle success, update state, show notifications, etc.
-      console.log('Success:', data);
-      
+      var retrievedData = localStorage.getItem('myData');
+      if (retrievedData) {
+          retrievedData = JSON.parse(retrievedData);
+          console.log(retrievedData);
+      } else {
+          console.log('No data found');
+      }
     } catch (error) {
       // Handle errors, show error messages, etc. 
       console.error('Error:', error);  

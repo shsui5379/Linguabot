@@ -8,14 +8,30 @@ export default function SignUp() {
   const [selected, setSelected] = useState(""); 
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
+  }  
+
+  const userData = localStorage.getItem('myData'); 
+  if (userData) { 
+        let user = JSON.parse(userData);
+        // Access the values
+        var firstName = user.firstName;
+        var lastName = user.lastName; 
   } 
 
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  
 
-    const targetLanguage = { 
-      sourceLanguage : "English", 
-      targetLanguages : selected
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();  
+
+    let sourceLanguage = "English"; 
+    let targetLanguages = [];
+    targetLanguages.push(selected); 
+    console.log(firstName, lastName, sourceLanguage, targetLanguages); 
+    const targetLanguage = {  
+      firstName : firstName, 
+      lastName : lastName,
+      sourceLanguage : sourceLanguage, 
+      targetLanguages : targetLanguages
     }
 
     try {
