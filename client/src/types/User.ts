@@ -34,7 +34,7 @@ class User {
 
         let data = await response.json();
 
-        return new User(data.userId, data.firstName, data.lastName, data.userLanguage, JSON.parse(data.targetLanguages));
+        return new User(data.userId, data.firstName, data.lastName, data.userLanguage, data.targetLanguages);
     }
 
     static async createUser(firstName: string, lastName: string, userLanguage: Language, targetLanguages: Language[]): Promise<User> {
@@ -72,7 +72,7 @@ class User {
             throw new Error(data.error);
         }
 
-        return new User(data.userId, data.firstName, data.lastName, data.userLanguage, JSON.parse(data.targetLanguages));
+        return new User(data.userId, data.firstName, data.lastName, data.userLanguage, data.targetLanguages);
     }
 
     private async updateUser() {
