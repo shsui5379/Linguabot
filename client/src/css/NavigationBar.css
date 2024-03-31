@@ -1,5 +1,5 @@
 .navigation-menu {
-    height: 65px;
+    height: 55px;
     background-color: var(--blue);
     letter-spacing: 1px;
 }
@@ -7,9 +7,9 @@
 #logo {
     margin: 0 0 0 5%;
     float: left;
-    line-height: 60px;
+    line-height: 50px;
     vertical-align: middle;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: var(--white);
     text-decoration: none;
@@ -18,7 +18,7 @@
 .navlink {
     margin: 0 5px 0 5px;
     float: right;
-    line-height: 60px;
+    line-height: 50px;
     vertical-align: middle;
     text-decoration: none;
 }
@@ -35,11 +35,11 @@
 
 .nav-button-white, .nav-button-filled {
     margin: 0;
-    line-height: 40px;
+    line-height: 35px;
     display: inline-block;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
 }
 

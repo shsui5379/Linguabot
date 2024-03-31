@@ -6,7 +6,7 @@ import path from "path";
 import "dotenv/config";
 
 const app = express();
-const router = require("./routes/routes.ts");
+import authRouter from "./routes/auth";
 import chat from "./routes/chat"
 import user from "./routes/user";
 const { auth, requiresAuth } = require('express-openid-connect');
@@ -31,7 +31,7 @@ const config = {
 app.use(auth(config));
 app.use(express.json({ strict: false }));
 
-app.use('/', router);
+app.use('/', authRouter);
 app.use("/api/chat", chat);
 app.use("/api/user", user);
 

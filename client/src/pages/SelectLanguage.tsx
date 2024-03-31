@@ -1,51 +1,16 @@
 // Sign up component
 import "../css/SelectLanguage.css"
-import NavigationBar from "../components/NavigationBar";
-import { SetStateAction, useState, useEffect, MouseEvent } from "react"
+import { SetStateAction, MouseEvent } from "react"
 
-export default function SelectLanguage() {
-  const [selected, setSelected] = useState("");
+export default function SelectLanguage({selected, setSelected, setFlowState}) {
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
   }
 
-  const userData = localStorage.getItem('myData');
-  if (userData) {
-    let user = JSON.parse(userData);
-    // Access the values
-    var firstName = user.firstName;
-    var lastName = user.lastName;
-  }
-
-
-
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    let sourceLanguage = "English";
-    let targetLanguages = [];
-    targetLanguages.push(selected);
-    console.log(firstName, lastName, sourceLanguage, targetLanguages);
-    const targetLanguage = {
-      firstName: firstName,
-      lastName: lastName,
-      sourceLanguage: sourceLanguage,
-      targetLanguages: targetLanguages
-    }
-
-    try {
-      // replace with library call 
-
-      // Handle success, update state, show notifications, etc.
-      console.log('Success:');
-
-    } catch (error) {
-      // Handle errors, show error messages, etc.
-      console.error('Error:', error);
-    }
+    setFlowState();
   };
-
-
 
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map((item) =>
@@ -64,7 +29,6 @@ export default function SelectLanguage() {
   )];
   return (
     <>
-      <NavigationBar />
       <p id="lang-select-instruction-title">Please select your target language.</p>
       <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
 
