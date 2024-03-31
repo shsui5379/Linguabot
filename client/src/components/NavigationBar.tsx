@@ -12,6 +12,10 @@ export default function NavigationBar() {
     window.location.href = '/login';
   };  
 
+  const handleSignUp = () => {
+    window.location.href = "/signup"
+  }
+
   const handleLogout = () => {
     window.location.href = '/logout'; 
   }
@@ -42,8 +46,7 @@ export default function NavigationBar() {
   if (!isLoggedIn) {
     navRight = (
       <>
-        <a className="navlink" id="navlink-rightmost" 
-          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
+        <a className="navlink" id="navlink-rightmost" onClick={handleSignUp} >
           <p className="nav-button-filled"> SIGN UP </p>           
         </a>
         <a className="navlink" onClick={handleLogin} >
