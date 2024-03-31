@@ -24,7 +24,7 @@
     width: 90%;
     padding-left: 25px;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
 }
 
@@ -45,7 +45,6 @@
 /* Navigation links at bottom of sidebar */
 #sidebar-nav-wrapper {
     width: 20%;
-    height: 50px;
     margin-bottom: 30px;
     position: fixed;
     left: 0%;
@@ -61,7 +60,7 @@
 }
 
 .sidebar-nav-link {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--white);
     text-decoration: none;
     position: relative;
@@ -74,7 +73,7 @@
     color: var(--white);
     background-color: black;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     padding: 10px;
     border-radius: 10px;
     z-index: 1;
@@ -152,7 +151,7 @@ button:hover, #user-text-send {
     width: 40px;
     height: 25px;
     margin-right: 25px;
-    font-size: 18px;
+    font-size: 16px;
     transform: rotate(15deg);
     background-color: transparent;
     border: none;
@@ -208,7 +207,7 @@ button:hover, #user-text-send {
     text-align: left;
     border-radius: 5px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .user-text {

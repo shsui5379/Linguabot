@@ -1,6 +1,6 @@
 /* Buttons with a unique language */
 .lang-unique-button {
-    height: 100px;
+    height: 95px;
     border-radius: 10px;
     border: none;
     font-size: 16px;
@@ -26,7 +26,7 @@
 
 #lang-select {
     display: grid;
-    grid-template-columns: 25vw 25vw;
+    grid-template-columns: 24vw 24vw;
     column-gap: 5%;
     height: 450px;
     justify-content: center;
@@ -34,13 +34,13 @@
 
 /* Instructions */
 #lang-select-instruction-title {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     margin: 5% auto 10px auto;
 }
 
 #lang-select-instruction-subtitle {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 5%;
 }
 
@@ -61,13 +61,13 @@
 #continue-lang-select {
     color: var(--white);
     background-color: var(--blue);
-    width: 13vw;
-    height: 50px;
+    width: 12vw;
+    height: 45px;
     border: none;
     border-radius: 10px;
-    margin: auto 22.5% 5% auto;
+    margin: auto 23% 5% auto;
     float: right;
-    font-size: 15px;
+    font-size: 14px;
     letter-spacing: 1px;
     text-decoration: none;
     display: flex;

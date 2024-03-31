@@ -11,25 +11,27 @@
 }
 
 #name-form input {
-    width: 30%;
-    height: 50px;
+    width: 25%;
+    height: 40px;
     border: 1px solid black;
     border-radius: 10px;
     padding-left: 20px;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 20px;
 }
 
 #name-form-continue {
     margin-top: 3%;
+    padding-left: 10px;
+    padding-right: 10px;
     color: var(--white);
     background-color: var(--blue);
-    width: 12vw;
-    height: 50px;
+    width: 25%;
+    height: 40px;
     border: none;
     border-radius: 10px;
     box-shadow: var(--shadow);
-    font-size: 15px;
+    font-size: 14px;
     letter-spacing: 1px;
     text-decoration: none;
     display: flex;
