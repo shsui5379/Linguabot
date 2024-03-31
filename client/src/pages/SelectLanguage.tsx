@@ -1,6 +1,6 @@
 // Sign up component
 import "../css/SelectLanguage.css"
-import { SetStateAction, useState, useEffect, MouseEvent } from "react"
+import { SetStateAction, useState, MouseEvent } from "react"
 
 export default function SelectLanguage() {
   const [selected, setSelected] = useState("");
@@ -15,8 +15,6 @@ export default function SelectLanguage() {
     var firstName = user.firstName;
     var lastName = user.lastName;
   }
-
-
 
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -44,6 +42,7 @@ export default function SelectLanguage() {
     }
   };
 
+  // Buttons of languages supported
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map((item) =>
     <button className={`lang-unique-button ${item === selected ? "active" : ""}`}
@@ -59,6 +58,7 @@ export default function SelectLanguage() {
       <div className="lang-unique-text">{item}</div>
     </button>
   )];
+
   return (
     <>
       <p id="lang-select-instruction-title">Please select your target language.</p>

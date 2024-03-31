@@ -11,7 +11,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState(new ChatSession([], "You are a conversational language partner. Only respond back to the user in French. Do not ever respond back in another language even if the user switches language."));
   const [inputMessage, setInputMessage] = useState('');
 
-  /** Saved chats */
+  // Saved chats
   var chats_list = ["comment ca va?", "mes amis sont tres popula..."];
   var saved_chats = [chats_list.map(item =>
     <div className="chat">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from 'react';
+import { useState, useEffect  } from 'react';
 import { Link } from "react-router-dom";
 import "../css/NavigationBar.css";   
 import LoginButton from './LoginButton'; 
@@ -39,19 +39,23 @@ export default function NavigationBar() {
   if (!isLoggedIn) {
     navRight = (
       <>
-          <SignUpButton/>
+        <div className="navlink">
           <LoginButton/>
+          <SignUpButton/>
+        </div>
       </>
     );
   } else {
     navRight = (
       <>
-        <Link className="navlink" id="navlink-rightmost"  to="/">
-          <p className="nav-button-filled" onClick={handleLogout}> LOG OUT </p>
+      <div className="navlink">
+        <Link to="/">
+          <p id="logout-button" onClick={handleLogout}> LOG OUT </p>
         </Link>
-        <Link className="navlink" to="/chat">
-          <p className="nav-button-white"> CHAT </p>
+        <Link to="/chat">
+          <p className="chat-button"> CHAT </p>
         </Link>
+      </div>
       </>
     );
   }

@@ -16,34 +16,33 @@
 }
 
 .navlink {
-    margin: 0 5px 0 5px;
+    margin: 0 5% 0 5px;
     float: right;
     line-height: 50px;
     vertical-align: middle;
     text-decoration: none;
 }
 
-#navlink-rightmost {
-    margin-right: 5%;
-}
-
-.nav-button-filled {
-    width: 100px;
+#logout-button {
+    width: 95px;
+    height: 35px;
     background-color: var(--white); 
     color: var(--blue);
-}
-
-.nav-button-white, .nav-button-filled {
-    margin: 0;
-    line-height: 35px;
-    display: inline-block;
-    border-radius: 10px;
+    border-radius: 5px;
+    border: none;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
+    margin: 0;
 }
 
-.nav-button-white {
-    width: 100px;
+#chat-button {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    width: 95px;
     color: var(--white);
+    background-color: transparent;
+    border: none;
 }

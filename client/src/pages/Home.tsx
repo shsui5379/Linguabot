@@ -1,12 +1,11 @@
 // Home component
 import "../css/Home.css"
-import NavigationBar from "../components/NavigationBar";
-import { Link } from "react-router-dom";
+import NavigationBar from "../components/NavigationBar"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faListCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function Home() {
-  /** Used to display flags of supported languages */
+  // Used to display flags of supported languages 
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var displayed_languages = [languages.map(item => 
     <p className="language" id={item + "-home"}>
