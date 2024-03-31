@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router(); 
 
 router.get("/auth", (req, res) => {
   console.log(req.oidc.isAuthenticated());
@@ -12,11 +12,11 @@ router.get("/auth", (req, res) => {
 }) 
 
 router.get("/signup", (req, res) => {
-  res.oidc.login({
-    authorizationParams: {
+  res.oidc.login({ 
+    returnTo : '/',
+    authorizationParams: { 
       screen_hint: 'signup'
     },
-    successRedirect: '/' // Redirect to the dashboard after successful login
   });
 });
 
