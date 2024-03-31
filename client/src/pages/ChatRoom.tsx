@@ -3,13 +3,17 @@ import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { ChatSession } from "../classes/ChatSession";
+import { useState, useEffect, useRef } from "react";
+import { ChatSession } from "../types/ChatSession";
+import User from "../types/User";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new ChatSession([], "You are a conversational language partner. Only respond back to the user in French. Do not ever respond back in another language even if the user switches language."));
   const [inputMessage, setInputMessage] = useState('');
+  const user = useRef();
+
+  // Do user fetching in an effect on mount here
 
   /** Saved chats */
   var chats_list = ["chat 1", "chat 2"];
