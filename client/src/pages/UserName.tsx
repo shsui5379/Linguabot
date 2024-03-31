@@ -1,11 +1,14 @@
 // Name component: asks user for their name
 import "../css/UserName.css"
 import NavigationBar from "../components/NavigationBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react"
+
 export default function UserName() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const navigation = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,7 +56,7 @@ export default function UserName() {
             onChange={(event) => setLastName(event.target.value)}
             value={lastName}>
           </input>
-          <Link id="name-form-continue" to="/language">CONTINUE</Link>
+          <button id="name-form-continue" type="submit" onClick={() => navigation("/language")}>CONTINUE</button>
         </form>
       </div>
     </>
