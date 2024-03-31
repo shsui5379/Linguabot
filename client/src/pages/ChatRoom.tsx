@@ -49,9 +49,9 @@ export default function ChatRoom() {
   initial_message_map.set("English", "Hello! I'm Linguabot, your personal conversational partner. What would you like to talk about today?");
   initial_message_map.set("Spanish", "¡Hola! Soy Linguabot, tu compañero de conversación personal. ¿De qué te gustaría hablar hoy?");
   initial_message_map.set("French", "Bonjour! Je suis Linguabot, votre interlocuteur personnel. De quoi aimeriez-vous parler aujourd’hui?");
-  initial_message_map.set("Mandarin", "你好！我是 Linguabot，您的私人对话伙伴。今天你想聊什么？");
+  initial_message_map.set("Mandarin", "你好！我是 Linguabot，你的私人对话伙伴。今天你想聊什么？");
   initial_message_map.set("Japanese", "こんにちは！ あなたの個人的な会話パートナー、Linguabot です。今日は何について話したいですか?");
-  initial_message_map.set("Korean", "안녕하세요! 여러분의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?");
+  initial_message_map.set("Korean", "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?");
 
   let initial_message = initial_message_map.get("");
 
