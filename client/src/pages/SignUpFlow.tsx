@@ -2,8 +2,9 @@ import UserName from "./UserName";
 import SelectLanguage from "./SelectLanguage";
 import { useState } from "react";
 import User from "../types/User";
+import { useNavigate } from "react-router-dom";
 
-export default function SignUpFlow(props) {
+export default function SignUpFlow()) {
     enum FLOW_STATE {
         USERNAME,
         TARGET_LANGUAGE_SELECTION,
@@ -14,6 +15,7 @@ export default function SignUpFlow(props) {
     const [firstName, setFirstName]= useState('');
     const [lastName, setLastName] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('');
+    const navigation = useNavigate();
 
     async function createUser(firstName: string, lastName: string, userLanguage: string, targetLanguages: string[]) {
         try {
@@ -38,12 +40,12 @@ export default function SignUpFlow(props) {
         return (<SelectLanguage
             selected={selectedLanguage}
             setSelected={setSelectedLanguage}
-            setFlowState={() => FLOW_STATE.FINISHED}
+            setFlowState={() => setFlowState(FLOW_STATE.FINISHED)}
             />
         );
     }
     else {
         createUser(firstName, lastName, "English", [selectedLanguage]);
-        props.router.push('/chat');
+        navigation("/chat");
     }
 }
