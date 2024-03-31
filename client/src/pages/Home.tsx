@@ -1,11 +1,10 @@
 // Home component
 import "../css/Home.css"
 import NavigationBar from "../components/NavigationBar";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faListCheck } from '@fortawesome/free-solid-svg-icons'
 
-export default function Home() {
+export default function Home(props) {
   /** Used to display flags of supported languages */
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var displayed_languages = [languages.map(item => 
@@ -61,7 +60,7 @@ export default function Home() {
       <div id="feature-display">
         <div className="feature-highlight-overview">
           <img className="feature-image-left"
-               src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
+               src={require("../assets/features/chat.png")}
                alt="Feature"></img>
           <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
@@ -93,8 +92,9 @@ export default function Home() {
                alt="Feature"></img>
           <div className="feature-highlight-right">
             <div className="inner-feature-highlight">
-              <p className="feature-highlight-title">Feature 3</p>
-              <p className="feature-highlight-description">Feature description in detail</p>
+              <p className="feature-highlight-title">Save Messages and Add Notes</p>
+              <p className="feature-highlight-description">Want to save a message Linguabot sent? Add it to your favorites list
+                and include a note if you'd like. You can go to your Notes page to look back at it later!</p>
             </div> 
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function Home() {
         <div id="join-now-title">Improve your fluency with Linguabot!</div>
         <div id="join-now-subtitle">Don't wait any longer to find a language partner.</div>
         <a id="get-started-button"
-          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
+          href={`https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup`} >
           GET STARTED   
         </a>
       </div>

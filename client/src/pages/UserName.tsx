@@ -1,44 +1,15 @@
 // Name component: asks user for their name
 import "../css/UserName.css"
-import NavigationBar from "../components/NavigationBar";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react"
-
-export default function UserName() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-
-  const navigation = useNavigate();
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+export default function UserName({firstName, lastName, setFirstName, setLastName, setFlowState}) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const userData = {
-      firstName: firstName,
-      lastName: lastName
-    };
-
-    try {
-      localStorage.setItem('myData', JSON.stringify(userData));
-
-      var retrievedData = localStorage.getItem('myData');
-      if (retrievedData) {
-        retrievedData = JSON.parse(retrievedData);
-        console.log(retrievedData);
-      } else {
-        console.log('No data found');
-      }
-    } catch (error) {
-      // Handle errors, show error messages, etc. 
-      console.error('Error:', error);
-    }
+    setFlowState();
   };
-  return (
+
+  return(
     <>
-      <NavigationBar />
       <div id="name-page">
         <p id="name-instruction">Enter your name</p>
-
         <form id="name-form" onSubmit={handleSubmit}>
           <input type="text"
             id="first-name"
@@ -56,7 +27,7 @@ export default function UserName() {
             onChange={(event) => setLastName(event.target.value)}
             value={lastName}>
           </input>
-          <button id="name-form-continue" type="submit" onClick={() => navigation("/language")}>CONTINUE</button>
+          <button id="name-form-continue">CONTINUE</button>
         </form>
       </div>
     </>
