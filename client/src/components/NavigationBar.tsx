@@ -1,16 +1,13 @@
 import React, { useState, useEffect  } from 'react';
 import { Link } from "react-router-dom";
-import "../css/NavigationBar.css";  
+import "../css/NavigationBar.css";   
+import LoginButton from './LoginButton'; 
+import SignUpButton from './SignUpButton'
 
 // Navigation bar component
 export default function NavigationBar() {
   // Determine the correct things to display on the right side of the navigation bar
   let navRight = null; 
-
-  // Redirect users to the Auth0 login page
-  const handleLogin = () => {
-    window.location.href = '/login';
-  };  
 
   const handleLogout = () => {
     window.location.href = '/logout'; 
@@ -42,13 +39,8 @@ export default function NavigationBar() {
   if (!isLoggedIn) {
     navRight = (
       <>
-        <a className="navlink" id="navlink-rightmost" 
-          href="https://dev-3pimm2jcsp5tvdbf.us.auth0.com/authorize?response_type=code&client_id=0XZ78NoX2OqMXCuDRDrCNaFbjoO4PGlF&redirect_uri=http://localhost:8080/callback&prompt=login&screen_hint=signup" >
-          <p className="nav-button-filled"> SIGN UP </p>           
-        </a>
-        <a className="navlink" onClick={handleLogin} >
-          <p className="nav-button-white"> LOG IN </p>
-        </a>
+          <SignUpButton/>
+          <LoginButton/>
       </>
     );
   } else {
