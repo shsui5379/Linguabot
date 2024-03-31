@@ -1,20 +1,11 @@
 // Home component
 import "../css/Home.css"
-<<<<<<< HEAD
 import NavigationBar from "../components/NavigationBar";
-=======
-import NavigationBar from "../components/NavigationBar"
->>>>>>> 68a8c83701907f80463c844b77739c3785103096
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
 
-<<<<<<< HEAD
-export default function Home(props) {
-  /** Used to display flags of supported languages */
-=======
 export default function Home() {
   // Used to display flags of supported languages 
->>>>>>> 68a8c83701907f80463c844b77739c3785103096
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var displayed_languages = [languages.map(item => 
     <p className="language" id={item + "-home"}>

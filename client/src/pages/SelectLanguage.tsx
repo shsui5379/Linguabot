@@ -1,58 +1,18 @@
 // Sign up component
 import "../css/SelectLanguage.css"
-<<<<<<< HEAD
-import { SetStateAction, MouseEvent } from "react"
-=======
 import NavigationBar from "../components/NavigationBar";
 import { SetStateAction, useState, useEffect, MouseEvent } from "react"
 import User from "../types/User";
 import { Language } from "../types/Language";
->>>>>>> 68a8c83701907f80463c844b77739c3785103096
 
 export default function SelectLanguage({selected, setSelected, setFlowState}) {
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
   }
 
-<<<<<<< HEAD
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setFlowState();
-=======
-  const userData = localStorage.getItem('myData');
-  if (userData) {
-    let user = JSON.parse(userData);
-    // Access the values
-    var firstName = user.firstName;
-    var lastName = user.lastName;
-  }
-
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    let sourceLanguage = "English";
-    let targetLanguages = [];
-    targetLanguages.push(selected);
-    console.log(firstName, lastName, sourceLanguage, targetLanguages);
-    const targetLanguage = {
-      firstName: firstName,
-      lastName: lastName,
-      sourceLanguage: sourceLanguage,
-      targetLanguages: targetLanguages
-    }
-
-    try {
-      let user = await User.createUser(firstName, lastName, sourceLanguage as Language, targetLanguages as Language[]);
-      // store user in some global state for future reference
-
-      // Handle success, update state, show notifications, etc.
-      console.log('Success:');
-
-    } catch (error) {
-      // Handle errors, show error messages, etc.
-      console.error('Error:', error);
-    }
->>>>>>> 68a8c83701907f80463c844b77739c3785103096
   };
 
   // Buttons of languages supported
