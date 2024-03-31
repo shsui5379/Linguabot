@@ -1,17 +1,18 @@
 // Name component: asks user for their name
 import "../css/UserName.css"
-export default function UserName({firstName, lastName, setFirstName, setLastName, setFlowState}) {
+export default function UserName({ firstName, lastName, setFirstName, setLastName, setFlowState }) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFlowState();
   };
 
-  return(
+  return (
     <>
       <div id="name-page">
         <p id="name-instruction">Enter your name</p>
         <form id="name-form" onSubmit={handleSubmit}>
           <input type="text"
+            required
             id="first-name"
             name="first-name"
             required-minlength="1"
@@ -20,6 +21,7 @@ export default function UserName({firstName, lastName, setFirstName, setLastName
             value={firstName}>
           </input>
           <input type="text"
+            required
             id="last-name"
             name="last-name"
             required-minlength="1"
