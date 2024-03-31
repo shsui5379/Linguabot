@@ -2,6 +2,8 @@
 import "../css/SelectLanguage.css"
 import NavigationBar from "../components/NavigationBar";
 import { SetStateAction, useState, useEffect, MouseEvent } from "react"
+import User from "../types/User";
+import { Language } from "../types/Language";
 
 export default function SelectLanguage() {
   const [selected, setSelected] = useState("");
@@ -34,7 +36,8 @@ export default function SelectLanguage() {
     }
 
     try {
-      // replace with library call 
+      let user = await User.createUser(firstName, lastName, sourceLanguage as Language, targetLanguages as Language[]);
+      // store user in some global state for future reference
 
       // Handle success, update state, show notifications, etc.
       console.log('Success:');
