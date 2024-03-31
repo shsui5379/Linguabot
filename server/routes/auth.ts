@@ -11,6 +11,15 @@ router.get("/auth", (req, res) => {
   });
 })
 
+router.get("/signup", (req, res) => {
+  res.oidc.login({
+    returnTo: '/register',
+    authorizationParams: {
+      screen_hint: 'signup'
+    },
+  });
+});
+
 router.get('/status', (req, res) => {
   res.send(
     req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'

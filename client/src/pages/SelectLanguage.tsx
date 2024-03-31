@@ -1,9 +1,6 @@
 // Sign up component
 import "../css/SelectLanguage.css"
-import NavigationBar from "../components/NavigationBar";
-import { SetStateAction, useState, useEffect, MouseEvent } from "react"
-import User from "../types/User";
-import { Language } from "../types/Language";
+import { SetStateAction, MouseEvent } from "react"
 
 export default function SelectLanguage({selected, setSelected, setFlowState}) {
   const isSelected = (item: SetStateAction<string>) => {
