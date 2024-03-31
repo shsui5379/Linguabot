@@ -16,6 +16,7 @@ export default function UserName({ firstName, lastName, setFirstName, setLastNam
             id="first-name"
             name="first-name"
             required-minlength="1"
+            maxLength={255}
             placeholder="First name"
             onChange={(event) => setFirstName(event.target.value)}
             value={firstName}>
@@ -25,6 +26,7 @@ export default function UserName({ firstName, lastName, setFirstName, setLastNam
             id="last-name"
             name="last-name"
             required-minlength="1"
+            maxLength={255}
             placeholder="Last name"
             onChange={(event) => setLastName(event.target.value)}
             value={lastName}>
