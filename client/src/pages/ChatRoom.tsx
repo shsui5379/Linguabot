@@ -11,9 +11,12 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new ChatSession([], "You are a conversational language partner. Only respond back to the user in French. Do not ever respond back in another language even if the user switches language."));
   const [inputMessage, setInputMessage] = useState('');
-  const user = useRef();
+  const user_info: any = useRef();
 
-  // Do user fetching in an effect on mount here
+  // Do user fetching on mount
+  useEffect(() => {
+    User.fetchUser().then((user) => user_info.current = user).catch((error) => console.log(error.message));
+  }, []);
 
   /** Saved chats */
   var chats_list = ["chat 1", "chat 2"];
