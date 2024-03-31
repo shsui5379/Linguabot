@@ -4,7 +4,7 @@ import { useState } from "react";
 import User from "../types/User";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUpFlow()) {
+export default function SignUpFlow() {
     enum FLOW_STATE {
         USERNAME,
         TARGET_LANGUAGE_SELECTION,
