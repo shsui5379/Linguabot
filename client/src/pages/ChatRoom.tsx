@@ -16,7 +16,7 @@ export default function ChatRoom() {
   const initial_message_map = useRef(new Map())
 
   // Saved chats
-  var chats_list = ["comment ca va?", "mes amis sont tres popula..."];
+  var chats_list = ["Chat 1", "Chat 2"];
   var saved_chats = [chats_list.map(item =>
     <div className="chat">
       <button className="chat-overview">{item}</button>
