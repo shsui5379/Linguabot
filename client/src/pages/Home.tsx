@@ -42,7 +42,7 @@ export default function Home() {
                          <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div id="feature-left">
-            <p className="feature-title"><FontAwesomeIcon icon={faUser} />Your Account</p>
+            <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
             <p className="feature-description">Create a new account or <br></br>log in if you already have one!</p>
           </div>
           <div>

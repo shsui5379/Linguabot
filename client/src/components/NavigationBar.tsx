@@ -46,23 +46,22 @@ export default function NavigationBar() {
   if (!isLoggedIn) {
     navRight = (
       <>
-        <a className="navlink" id="navlink-rightmost" onClick={handleSignUp} >
-          <p className="nav-button-filled"> SIGN UP </p>           
-        </a>
-        <a className="navlink" onClick={handleLogin} >
-          <p className="nav-button-white"> LOG IN </p>
-        </a>
+      <div className="navlink">
+        <a className="navbar-button" id="login-button" onClick={handleLogin} > LOG IN </a>
+        <a className="navbar-button" id="signup-button" onClick={handleSignUp} > SIGN UP </a>
+      </div>
       </>
     );
   } else {
     navRight = (
       <>
-        <Link className="navlink" id="navlink-rightmost"  to="/">
-          <p className="nav-button-filled" onClick={handleLogout}> LOG OUT </p>
+      <div className="navlink">
+        <Link className="navbar-button" id="chat-button" to="/chat">CHAT</Link>
+        <Link className="navbar-button" id="logout-button" to="/">
+          <p onClick={handleLogout}> LOG OUT </p>
         </Link>
-        <Link className="navlink" to="/chat">
-          <p className="nav-button-white"> CHAT </p>
-        </Link>
+      </div>
+        
       </>
     );
   }
