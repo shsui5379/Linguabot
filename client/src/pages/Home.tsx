@@ -2,10 +2,10 @@
 import "../css/Home.css"
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faLanguage, faRobot, faListCheck } from '@fortawesome/free-solid-svg-icons'
+import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
 
-export default function Home(props) {
-  /** Used to display flags of supported languages */
+export default function Home() {
+  // Used to display flags of supported languages 
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var displayed_languages = [languages.map(item => 
     <p className="language" id={item + "-home"}>
@@ -42,16 +42,16 @@ export default function Home(props) {
                          <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div id="feature-left">
+            <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
+            <p className="feature-description">Create a new account or <br></br>log in if you already have one!</p>
+          </div>
+          <div>
             <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>
             <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
           </div>
-          <div>
-            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
-            <p className="feature-description">Linguabot will chat with <br></br> you only in your target language!</p>
-          </div>
           <div id="feature-right">
-            <p className="feature-title"><FontAwesomeIcon icon={faListCheck} /> Manage Conversations</p>
-            <p className="feature-description">Create new conversations or <br></br>pick up from where you left off!</p>
+            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
+            <p className="feature-description">Linguabot will chat with <br></br>you only in your target language!</p>
           </div>
         </div>
       </div>
@@ -83,10 +83,10 @@ export default function Home(props) {
             </div>
           </div>
           <img className="feature-image-right" 
-               src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
+               src={require("../assets/features/saved-conversations.png")}
                alt="Feature"></img>
         </div>
-        <div className="feature-highlight-overview">
+        {/* <div className="feature-highlight-overview">
           <img className="feature-image-left"
                src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
                alt="Feature"></img>
@@ -97,7 +97,7 @@ export default function Home(props) {
                 and include a note if you'd like. You can go to your Notes page to look back at it later!</p>
             </div> 
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/** Register */}

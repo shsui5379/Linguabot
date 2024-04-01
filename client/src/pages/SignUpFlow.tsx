@@ -45,7 +45,6 @@ export default function SignUpFlow() {
         );
     }
     else {
-        createUser(firstName, lastName, "English", [selectedLanguage]);
-        navigation("/chat");
+        createUser(firstName, lastName, "English", [selectedLanguage]).then(() => navigation("/chat"));
     }
 }
