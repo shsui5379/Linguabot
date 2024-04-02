@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
-import { ChatSession } from "../types/ChatSession";
+import { Conversation } from "../types/Conversation";
 import User from "../types/User";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
-  const [messages, setMessages] = useState(new ChatSession([], ""));
+  const [messages, setMessages] = useState(new Conversation([], ""));
   const [inputMessage, setInputMessage] = useState('');
   const user_info: any = useRef();
   const initial_message = useRef("");
-  const initial_message_map = useRef(new Map())
+  const initial_message_map = useRef(new Map());
 
   // Saved chats
   var chats_list = ["Chat 1", "Chat 2"];
@@ -33,7 +33,7 @@ export default function ChatRoom() {
     initial_message_map.current.set("Korean", "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?");
     User.fetchUser().then((user) => {
       user_info.current = user;
-      setMessages(new ChatSession([], `You are a conversational language partner. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
+      setMessages(new Conversation([], `You are a conversational language partner. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
       initial_message.current = initial_message_map.current.get(user_info.current.targetLanguages[0]);
     });
   }, []);
@@ -55,11 +55,11 @@ export default function ChatRoom() {
   // Handles form submission
   async function handleFormSubmit(event) {
     event.preventDefault();
-    let updated_messages = new ChatSession(messages.messageHistory);
+    let updated_messages = new Conversation(messages.messageHistory);
     updated_messages.send(inputMessage);
     setInputMessage('');
     setMessages(updated_messages);
-    updated_messages = new ChatSession(updated_messages.messageHistory);
+    updated_messages = new Conversation(updated_messages.messageHistory);
     await updated_messages.receive();
     setMessages(updated_messages);
   }
