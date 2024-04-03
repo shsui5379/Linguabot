@@ -39,7 +39,7 @@ export default function Home() {
       <div id="major-features">
         <h3 id="problem">Struggling to find a language practice partner?</h3>
         <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
-                         <br></br>communication skills by simulating real-life conversations.</p>
+                        <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div id="feature-left">
             <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
