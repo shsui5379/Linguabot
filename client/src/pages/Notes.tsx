@@ -7,6 +7,9 @@ export default function Notes() {
     <>
         <NavigationBar/>
         {/** Can include checkboxes */}
+        <div id="notes-wrapper">
+            
+        </div>
     </>
     );
 }

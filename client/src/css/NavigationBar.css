@@ -38,7 +38,7 @@
     text-decoration: none;
 }
 
-#chat-button, #login-button {
+#notes-button, #chat-button, #login-button {
     color: var(--white);
     background-color: transparent;
     margin-right: 10px;
