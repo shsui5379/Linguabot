@@ -46,9 +46,9 @@ export default function ChatRoom() {
       return (
       <>
         <div className="text">  
-          <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
+          <div className="message-tools-wrapper">
             <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
-            <div className={message.role === "user" ? "message-tools-user" : "message-tools-bot"}>
+            <div className="message-tools">
               <button className="message-tools-button" id="message-fav">star</button>
               <button className="message-tools-button" id="message-listen">listen</button>
               <button className="message-tools-button" id="message-translate">translate</button>

@@ -270,25 +270,18 @@ button:hover, #user-text-send {
 }
 
 /* Message Tools */
-.user-text:hover + .message-tools-user, .bot-text:hover + .message-tools-bot,
-.message-tools-user:hover, .message-tools-bot:hover {
+.bot-text:hover + .message-tools,
+.message-tools-:hover {
     display: flex;
 }
 
-.message-tools-user-wrapper, .message-tools-bot-wrapper {
+.message-tools-wrapper {
     display: flex;
     flex-direction: column-reverse;
-}
-
-.message-tools-user-wrapper {
-    align-items: flex-end;
-}
-
-.message-tools-bot-wrapper {
     align-items: flex-start;
 }   
 
-.message-tools-user, .message-tools-bot {
+.message-tools {
     width: 115px;
     height: 40px;
     background-color: black;
