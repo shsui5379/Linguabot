@@ -44,9 +44,19 @@ export default function ChatRoom() {
       if (index === 0)
         return <></>;
       return (
-        <div className="text">
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
-        </div>
+      <>
+        <div className="text">  
+          <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
+            <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+            <div className={message.role === "user" ? "message-tools-user" : "message-tools-bot"}>
+              <button className="message-tools-button" id="message-fav">star</button>
+              <button className="message-tools-button" id="message-listen">listen</button>
+              <button className="message-tools-button" id="message-translate">translate</button>
+            </div>
+          </div>
+          
+        </div> 
+      </>
       );
     }).reverse();
   }

@@ -200,7 +200,7 @@ button:hover, #user-text-send {
     display:none;
 }
 
-.user-text, .bot-text {
+.user-text, .bot-text{
     max-width: 40%;
     overflow-wrap: break-word;
     height: fit-content;
@@ -208,6 +208,7 @@ button:hover, #user-text-send {
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
+    margin-top: 0;
 }
 
 .user-text {
@@ -266,4 +267,36 @@ button:hover, #user-text-send {
     border-bottom: var(--transparent-triangle-side);
     left: var(--triangle-distance);
     top: 6px;
+}
+
+/* Message Tools */
+.user-text:hover + .message-tools-user, .bot-text:hover + .message-tools-bot,
+.message-tools-user:hover, .message-tools-bot:hover {
+    display: flex;
+}
+
+.message-tools-user-wrapper, .message-tools-bot-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.message-tools-user-wrapper {
+    align-items: flex-end;
+}
+
+.message-tools-bot-wrapper {
+    align-items: flex-start;
+}   
+
+.message-tools-user, .message-tools-bot {
+    width: 115px;
+    height: 40px;
+    background-color: black;
+    display: none;
+    border-radius: 10px;
+}
+
+.message-tools-button {
+    width: 35px;
+    height: 35px;
 }
