@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { ChatSession } from "../types/ChatSession";
@@ -97,11 +97,15 @@ export default function ChatRoom() {
         <div id="sidebar-nav">
           <Link className="sidebar-nav-link" to="/"> 
             <FontAwesomeIcon icon={faHouse} /> 
-            <span className="tooltiptext">Return Home</span>
+            <span className="tooltiptext" id="toolkit-home">Return Home</span>
+          </Link>
+          <Link className="sidebar-nav-link" to="/Notes"> 
+            <FontAwesomeIcon icon={faNoteSticky} /> 
+            <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
           </Link>
           <div className="sidebar-nav-link" onClick={handleLogout}> 
             <FontAwesomeIcon icon={faRightFromBracket} /> 
-            <span className="tooltiptext">Log Out</span>
+            <span className="tooltiptext" id="toolkit-logout">Log Out</span>
           </div>
         </div>
       </div>

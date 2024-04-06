@@ -31,7 +31,7 @@
 #sidebar-addchat {
     height: 50px;
     margin: 25px auto 40px auto;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid var(--white);
     color: var(--white);
     background-color: var(--blue);
@@ -78,7 +78,6 @@
     border-radius: 10px;
     z-index: 1;
     bottom: 120%;
-    left: -30px;
     visibility: hidden;
     position: absolute;
 }
@@ -92,6 +91,19 @@
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
+}
+
+
+#toolkit-home {
+    left: -35px;
+}
+
+#toolkit-notes {
+    left: -45px;
+}
+
+#toolkit-logout {
+    left: -25px;
 }
 
 .sidebar-nav-link:hover .tooltiptext {
