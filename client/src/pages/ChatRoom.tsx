@@ -2,7 +2,8 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faPlus, faHouse, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { ChatSession } from "../types/ChatSession";
 import User from "../types/User";
@@ -11,6 +12,8 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new ChatSession([], ""));
   const [inputMessage, setInputMessage] = useState('');
+  const [savedMessage, setSavedMessage] = useState(false);
+  const [starIcon, setStarIcon] = useState(faStarSolid);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map())
@@ -38,6 +41,12 @@ export default function ChatRoom() {
     });
   }, []);
 
+  // Add message to favorites and change star icon
+  function favMessage() {
+    setSavedMessage(!savedMessage);
+    setStarIcon(savedMessage ? faStarSolid : faStarReg);
+  }
+
   function getMessages() {
     return messages.messageHistory.map((message, index) => {
       // Skip the configuration message
@@ -45,17 +54,16 @@ export default function ChatRoom() {
         return <></>;
       return (
       <>
-        <div className="text">  
-          <div className="message-tools-wrapper">
-            <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
-            <div className="message-tools">
-              <button className="message-tools-button" id="message-fav">star</button>
-              <button className="message-tools-button" id="message-listen">listen</button>
-              <button className="message-tools-button" id="message-translate">translate</button>
+        <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
+          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+          <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
+            <div id="message-tools-bot">
+              <button className="message-tools-button" id="message-fav" onChange={()=>favMessage()}>{<FontAwesomeIcon icon={starIcon}/>}</button>
+              <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+              <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
-          
-        </div> 
+        </div>
       </>
       );
     }).reverse();
@@ -121,7 +129,7 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
-          <button id="user-text-send"><FontAwesomeIcon icon={faPaperPlane}/></button>
+          <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
     </div>

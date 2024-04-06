@@ -148,14 +148,18 @@ button:hover, #user-text-send {
 }
 
 #user-text-send {
-    width: 40px;
-    height: 25px;
-    margin-right: 25px;
+    margin-right: 20px;
     font-size: 16px;
-    transform: rotate(15deg);
     background-color: transparent;
     border: none;
     color: var(--dark-gray);
+}
+
+#user-text-send-icon {
+    display: flex;
+    filter: opacity(0.8);
+    width: 25px;
+    height: 20px;
 }
 
 /* Text messages */
@@ -270,26 +274,55 @@ button:hover, #user-text-send {
 }
 
 /* Message Tools */
-.bot-text:hover + .message-tools,
-.message-tools-:hover {
-    display: flex;
-}
-
-.message-tools-wrapper {
+.user-text-wrapper, .bot-text-wrapper {
     display: flex;
     flex-direction: column-reverse;
+}
+
+.user-text-wrapper {
+    align-items: flex-end;
+}
+
+.bot-text-wrapper {
     align-items: flex-start;
 }   
 
-.message-tools {
+.bot-text:hover + .message-tools-bot-wrapper,
+.message-tools-bot-wrapper:hover {
+    display: flex;
+}
+
+.message-tools-user-wrapper{
+    display: none;
+}
+
+.message-tools-bot-wrapper {
     width: 115px;
     height: 40px;
-    background-color: black;
+    margin-left: 19px;
+    padding-bottom: 5px;
     display: none;
+}
+
+#message-tools-bot {
+    width: 115px;
+    height: 40px;
+    background-color: #171717e0;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .message-tools-button {
     width: 35px;
     height: 35px;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+}
+
+#message-listen:active, #message-translate:active {
+    color: var(--subtext-gray);
+    cursor: default;
 }
