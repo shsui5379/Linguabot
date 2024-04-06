@@ -320,9 +320,10 @@ button:hover, #user-text-send {
     background-color: transparent;
     color: var(--white);
     border: none;
+    font-size: 14px;
 }
 
 #message-listen:active, #message-translate:active {
-    color: var(--subtext-gray);
+    color: #2d95fcd3;
     cursor: default;
 }

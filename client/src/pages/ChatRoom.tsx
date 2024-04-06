@@ -13,7 +13,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState(new ChatSession([], ""));
   const [inputMessage, setInputMessage] = useState('');
   const [savedMessage, setSavedMessage] = useState(false);
-  const [starIcon, setStarIcon] = useState(faStarSolid);
+  const [starIcon, setStarIcon] = useState(faStarReg);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map())
@@ -44,7 +44,7 @@ export default function ChatRoom() {
   // Add message to favorites and change star icon
   function favMessage() {
     setSavedMessage(!savedMessage);
-    setStarIcon(savedMessage ? faStarSolid : faStarReg);
+    setStarIcon(savedMessage ?  faStarReg : faStarSolid);
   }
 
   function getMessages() {
@@ -58,7 +58,7 @@ export default function ChatRoom() {
           <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
           <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
             <div id="message-tools-bot">
-              <button className="message-tools-button" id="message-fav" onChange={()=>favMessage()}>{<FontAwesomeIcon icon={starIcon}/>}</button>
+              <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
               <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
               <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
