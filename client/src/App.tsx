@@ -3,6 +3,7 @@ import ChatRoom from "./pages/ChatRoom.tsx";
 import Home from "./pages/Home.tsx";
 import UserHome from "./pages/UserHome.tsx";
 import SignUpFlow from "./pages/SignUpFlow.tsx";
+import Notes from "./pages/Notes.tsx";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/register" element={<SignUpFlow />} />;
           <Route path="/home" element={<UserHome />} />;
           <Route path="/chat" element={<ChatRoom />} />;
+          <Route path="/notes" element={<Notes />} />;
         </Routes>
       </BrowserRouter>
     </div>
