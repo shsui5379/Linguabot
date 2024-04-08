@@ -24,6 +24,10 @@ function init(sequelize: Sequelize.Sequelize) {
             type: Sequelize.DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
+        },
+        human: {
+            type: Sequelize.DataTypes.BOOLEAN,
+            allowNull: false
         }
     }, { sequelize });
 }

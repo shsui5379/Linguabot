@@ -10,3 +10,4 @@ Each Message shall have:
 - content
 - note
 - starred boolean
+- human boolean
