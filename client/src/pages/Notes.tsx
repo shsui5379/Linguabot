@@ -4,28 +4,32 @@ import "../css/Notes.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faLanguage, faX } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function Notes() {
     return(
     <>
         <NavigationBar/>
         {/** Can include checkboxes */}
         <div id="notes-wrapper">
-            <div className="notes-messages-tools">
-                <p className="notes-messages"> 안녕하세요 </p>
-                <div className="notes-tools">
-                    <button className="notes-message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-                    <button className="notes-message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
-                    <button className="notes-message-tools-button" id="message-delete">{<FontAwesomeIcon icon={faX} />}</button>
+            <div className="saved-message">
+                <div className="saved-message-text">
+                    <p className="saved-text"> 안녕하세요 </p>
+                    <div className="saved-text-tools">
+                        <button className="saved-text-tools-button" id="saved-text-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+                        <button className="saved-text-tools-button" id="saved-text-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
+                        <button className="saved-text-tools-button" id="saved-text-delete">{<FontAwesomeIcon icon={faX} />}</button>
+                    </div>
                 </div>
-            </div>
-            <div className="notes">
-                <input type="text"
-                       value="This means 'hello'"
-                       className="notes-input">
-                </input>
+                <form className="saved-message-notes">
+                    <textarea
+                        name="note"
+                        placeholder="Add a note..."
+                        className="notes-input">
+                        This means "hello"
+                    </textarea>                    
+                </form>
             </div>
         </div>
+        
     </>
     );
 }
