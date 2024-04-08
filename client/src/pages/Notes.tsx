@@ -39,7 +39,6 @@ export default function Notes() {
     return(
     <>
         <NavigationBar/>
-        {/** Can include checkboxes */}
         <div id="notes-wrapper">
             {saved_messages_and_notes_display}
         </div> 
