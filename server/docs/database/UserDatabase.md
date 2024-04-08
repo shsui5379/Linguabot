@@ -6,8 +6,16 @@ Wraps around Sequelize. Has User Model to perform userdata related database oper
 ## Procedures
 - connect to db and verify connection
 - define model that can house a User instance
-- set up relationships to Note and Conversation instances (post-MVP stretch goal)
+- set up relationships to Chat and Message instances
 - export select functions
+
+# Model
+Each User shall have:
+- an id: primary key to Chats
+- firstName
+- lastName
+- targetLanguages array
+- userLanguage
 
 ## Exported Functions
 - ALL ARE ASYNC!!!
