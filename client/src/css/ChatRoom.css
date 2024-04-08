@@ -31,7 +31,7 @@
 #sidebar-addchat {
     height: 50px;
     margin: 25px auto 40px auto;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 1px solid var(--white);
     color: var(--white);
     background-color: var(--blue);
@@ -78,7 +78,6 @@
     border-radius: 10px;
     z-index: 1;
     bottom: 120%;
-    left: -30px;
     visibility: hidden;
     position: absolute;
 }
@@ -92,6 +91,19 @@
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
+}
+
+
+#toolkit-home {
+    left: -35px;
+}
+
+#toolkit-notes {
+    left: -45px;
+}
+
+#toolkit-logout {
+    left: -25px;
 }
 
 .sidebar-nav-link:hover .tooltiptext {
@@ -148,14 +160,18 @@ button:hover, #user-text-send {
 }
 
 #user-text-send {
-    width: 40px;
-    height: 25px;
-    margin-right: 25px;
+    margin-right: 20px;
     font-size: 16px;
-    transform: rotate(15deg);
     background-color: transparent;
     border: none;
     color: var(--dark-gray);
+}
+
+#user-text-send-icon {
+    display: flex;
+    filter: opacity(0.8);
+    width: 25px;
+    height: 20px;
 }
 
 /* Text messages */
@@ -200,7 +216,7 @@ button:hover, #user-text-send {
     display:none;
 }
 
-.user-text, .bot-text {
+.user-text, .bot-text{
     max-width: 40%;
     overflow-wrap: break-word;
     height: fit-content;
@@ -208,6 +224,7 @@ button:hover, #user-text-send {
     border-radius: 5px;
     padding: 10px;
     font-size: 14px;
+    margin-top: 0;
 }
 
 .user-text {
@@ -266,4 +283,59 @@ button:hover, #user-text-send {
     border-bottom: var(--transparent-triangle-side);
     left: var(--triangle-distance);
     top: 6px;
+}
+
+/* Message Tools */
+.user-text-wrapper, .bot-text-wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.user-text-wrapper {
+    align-items: flex-end;
+}
+
+.bot-text-wrapper {
+    align-items: flex-start;
+}   
+
+.bot-text:hover + .message-tools-bot-wrapper,
+.message-tools-bot-wrapper:hover {
+    display: flex;
+}
+
+.message-tools-user-wrapper{
+    display: none;
+}
+
+.message-tools-bot-wrapper {
+    width: 115px;
+    height: 40px;
+    margin-left: 19px;
+    padding-bottom: 5px;
+    display: none;
+}
+
+#message-tools-bot {
+    width: 115px;
+    height: 40px;
+    background-color: #171717e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-tools-button {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    font-size: 14px;
+}
+
+#message-listen:active, #message-translate:active {
+    color: #2d95fcd3;
+    cursor: default;
 }
