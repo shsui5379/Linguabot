@@ -1,9 +1,14 @@
 import Sequelize from "sequelize";
 
+import ChatDatabase from "./ChatDatabase";
+import MessageDatabase from "./MessageDatabase";
+
 import User from "../types/User";
 import { Language } from "../types/Language"
 
 const sequelize = new Sequelize.Sequelize(process.env.POSTGRES_URL!, { logging: false });
+
+// ---- Models ----
 
 class UserDatabase extends Sequelize.Model { };
 
@@ -52,9 +57,21 @@ UserDatabase.init({
     }
 }, { sequelize });
 
-// post-MVP stretch goal: UserDatabase.hasMany(NotesDatabase);
-// post-MVP stretch goal: UserDatabase.hasMany(ConversationHistoryDatabase);
-//                        foreignKey: "userId"
+ChatDatabase.init(sequelize);
+MessageDatabase.init(sequelize);
+
+// ---- Relationships ----
+
+ChatDatabase.ChatDatabase.hasMany(MessageDatabase.MessageDatabase, { foreignKey: "chatId" });
+MessageDatabase.MessageDatabase.belongsTo(ChatDatabase.ChatDatabase, { foreignKey: "chatId" });
+
+UserDatabase.hasMany(ChatDatabase.ChatDatabase, { foreignKey: "userId" });
+ChatDatabase.ChatDatabase.belongsTo(UserDatabase, { foreignKey: "userId" });
+
+UserDatabase.belongsToMany(MessageDatabase.MessageDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "userId" });
+MessageDatabase.MessageDatabase.belongsToMany(UserDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "chatId" });
+
+// ---- DB Functions ----
 
 async function initialize() {
     await sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
@@ -64,6 +81,8 @@ async function initialize() {
 async function close() {
     await sequelize.close();
 }
+
+// ---- User Functions ----
 
 /**
  * Fetches a User object by its ID
@@ -117,6 +136,11 @@ async function createUser(userId: string, firstName: string, lastName: string, u
 
     return null;
 }
+
+// ---- Chat Functions ----
+
+
+// ---- Message Functions ----
 
 
 export default { fetchUser, createUser, initialize, close };
