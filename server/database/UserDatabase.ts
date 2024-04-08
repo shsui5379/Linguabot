@@ -137,10 +137,5 @@ async function createUser(userId: string, firstName: string, lastName: string, u
     return null;
 }
 
-// ---- Chat Functions ----
-
-
-// ---- Message Functions ----
-
 
 export default { fetchUser, createUser, initialize, close };
