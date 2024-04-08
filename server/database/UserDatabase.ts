@@ -68,8 +68,8 @@ MessageDatabase.MessageDatabase.belongsTo(ChatDatabase.ChatDatabase, { foreignKe
 UserDatabase.hasMany(ChatDatabase.ChatDatabase, { foreignKey: "userId" });
 ChatDatabase.ChatDatabase.belongsTo(UserDatabase, { foreignKey: "userId" });
 
-UserDatabase.belongsToMany(MessageDatabase.MessageDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "userId" });
-MessageDatabase.MessageDatabase.belongsToMany(UserDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "chatId" });
+UserDatabase.belongsToMany(MessageDatabase.MessageDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "userId", sourceKey: "userId", otherKey: "chatId", targetKey: "chatId" });
+MessageDatabase.MessageDatabase.belongsToMany(UserDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "chatId", sourceKey: "chatId", otherKey: "userId", targetKey: "userId" });
 
 // ---- DB Functions ----
 
