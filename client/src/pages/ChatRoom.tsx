@@ -59,7 +59,7 @@ export default function ChatRoom() {
           <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+              <button className="message-tools-button" id="message-listen" onClick={textToSpeech}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
               <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
@@ -69,6 +69,18 @@ export default function ChatRoom() {
     }).reverse();
   }
 
+  // Text to Speech 
+  async function textToSpeech() {  
+    if ('speechSynthesis' in window) {
+      // Speech Synthesis supported 🎉
+     }else{
+       alert("Sorry, your browser doesn't support text to speech!");
+     }
+    var msg = new SpeechSynthesisUtterance(); 
+    console.log(initial_message.current);
+    msg.text = "Hello World! This is Kevin";
+    window.speechSynthesis.speak(msg);
+  }
 
   // Handles form submission
   async function handleFormSubmit(event) {
