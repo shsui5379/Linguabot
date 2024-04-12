@@ -11,6 +11,7 @@ export default function UserName({ firstName, lastName, setFirstName, setLastNam
       <div id="name-page">
         <p id="name-instruction">Enter your name</p>
         <form id="name-form" onSubmit={handleSubmit}>
+          {/** First name */}
           <input type="text"
             required
             id="first-name"
@@ -21,6 +22,8 @@ export default function UserName({ firstName, lastName, setFirstName, setLastNam
             onChange={(event) => setFirstName(event.target.value)}
             value={firstName}>
           </input>
+
+          {/** Last name */}
           <input type="text"
             required
             id="last-name"

@@ -12,6 +12,7 @@ export default function SelectLanguage({selected, setSelected, setFlowState}) {
     setFlowState();
   };
 
+  // Buttons of languages supported
   const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   var rendered_languages = [languages_supported.map((item) =>
     <button className={`lang-unique-button ${item === selected ? "active" : ""}`}
@@ -27,6 +28,7 @@ export default function SelectLanguage({selected, setSelected, setFlowState}) {
       <div className="lang-unique-text">{item}</div>
     </button>
   )];
+
   return (
     <>
       <p id="lang-select-instruction-title">Please select your target language.</p>
