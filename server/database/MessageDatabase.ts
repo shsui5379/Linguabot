@@ -25,9 +25,12 @@ function init(sequelize: Sequelize.Sequelize) {
             allowNull: false,
             defaultValue: false
         },
-        human: {
-            type: Sequelize.DataTypes.BOOLEAN,
-            allowNull: false
+        role: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                is: new RegExp("system|assistant|user")
+            }
         }
     }, { sequelize });
 }
