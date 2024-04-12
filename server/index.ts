@@ -11,6 +11,7 @@ import chat from "./routes/chat"
 import user from "./routes/user";
 const { auth, requiresAuth } = require('express-openid-connect');
 
+import Database from "./database/Database";
 import UserDatabase from "./database/UserDatabase";
 
 app.set('view engine', 'ejs');
@@ -25,7 +26,7 @@ const config = {
 };
 
 (async () => {
-    await UserDatabase.initialize();
+    await Database.initialize();
 })();
 
 app.use(auth(config));
@@ -34,10 +35,6 @@ app.use(express.json({ strict: false }));
 app.use('/', authRouter);
 app.use("/api/chat", chat);
 app.use("/api/user", user);
-
-(async () => {
-    await UserDatabase.initialize();
-})();
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 

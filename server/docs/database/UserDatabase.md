@@ -23,6 +23,7 @@ Each User shall have:
   - return the associated User if found
 - createUser(userId: string, firstName: string, lastName: string, userLanguage: Language, targetLanguages[]: Language): [user: User, newlyCreated: bool]
   - attempts to create the user and return it. If it already exists, will return the preexiting User and notify via newlyCreated = 0
+- **Below two are moved to Database.ts**
 - initialize(): void
   - initializes database connections and model
 - close(): void

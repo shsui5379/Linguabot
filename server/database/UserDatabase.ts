@@ -1,74 +1,57 @@
 import Sequelize from "sequelize";
 
-import ChatDatabase from "./ChatDatabase";
-import MessageDatabase from "./MessageDatabase";
-
 import User from "../types/User";
 import { Language } from "../types/Language"
-
-const sequelize = new Sequelize.Sequelize(process.env.POSTGRES_URL!, { logging: false });
 
 // ---- Models ----
 
 class UserDatabase extends Sequelize.Model { };
 
-UserDatabase.init({
-    firstName: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
-    lastName: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
-    },
-    userLanguage: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        defaultValue: "English",
-        validate: {
-            is: new RegExp("English|Spanish|French|Mandarin|Japanese|Korean")
-        }
-    },
-    targetLanguages: {
-        type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING),
-        allowNull: false,
-        validate: {
-            min: 1,
-            isValidLanguage: function (value) {
-                if (!value) return value;
-
-                let values = (Array.isArray(value)) ? value : [value];
-
-                values.forEach(function (val) {
-                    if (!(new RegExp("English|Spanish|French|Mandarin|Japanese|Korean").test(val))) {
-                        throw new Error("Invalid language.");
-                    }
-                });
-                return value;
+function init(sequelize: Sequelize.Sequelize) {
+    UserDatabase.init({
+        firstName: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false
+        },
+        lastName: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false
+        },
+        userLanguage: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "English",
+            validate: {
+                is: new RegExp("English|Spanish|French|Mandarin|Japanese|Korean")
             }
+        },
+        targetLanguages: {
+            type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING),
+            allowNull: false,
+            validate: {
+                min: 1,
+                isValidLanguage: function (value) {
+                    if (!value) return value;
 
+                    let values = (Array.isArray(value)) ? value : [value];
+
+                    values.forEach(function (val) {
+                        if (!(new RegExp("English|Spanish|French|Mandarin|Japanese|Korean").test(val))) {
+                            throw new Error("Invalid language.");
+                        }
+                    });
+                    return value;
+                }
+
+            }
+        },
+        userId: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            primaryKey: true,
+            unique: true
         }
-    },
-    userId: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false,
-        primaryKey: true,
-        unique: true
-    }
-}, { sequelize });
-
-ChatDatabase.init(sequelize);
-MessageDatabase.init(sequelize);
-
-// ---- DB Functions ----
-
-async function initialize() {
-    await sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
-    await sequelize.sync({ alter: true }).catch((error) => { console.error("Error syncing database model: ", error) });
-}
-
-async function close() {
-    await sequelize.close();
+    }, { sequelize });
 }
 
 // ---- User Functions ----
@@ -127,4 +110,4 @@ async function createUser(userId: string, firstName: string, lastName: string, u
 }
 
 
-export default { fetchUser, createUser, initialize, close };
+export default { fetchUser, createUser, init };
