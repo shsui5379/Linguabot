@@ -1,5 +1,4 @@
 import Sequelize from "sequelize";
-import MessageDatabase from "./MessageDatabase";
 
 class ChatDatabase extends Sequelize.Model { };
 
