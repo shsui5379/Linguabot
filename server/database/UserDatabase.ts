@@ -60,17 +60,6 @@ UserDatabase.init({
 ChatDatabase.init(sequelize);
 MessageDatabase.init(sequelize);
 
-// ---- Relationships ----
-
-ChatDatabase.ChatDatabase.hasMany(MessageDatabase.MessageDatabase, { foreignKey: "chatId" });
-MessageDatabase.MessageDatabase.belongsTo(ChatDatabase.ChatDatabase, { foreignKey: "chatId" });
-
-UserDatabase.hasMany(ChatDatabase.ChatDatabase, { foreignKey: "userId" });
-ChatDatabase.ChatDatabase.belongsTo(UserDatabase, { foreignKey: "userId" });
-
-UserDatabase.belongsToMany(MessageDatabase.MessageDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "userId", sourceKey: "userId", otherKey: "chatId", targetKey: "chatId" });
-MessageDatabase.MessageDatabase.belongsToMany(UserDatabase, { through: ChatDatabase.ChatDatabase, foreignKey: "chatId", sourceKey: "chatId", otherKey: "userId", targetKey: "userId" });
-
 // ---- DB Functions ----
 
 async function initialize() {
