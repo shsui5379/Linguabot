@@ -3,16 +3,18 @@
 
 import express from "express";
 import path from "path";
-import "dotenv/config";
 
-const app = express();
 import authRouter from "./routes/auth";
-import chat from "./routes/chat"
+import chat from "./routes/chat";
 import user from "./routes/user";
-const { auth, requiresAuth } = require('express-openid-connect');
 
 import Database from "./database/Database";
 import UserDatabase from "./database/UserDatabase";
+
+import "dotenv/config";
+
+const app = express();
+const { auth, requiresAuth } = require('express-openid-connect');
 
 app.set('view engine', 'ejs');
 
@@ -30,8 +32,7 @@ const config = {
 })();
 
 app.use(auth(config));
-app.use(express.json({ strict: false }));
-
+app.use(express.json());
 app.use('/', authRouter);
 app.use("/api/chat", chat);
 app.use("/api/user", user);
@@ -51,7 +52,6 @@ app.use((req, res, next) => {
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     }
 });
-
 
 // Start the server 
 const PORT = process.env.PORT || 8080;
