@@ -15,10 +15,12 @@ Class representing a user
 - constructor to initialize all members
 - getters/setters for above public members
   - setters will also save the updated value into databaseRecord
-- fetchNotes(): Note[]
-  - post-MVP stretch goal
-- fetchConversationHistory(): Conversation[]
-  - post-MVP stretch goal
+- fetchNotes(language = "*": Language | "\*"): Message[]
+  - 
+- fetchChats(language = "*": Language | "\*"): Chat[]
+  - 
+- fetchStarred(langauge = "*": Language | "\*"): Message[]
+  - 
 - delete(): void
   - deletes the user
 - toJSON(): Object

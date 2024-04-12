@@ -1,9 +1,10 @@
 import "dotenv/config";
+import Database from "./Database";
 import UserDatabase from "./UserDatabase";
 
-beforeAll(async () => await UserDatabase.initialize());
+beforeAll(async () => await Database.initialize());
 
-afterAll(async () => await UserDatabase.close());
+afterAll(async () => await Database.close());
 
 test("guards against unreasonable user data parameters during creation", async () => {
     await expect(() => UserDatabase.createUser("", "John", "Doe", "English", ["Spanish"])).rejects.toThrow("User Id cannot have 0 length");
