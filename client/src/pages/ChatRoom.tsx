@@ -49,17 +49,18 @@ export default function ChatRoom() {
 
   function getMessages() {
     return messages.messageHistory.map((message, index) => {
+      let message_string = message.content?.toString() as string;
       // Skip the configuration message
       if (index === 0)
         return <></>;
       return (
       <>
         <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message_string}</p>
           <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen" onClick={textToSpeech}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+              <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
               <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
@@ -70,15 +71,17 @@ export default function ChatRoom() {
   }
 
   // Text to Speech 
-  async function textToSpeech() {  
+  async function textToSpeech(message_to_speak: string) {  
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};
+    
     if ('speechSynthesis' in window) {
       // Speech Synthesis supported 🎉
-     }else{
-       alert("Sorry, your browser doesn't support text to speech!");
-     }
-    var msg = new SpeechSynthesisUtterance(); 
-    console.log(initial_message.current);
-    msg.text = "Hello World! This is Kevin";
+    } else {
+      alert("Sorry, your browser doesn't support text to speech!");
+    }
+
+    var msg = new SpeechSynthesisUtterance(message_to_speak); 
+    msg.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
     window.speechSynthesis.speak(msg);
   }
 
