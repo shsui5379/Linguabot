@@ -26,6 +26,8 @@ export default function ChatRoom() {
     </div>
   )];
 
+  var targetLanguage = "";
+
   // Do user fetching on mount
   useEffect(() => {
     initial_message_map.current.set("English", "Hello! I'm Linguabot, your personal conversational partner. What would you like to talk about today?");
@@ -36,8 +38,10 @@ export default function ChatRoom() {
     initial_message_map.current.set("Korean", "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?");
     User.fetchUser().then((user) => {
       user_info.current = user;
-      setMessages(new ChatSession([], `You are a conversational language partner. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
-      initial_message.current = initial_message_map.current.get(user_info.current.targetLanguages[0]);
+      targetLanguage = user_info.current.targetLanguages[0];
+      console.log("42 targetlang " + targetLanguage);
+      setMessages(new ChatSession([], `You are a conversational language partner. Only respond back to the user in ${targetLanguage}. Do not ever respond back in another language even if the user switches language.`));
+      initial_message.current = initial_message_map.current.get(targetLanguage);
     });
   }, []);
 
@@ -49,17 +53,18 @@ export default function ChatRoom() {
 
   function getMessages() {
     return messages.messageHistory.map((message, index) => {
+      let message_string = message.content?.toString() as string;
       // Skip the configuration message
       if (index === 0)
         return <></>;
       return (
       <>
         <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message_string}</p>
           <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen" onClick={textToSpeech}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+              <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
               <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
@@ -70,15 +75,30 @@ export default function ChatRoom() {
   }
 
   // Text to Speech 
-  async function textToSpeech() {  
-    if ('speechSynthesis' in window) {
+  async function textToSpeech(message_to_speak: string) {  
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};
+    // const access_locales = (lang: keyof typeof locales) => {
+    //   return locales[lang];
+    // };
+    console.log("targetlang " + targetLanguage + '\n');
+    console.log("LOCAL LANGES " + locales[targetLanguage as keyof typeof locales]);
+    let targetVoice;
+    for (let voice of speechSynthesis.getVoices()) {
+      // if (voice.lang === access_locales[targetLanguage] ) {
+      //     targetVoice= voice;
+      //     break;
+      // }
+    }
+
+    if ('speechSynthesis' in window && targetVoice) {
       // Speech Synthesis supported 🎉
-     }else{
-       alert("Sorry, your browser doesn't support text to speech!");
-     }
+    } else {
+      alert("Sorry, your browser doesn't support text to speech!");
+    }
     var msg = new SpeechSynthesisUtterance(); 
-    console.log(initial_message.current);
-    msg.text = "Hello World! This is Kevin";
+    console.log(message_to_speak);
+    // msg.voice = targetVoice;
+    msg.text = message_to_speak;
     window.speechSynthesis.speak(msg);
   }
 
