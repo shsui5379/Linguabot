@@ -73,16 +73,15 @@ export default function ChatRoom() {
   // Text to Speech 
   async function textToSpeech(message_to_speak: string) {  
     const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};
-    let targetLang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
-
+    
     if ('speechSynthesis' in window) {
       // Speech Synthesis supported 🎉
     } else {
       alert("Sorry, your browser doesn't support text to speech!");
     }
-    var msg = new SpeechSynthesisUtterance(); 
-    msg.text = message_to_speak;
-    msg.lang = targetLang;
+
+    var msg = new SpeechSynthesisUtterance(message_to_speak); 
+    msg.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
     window.speechSynthesis.speak(msg);
   }
 
