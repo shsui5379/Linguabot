@@ -1,5 +1,4 @@
 import OpenAI from "openai";
-import UserDatabase from "../database/UserDatabase";
 require("dotenv").config();
 
 const router = require("express").Router();
