@@ -12,3 +12,8 @@ Each Message shall have:
 - starred boolean
 - role (system, assistant, user)
 - timestamp as unix time stamp number
+
+## Methods
+- fetchMessage(messageId: string): Message
+- fetchMessages(userId: string, language?: Language, hasStar?: bool, hasNote?: bool): Message[]
+- createMessage(messageId, chatId, content, role)
