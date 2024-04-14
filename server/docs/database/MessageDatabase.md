@@ -10,4 +10,5 @@ Each Message shall have:
 - content
 - note
 - starred boolean
-- human boolean
+- role (system, assistant, user)
+- timestamp as unix time stamp number

@@ -31,6 +31,11 @@ function init(sequelize: Sequelize.Sequelize) {
             validate: {
                 is: new RegExp("system|assistant|user")
             }
+        },
+        timestamp: {
+            type: Sequelize.DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: Date.now()
         }
     }, { sequelize });
 }
