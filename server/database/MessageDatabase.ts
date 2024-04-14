@@ -35,7 +35,7 @@ function init(sequelize: Sequelize.Sequelize) {
         timestamp: {
             type: Sequelize.DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: Date.now()
+            defaultValue: () => Date.now()
         }
     }, { sequelize });
 }
