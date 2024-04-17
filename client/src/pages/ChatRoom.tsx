@@ -12,7 +12,8 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new Conversation([], ""));
   const [inputMessage, setInputMessage] = useState('');
-  const [savedMessage, setSavedMessage] = useState(false);
+  const [savedMessage, setSavedMessage] = useState(false); 
+  const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
   const user_info: any = useRef();
   const initial_message = useRef("");
@@ -85,6 +86,31 @@ export default function ChatRoom() {
     window.speechSynthesis.speak(msg);
   }
 
+  //Speech to Text 
+  async function speechToText() { 
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.start();
+    setSpeechStatus('Listening'); 
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      setInputMessage(transcript)
+    };
+
+    recognition.onspeechend = function() { 
+      setSpeechStatus('Type Something...')
+      recognition.stop();
+    };
+
+    recognition.onerror = function(event) {
+      setInputMessage('Error occurred in recognition: ' + event.error)
+  };
+
+  }
+
   // Handles form submission
   async function handleFormSubmit(event) {
     event.preventDefault();
@@ -144,11 +170,11 @@ export default function ChatRoom() {
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder="Type something..."
+                placeholder={speechStatus}
                 value={inputMessage}
                 onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id="speech-to-text-icon"/></button>
+          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id="speech-to-text-icon" onClick={speechToText}/></button>
           <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
