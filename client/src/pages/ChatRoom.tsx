@@ -101,24 +101,26 @@ export default function ChatRoom() {
     recognition.onresult = function(event) {
       const transcript = event.results[0][0].transcript;
       setInputMessage(transcript);
+      setMicStatus(micStatus);
     };
 
     recognition.onspeechend = function() { 
       setSpeechStatus('Type Something...')
       recognition.stop();
+      setMicStatus(micStatus);
     };
 
     recognition.onerror = function(event) {
-      setInputMessage('Error occurred in recognition: ' + event.error);
+      alert('Error occurred in recognition: ' + event.error);
+      setMicStatus(micStatus);
+      setSpeechStatus('Type Something...');
     };
-
-    setMicStatus(micStatus);
   }
 
   // Handles form submission
   async function handleFormSubmit(event) {
     event.preventDefault();
-    if(inputMessage.length > 0) {
+    if(inputMessage.trim().length > 0) {
       let updated_messages = new Conversation(messages.messageHistory);
       updated_messages.send(inputMessage);
       setInputMessage('');
