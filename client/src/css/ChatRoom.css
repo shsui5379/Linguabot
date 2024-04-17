@@ -276,7 +276,7 @@ button:hover {
 }
 
 .bot-text {
-    margin-left: 3%;
+    left: 19px;
     float: left;
     color: var(--white);
     background-color: #1d5c9bd3;
