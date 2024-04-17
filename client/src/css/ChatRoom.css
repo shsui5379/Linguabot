@@ -87,7 +87,7 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -5px;
+    margin-left: -9px;
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
@@ -124,7 +124,7 @@ input:focus {
     outline: none;
 }
 
-button:hover, #user-text-send {
+button:hover {
     cursor: pointer;
 }
 
@@ -159,7 +159,7 @@ button:hover, #user-text-send {
     padding-left: 25px;
 }
 
-#user-text-send {
+#user-text-send, #speech-to-text {
     margin-right: 20px;
     font-size: 16px;
     background-color: transparent;
@@ -172,6 +172,16 @@ button:hover, #user-text-send {
     filter: opacity(0.8);
     width: 25px;
     height: 20px;
+}
+
+#speech-to-text-icon {
+    display: flex;
+    width: 13px;
+}
+
+#user-text-send:active, #speech-to-text:active {
+    color: var(--blue);
+    cursor: default;    
 }
 
 /* Text messages */
