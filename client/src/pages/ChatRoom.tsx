@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
-// import { Conversation } from "../types/Conversation";
+import { Conversation } from "../types/Conversation";
 import User from "../types/User";
 
 export default function ChatRoom() {
