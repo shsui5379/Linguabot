@@ -7,6 +7,7 @@ import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
 import User from "../types/User";
+import { addListener } from "process";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
@@ -15,6 +16,7 @@ export default function ChatRoom() {
   const [savedMessage, setSavedMessage] = useState(false); 
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
+  const [micStatus, setMicStatus] = useState(false);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
@@ -88,6 +90,7 @@ export default function ChatRoom() {
 
   //Speech to Text 
   async function speechToText() { 
+    setMicStatus(!micStatus);
     const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
@@ -97,7 +100,7 @@ export default function ChatRoom() {
     setSpeechStatus('Listening...'); 
     recognition.onresult = function(event) {
       const transcript = event.results[0][0].transcript;
-      setInputMessage(transcript)
+      setInputMessage(transcript);
     };
 
     recognition.onspeechend = function() { 
@@ -106,21 +109,24 @@ export default function ChatRoom() {
     };
 
     recognition.onerror = function(event) {
-      setInputMessage('Error occurred in recognition: ' + event.error)
-  };
+      setInputMessage('Error occurred in recognition: ' + event.error);
+    };
 
+    setMicStatus(micStatus);
   }
 
   // Handles form submission
   async function handleFormSubmit(event) {
     event.preventDefault();
-    let updated_messages = new Conversation(messages.messageHistory);
-    updated_messages.send(inputMessage);
-    setInputMessage('');
-    setMessages(updated_messages);
-    updated_messages = new Conversation(updated_messages.messageHistory);
-    await updated_messages.receive();
-    setMessages(updated_messages);
+    if(inputMessage.length > 0) {
+      let updated_messages = new Conversation(messages.messageHistory);
+      updated_messages.send(inputMessage);
+      setInputMessage('');
+      setMessages(updated_messages);
+      updated_messages = new Conversation(updated_messages.messageHistory);
+      await updated_messages.receive();
+      setMessages(updated_messages);
+    }
   }
 
   const handleLogout = () => { 
@@ -174,7 +180,7 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id="speech-to-text-icon" onClick={speechToText}/></button>
+          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micStatus ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={speechToText}/></button>
           <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>

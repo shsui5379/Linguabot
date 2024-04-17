@@ -174,13 +174,16 @@ button:hover {
     height: 20px;
 }
 
-#speech-to-text-icon {
+#speech-to-text-icon, #speech-to-text-icon-active {
     display: flex;
     width: 13px;
 }
 
-#user-text-send:active, #speech-to-text:active {
+#speech-to-text-icon-active, #user-text-send:active {
     color: var(--blue);
+}
+
+#user-text-send:active {
     cursor: default;    
 }
 
@@ -189,7 +192,7 @@ button:hover {
     height: 100%;
     width: 80%;
     margin-left: 20%;
-    margin-bottom: 120px;
+    margin-bottom: 100px;
     left: 0%;
     bottom: 0%;
     display: flex;
@@ -200,7 +203,7 @@ button:hover {
 
 #chat-messages {
     width: 100%;
-    max-height: 82%;
+    max-height: 80%;
     padding-right: 8%;
     margin-left: 10%;
     display: flex;
