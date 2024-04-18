@@ -17,11 +17,11 @@ function init(sequelize: Sequelize.Sequelize) {
             allowNull: false
         },
         content: {
-            type: Sequelize.DataTypes.STRING,
+            type: Sequelize.DataTypes.STRING(1024),
             allowNull: false
         },
         note: {
-            type: Sequelize.DataTypes.STRING
+            type: Sequelize.DataTypes.STRING(1024)
         },
         starred: {
             type: Sequelize.DataTypes.BOOLEAN,
@@ -86,7 +86,7 @@ async function fetchMessage(messageId: string): Promise<Message | null> {
 async function createMessage(messageId: string, chatId: string, content: string, role: "system" | "assistant" | "user"): Promise<Message> {
     if (messageId.length === 0) throw new Error("Message ID cannot be empty");
     if (chatId.length === 0) throw new Error("Chat ID cannot be empty");
-    if (content.length === 0) throw new Error("Content cannot be empty");
+    if (content.length === 0 || content.length > 1024) throw new Error("Content length needs to be 1-1024 characters long");
 
     try {
         const [instance, justCreated] = await MessageDatabase.findOrCreate({

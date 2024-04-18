@@ -44,6 +44,8 @@ class Message {
     }
 
     async setNote(newNote: string) {
+        if (newNote.length > 1024) throw new Error("Max note length is 1024 characters");
+
         if (newNote = "") {
             this.#databaseRecord.note = null;
         } else {
@@ -68,8 +70,8 @@ class Message {
     }
 
     async setContent(newContent: string) {
-        if (newContent.length === 0) {
-            throw new Error("Message content cannot be empty");
+        if (newContent.length === 0 || newContent.length > 1024) {
+            throw new Error("Message content length needs to be 1-1024 characters long");
         }
 
         this.#databaseRecord.content = newContent;
