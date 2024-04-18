@@ -11,7 +11,7 @@ Each Chat shall have:
 - nickname to title the chat
 
 # Exported functions
-- async createChat(userId: string, chatId, language: Language): Chat
+- async createChat(userId: string, chatId, nickname: string, language: Language): Chat
   - creates a new Chat based on the given details
 - async fetchChats(userId: string, language?: Language): Chat[]
   - fetch Chat objects for the current user

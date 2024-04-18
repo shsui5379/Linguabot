@@ -38,16 +38,18 @@ function init(sequelize: Sequelize.Sequelize) {
  * @param language The Language the Chat is in
  * @returns The Chat object that was created, or a thrown Error if chatId already exists
  */
-async function createChat(chatId: string, userId: string, language: Language): Promise<Chat> {
+async function createChat(chatId: string, userId: string, nickname: string, language: Language): Promise<Chat> {
     if (chatId.length === 0) throw new Error("chatId cannot have 0 length");
     if (userId.length === 0) throw new Error("userId cannot have 0 length");
+    if (nickname.length === 0 || nickname.length > 255) throw new Error("Nickname needs to be between 1-255 length");
 
     try {
         const [instance, justCreated] = await ChatDatabase.findOrCreate({
             where: { chatId: chatId },
             defaults: {
                 userId: userId,
-                language: language
+                language: language,
+                nickname: nickname
             }
         });
 
