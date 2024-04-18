@@ -9,7 +9,8 @@ function init(sequelize: Sequelize.Sequelize) {
         chatId: {
             type: Sequelize.DataTypes.STRING,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            unique: true
         },
         userId: {
             type: Sequelize.DataTypes.STRING,
