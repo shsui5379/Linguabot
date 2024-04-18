@@ -21,6 +21,10 @@ function init(sequelize: Sequelize.Sequelize) {
             validate: {
                 is: new RegExp("English|Spanish|French|Mandarin|Japanese|Korean")
             }
+        },
+        nickname: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false
         }
     }, { sequelize });
 }
