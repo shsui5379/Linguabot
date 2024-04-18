@@ -31,6 +31,10 @@ class Chat {
         this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving nickname of chat " + this.#databaseRecord.chatId, e) });
     }
 
+    get timestamp(): number {
+        return this.#databaseRecord.timestamp
+    }
+
     async delete() {
         await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.chatId, e) });
     }

@@ -15,6 +15,8 @@ Class representing an instance of a Chat
 - nickname: string
   - public setters/getters
   - pulled from record
+- timestamp
+  - unix time
 
 ## Methods
 - constructor(record)

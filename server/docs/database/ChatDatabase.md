@@ -9,6 +9,7 @@ Each Chat shall have:
 - the id of the User it belongs to: foreign key connecting from User
 - language that the Chat is in
 - nickname to title the chat
+- timestamp in unix time in case we need to sort
 
 # Exported functions
 - async createChat(userId: string, chatId, nickname: string, language: Language): Chat

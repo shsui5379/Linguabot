@@ -26,6 +26,11 @@ function init(sequelize: Sequelize.Sequelize) {
         nickname: {
             type: Sequelize.DataTypes.STRING,
             allowNull: false
+        },
+        timestamp: {
+            type: Sequelize.DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: () => Date.now()
         }
     }, { sequelize });
 }
@@ -49,7 +54,8 @@ async function createChat(chatId: string, userId: string, nickname: string, lang
             defaults: {
                 userId: userId,
                 language: language,
-                nickname: nickname
+                nickname: nickname,
+                timestamp: Date.now()
             }
         });
 
