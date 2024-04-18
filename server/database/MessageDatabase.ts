@@ -46,7 +46,7 @@ function init(sequelize: Sequelize.Sequelize) {
 /**
  * Fetches an array of Messages based on given filtering criteria.
  * @param userId ID of the User to fetch Messages for
- * @param chatId ID of the Chat the the Message originated from.
+ * @param chatId ID of the Chat the the Message originated from. Omit to select all.
  * @param language Language of the Messages to fetch. Omit to select all.
  * @param mustHaveStar Whether the Messages fetched shall be starred messages. Omit to select all.
  * @param mustHaveNote Whether the Messages fetched shall have a Note. Omit to select all.
