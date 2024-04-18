@@ -15,5 +15,5 @@ Each Message shall have:
 
 ## Methods
 - fetchMessage(messageId: string): Message
-- fetchMessages(userId: string, language?: Language, hasStar?: bool, hasNote?: bool): Message[]
+- fetchMessages(userId: string, language?: Language, mustHaveStar?: bool, mustHaveNote?: bool): Message[]
 - createMessage(messageId: string, chatId: string, content: string, role: "system" | "user" | "assistant"): Message
