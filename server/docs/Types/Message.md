@@ -33,3 +33,5 @@ Class representing an instance of a Message
 ## Methods
 - constructor(record)
 - async delete()
+- toJSON()
+  - has all properties except for the database record object itself
