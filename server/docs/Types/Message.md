@@ -23,10 +23,10 @@ Class representing an instance of a Message
 - content: string
   - via public setters getters
   - pulled from record
-- role
+- role: string
   - pulled from record
   - assistant | user | system
-- timestamp
+- timestamp: number
   - pulled from record
   - unix time
 
