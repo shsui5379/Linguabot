@@ -49,11 +49,11 @@ function init(sequelize: Sequelize.Sequelize) {
  * @param userId ID of the User to fetch Messages for
  * @param chatId ID of the Chat the the Message originated from. Omit or ".*" to select all.
  * @param language Language of the Messages to fetch. Omit or ".*" to select all.
- * @param mustHaveStar Whether the Messages fetched shall be starred messages. Omit or ".*" to select all.
- * @param mustHaveNote Whether the Messages fetched shall have a Note. Omit to select all.
+ * @param mustHaveStar Whether the Messages fetched must be starred messages
+ * @param mustHaveNote Whether the Messages fetched must have a Note
  * @returns Array of Messages matching the filtering criteria.
  */
-async function fetchMessages(userId: string, chatId: string = ".*", language: Language | ".*" = ".*", mustHaveStar: boolean | ".*" = ".*", mustHaveNote: boolean | ".*" = ".*"): Promise<Message[]> {
+async function fetchMessages(userId: string, chatId: string = ".*", language: Language | ".*" = ".*", mustHaveStar: boolean, mustHaveNote: boolean): Promise<Message[]> {
 
 }
 
