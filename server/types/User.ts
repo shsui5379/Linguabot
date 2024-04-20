@@ -63,10 +63,6 @@ class User {
             userId: this.userId
         };
     }
-
-    // fetchConversationHistory: post-MVP stretch goal
-
-    // fetchNotes: post-MVP stretch goal
-};
+}
 
 export default User;

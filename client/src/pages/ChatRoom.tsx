@@ -2,18 +2,21 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
 import User from "../types/User";
+import { addListener } from "process";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new Conversation([], ""));
   const [inputMessage, setInputMessage] = useState('');
-  const [savedMessage, setSavedMessage] = useState(false);
+  const [savedMessage, setSavedMessage] = useState(false); 
+  const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
+  const [micStatus, setMicStatus] = useState(false);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
@@ -36,7 +39,7 @@ export default function ChatRoom() {
     initial_message_map.current.set("Korean", "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?");
     User.fetchUser().then((user) => {
       user_info.current = user;
-      setMessages(new Conversation([], `You are a conversational language partner. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
+      setMessages(new Conversation([], `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
       initial_message.current = initial_message_map.current.get(user_info.current.targetLanguages[0]);
     });
   }, []);
@@ -49,17 +52,18 @@ export default function ChatRoom() {
 
   function getMessages() {
     return messages.messageHistory.map((message, index) => {
+      let message_string = message.content?.toString() as string;
       // Skip the configuration message
       if (index === 0)
         return <></>;
       return (
       <>
         <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message_string}</p>
           <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+              <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
               <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
@@ -68,18 +72,63 @@ export default function ChatRoom() {
       );
     }).reverse();
   }
+ 
+  // Text to Speech 
+  async function textToSpeech(message_to_speak: string) {  
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    if ('speechSynthesis' in window) {
+      // Speech Synthesis supported 🎉
+    } else {
+      alert("Sorry, your browser doesn't support text to speech!");
+    }
 
+    var msg = new SpeechSynthesisUtterance(message_to_speak); 
+    msg.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
+    msg.rate = 0.9;
+    window.speechSynthesis.speak(msg);
+  }
+
+  //Speech to Text 
+  async function speechToText() { 
+    setMicStatus(!micStatus);
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+    recognition.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.start();
+    setSpeechStatus('Listening...'); 
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      setInputMessage(transcript);
+      setMicStatus(micStatus);
+    };
+
+    recognition.onspeechend = function() { 
+      setSpeechStatus('Type Something...')
+      recognition.stop();
+      setMicStatus(micStatus);
+    };
+
+    recognition.onerror = function(event) {
+      alert('Error occurred in recognition: ' + event.error);
+      setMicStatus(micStatus);
+      setSpeechStatus('Type Something...');
+    };
+  }
 
   // Handles form submission
   async function handleFormSubmit(event) {
     event.preventDefault();
-    let updated_messages = new Conversation(messages.messageHistory);
-    updated_messages.send(inputMessage);
-    setInputMessage('');
-    setMessages(updated_messages);
-    updated_messages = new Conversation(updated_messages.messageHistory);
-    await updated_messages.receive();
-    setMessages(updated_messages);
+    if(inputMessage.trim().length > 0) {
+      let updated_messages = new Conversation(messages.messageHistory);
+      updated_messages.send(inputMessage);
+      setInputMessage('');
+      setMessages(updated_messages);
+      updated_messages = new Conversation(updated_messages.messageHistory);
+      await updated_messages.receive();
+      setMessages(updated_messages);
+    }
   }
 
   const handleLogout = () => { 
@@ -129,10 +178,11 @@ export default function ChatRoom() {
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder="Type something..."
+                placeholder={speechStatus}
                 value={inputMessage}
                 onChange={(event) => {setInputMessage(event.target.value)}}>
           </input>
+          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micStatus ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={speechToText}/></button>
           <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
