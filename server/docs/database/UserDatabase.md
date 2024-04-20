@@ -6,8 +6,16 @@ Wraps around Sequelize. Has User Model to perform userdata related database oper
 ## Procedures
 - connect to db and verify connection
 - define model that can house a User instance
-- set up relationships to Note and Conversation instances (post-MVP stretch goal)
+- set up relationships to Chat and Message instances
 - export select functions
+
+# Model
+Each User shall have:
+- an id: primary key to Chats
+- firstName
+- lastName
+- targetLanguages array
+- userLanguage
 
 ## Exported Functions
 - ALL ARE ASYNC!!!
@@ -15,6 +23,7 @@ Wraps around Sequelize. Has User Model to perform userdata related database oper
   - return the associated User if found
 - createUser(userId: string, firstName: string, lastName: string, userLanguage: Language, targetLanguages[]: Language): [user: User, newlyCreated: bool]
   - attempts to create the user and return it. If it already exists, will return the preexiting User and notify via newlyCreated = 0
+- **Below two are moved to Database.ts**
 - initialize(): void
   - initializes database connections and model
 - close(): void
