@@ -54,7 +54,32 @@ function init(sequelize: Sequelize.Sequelize) {
  * @returns Array of Messages matching the filtering criteria.
  */
 async function fetchMessages(userId: string, chatId: string = ".*", language: Language | ".*" = ".*", mustHaveStar: boolean, mustHaveNote: boolean): Promise<Message[]> {
+    let output = [];
 
+    let additionalFilters: any = {};
+    if (mustHaveStar) {
+        additionalFilters.starred = true;
+    }
+    if (mustHaveNote) {
+        additionalFilters.note = { [Sequelize.Op.not]: null }
+    }
+
+    const results = await MessageDatabase.findAll({
+        where: {
+            userId: userId,
+            chatId: { [Sequelize.Op.regexp]: chatId },
+            language: { [Sequelize.Op.regexp]: language },
+            ...additionalFilters
+        }
+    }).catch((error) => console.error("Error looking up messages ", userId, chatId, language, mustHaveStar, mustHaveNote, error));
+
+    if (results) {
+        for (let result of results) {
+            output.push(new Message(result));
+        }
+    }
+
+    return output;
 }
 
 /**
