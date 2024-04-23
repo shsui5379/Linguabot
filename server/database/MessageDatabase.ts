@@ -70,7 +70,10 @@ async function fetchMessages(userId: string, chatId: string = ".*", language: La
             chatId: { [Sequelize.Op.regexp]: chatId },
             language: { [Sequelize.Op.regexp]: language },
             ...additionalFilters
-        }
+        },
+        order: [
+            ["timestamp", "ASC"]
+        ]
     }).catch((error) => console.error("Error looking up messages ", userId, chatId, language, mustHaveStar, mustHaveNote, error));
 
     if (results) {

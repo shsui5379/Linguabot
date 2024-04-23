@@ -101,7 +101,10 @@ async function fetchChats(userId: string, language: Language | ".*" = ".*"): Pro
         where: {
             userId: userId,
             language: { [Sequelize.Op.regexp]: language }
-        }
+        },
+        order: [
+            ["timestamp", "ASC"]
+        ]
     }).catch((error) => console.error("Error looking up chats for ", userId, error));
 
     if (results) {
