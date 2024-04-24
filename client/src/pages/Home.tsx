@@ -12,13 +12,13 @@ export default function Home() {
   const navigateTo = useNavigate();
 
   var displayed_languages = [languages.map(item => 
-    <p className="language" id={item + "-home"}>
+    <span className="language" id={item + "-home"}>
       <img className="lang-flag" 
            id={item + "-home-flag"}
            src={require("/src/assets/flags/" + item +".png")}
            alt={item}></img>
       {item}
-    </p>
+    </span>
   )];
 
   // Probably look to repurpose upper-level "App" component as overarching "Client" for organizational reasons
@@ -32,8 +32,8 @@ export default function Home() {
       <div id="welcome-block">
         <div id="welcome-inner-block">
           <div id="welcome-inner-text">
-            <h1 className="welcome-title" id="welcome-title-upper">CHATBOT</h1>
-            <h2 className="welcome-title" id="welcome-title-lower">language partner</h2>
+            <h1 id="welcome-title-upper">CHATBOT</h1>
+            <h2 id="welcome-title-lower">language partner</h2>
             <p id="welcome-subtitle">Improve your language fluency by chatting with Linguabot!</p>
           </div>
           <img id="welcome-image" alt="Robot welcome" src="https://kioku-space.com/images/chatbot.webp"></img> 
@@ -45,21 +45,21 @@ export default function Home() {
 
       {/** Major Feature Overview */}
       <div id="major-features">
-        <h3 id="problem">Struggling to find a language practice partner?</h3>
-        <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
+        <h1>Struggling to find a language practice partner?</h1>
+        <p className="gray-text">Look no further! Linguabot uses GPT technology to help you practice 
                         <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div className="overview-feature">
-            <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
-            <p className="feature-description">Create a new account or <br></br>log in if you already have one!</p>
+            <p><FontAwesomeIcon icon={faUser} /><b> Your Account</b></p>
+            <span>Create a new account or <br></br>log in if you already have one!</span>
           </div>
           <div className="overview-feature">
-            <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>
-            <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
+            <p><FontAwesomeIcon icon={faLanguage} /><b> Language Selection</b></p>
+            <span>Select a target language <br></br>to practice with the bot!</span>
           </div>
           <div className="overview-feature">
-            <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
-            <p className="feature-description">Linguabot will chat with <br></br>you only in your target language!</p>
+            <p><FontAwesomeIcon icon={faRobot} /><b> AI Partner</b></p>
+            <span>Linguabot will chat with <br></br>you only in your target language!</span>
           </div>
         </div>
       </div>
@@ -71,8 +71,8 @@ export default function Home() {
                src={require("../assets/features/chat.png")}
                alt="Feature"></img>
             <div className="feature-highlight">
-              <p className="feature-highlight-title">Chat with Your Language Partner</p>
-              <p className="feature-highlight-description">
+              <h1>Chat with Your Language Partner</h1>
+              <p className="gray-text">
                 Linguabot will respond to your messages in your target language, regardless of any mistakes.
                 Talk about any topic and ask it any questions! 
               </p>
@@ -83,8 +83,8 @@ export default function Home() {
                 src={require("../assets/features/saved-conversations.png")}
                 alt="Feature"></img>
             <div className="feature-highlight">
-              <p className="feature-highlight-title">Organize Your Conversations</p>
-              <p className="feature-highlight-description">
+              <h1>Organize Your Conversations</h1>
+              <p className="gray-text">
                 Start a new conversation, pick up from where you last left off, or remove a saved conversation! <br></br><br></br>
                 You can save up to <b>10 chats</b> with each one lasting up to 30 days if it's not used. 
               </p>
@@ -106,8 +106,8 @@ export default function Home() {
 
       {/** Register */}
       <div id="join-now">
-        <div id="join-now-title">Improve your fluency with Linguabot!</div>
-        <div id="join-now-subtitle">Don't wait any longer to find a language partner.</div>
+        <h1>Improve your fluency with Linguabot!</h1>
+        <p>Don't wait any longer to find a language partner.</p>
         <button id="get-started-button"
           onClick={() => window.location.href = '/signup'}>
           GET STARTED   
