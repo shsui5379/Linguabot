@@ -12,7 +12,9 @@ import { addListener } from "process";
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new Conversation([], ""));
-  const [inputMessage, setInputMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState(''); 
+  const [translatedText, setTranslatedText] = useState('');
+  const [originalText, setOriginalText] = useState('');
   const [savedMessage, setSavedMessage] = useState(false); 
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
@@ -64,7 +66,7 @@ export default function ChatRoom() {
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
               <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-              <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
+              <button className="message-tools-button" id="message-translate" onClick={()=>translateText(message_string)}>{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
         </div>
@@ -115,7 +117,30 @@ export default function ChatRoom() {
       setMicStatus(micStatus);
       setSpeechStatus('Type Something...');
     };
-  }
+  } 
+
+  //Translate Text 
+  async function translateText(message_to_translate : string) { 
+    const locales = {Spanish: "es", Korean: "ko", Japanese: "ja", English: "en", Chinese: "zh", French: "fr"};  
+    const res = await fetch("https://translate.terraprint.co/translate", {
+        method: "POST",
+        body: JSON.stringify({
+            q: message_to_translate,
+            source: "en",
+            target: "zh",
+            format: "text"
+        }),
+        headers: { "Content-Type": "application/json" }
+    });
+    const datas = await res.json();
+    console.log(datas['translatedText']); 
+}
+
+
+//Revert translated Text 
+async function revertTranslation() { 
+
+}
 
   // Handles form submission
   async function handleFormSubmit(event) {
