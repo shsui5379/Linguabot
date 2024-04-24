@@ -13,8 +13,9 @@ export default function ChatRoom() {
   // States for keeping track of message history and current input message
   const [messages, setMessages] = useState(new Conversation([], ""));
   const [inputMessage, setInputMessage] = useState(''); 
-  const [translatedText, setTranslatedText] = useState('');
+  const [translatedStatus, setTranslatedStatus] = useState(false);
   const [originalText, setOriginalText] = useState('');
+  const [displayedText, setDisplayedText] = useState('');
   const [savedMessage, setSavedMessage] = useState(false); 
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
@@ -66,7 +67,7 @@ export default function ChatRoom() {
             <div id="message-tools-bot">
               <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
               <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-              <button className="message-tools-button" id="message-translate" onClick={()=>translateText(message_string)}>{<FontAwesomeIcon icon={faLanguage} />}</button>
+              <button className="message-tools-button" id="message-translate" onClick={()=>translateText(message_string, translatedStatus)}>{<FontAwesomeIcon icon={faLanguage} />}</button>
             </div>
           </div>
         </div>
@@ -78,6 +79,7 @@ export default function ChatRoom() {
   // Text to Speech 
   async function textToSpeech(message_to_speak: string) {  
     const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    setOriginalText(message_to_speak);
     if ('speechSynthesis' in window) {
       // Speech Synthesis supported 🎉
     } else {
@@ -120,22 +122,28 @@ export default function ChatRoom() {
   } 
 
   //Translate Text 
-  async function translateText(message_to_translate : string) { 
-    const locales = {Spanish: "es", Korean: "ko", Japanese: "ja", English: "en", Chinese: "zh", French: "fr"};  
-    const res = await fetch("https://translate.terraprint.co/translate", {
-        method: "POST",
-        body: JSON.stringify({
-            q: message_to_translate,
-            source: "en",
-            target: "zh",
-            format: "text"
-        }),
-        headers: { "Content-Type": "application/json" }
-    });
-    const datas = await res.json();
-    console.log(datas['translatedText']); 
+  async function translateText(message_to_translate : string, translated_is_true : boolean) { 
+    if(translated_is_true) {
+      setDisplayedText(originalText);
+      setTranslatedStatus(!translatedStatus);
+    } else {
+      const locales = {Spanish: "es", Korean: "ko", Japanese: "ja", English: "en", Chinese: "zh", French: "fr"};  
+      const res = await fetch("https://translate.terraprint.co/translate", {
+          method: "POST",
+          body: JSON.stringify({
+              q: message_to_translate,
+              source: locales[user_info.current.targetLanguages[0] as keyof typeof locales],
+              target: "en",
+              format: "text"
+          }),
+          headers: { "Content-Type": "application/json" }
+      });
+      const datas = await res.json();
+      setDisplayedText(datas['translatedText']);
+      setTranslatedStatus(!translatedStatus);
+      console.log(datas['translatedText']); 
+    }
 }
-
 
 //Revert translated Text 
 async function revertTranslation() { 

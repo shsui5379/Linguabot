@@ -26,14 +26,6 @@ body {
         justify-content: space-between;
     }
 
-    #English-home {
-        margin-left: var(--section-margin-side);
-    }
-    
-    #Korean-home {
-        margin-right: var(--section-margin-side);
-    }
-
     .feature-highlight-overview {
         display: inline-flex;
         justify-content: space-evenly;
@@ -128,6 +120,7 @@ body {
 #welcome-block {
     background-color: var(--blue);
     color: var(--white);
+    padding-bottom: 30px;
 }
 
 #welcome-inner-block {
@@ -172,7 +165,7 @@ body {
 
 #languages-offered {
     margin: 1%;
-    width: 95vw;    
+    width: 90%;    
     display: inline-flex;
     font-weight: 600;
     font-size: var(--text-font-size);
