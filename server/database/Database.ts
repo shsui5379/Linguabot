@@ -10,10 +10,10 @@ ChatDatabase.init(sequelize);
 MessageDatabase.init(sequelize);
 UserDatabase.init(sequelize);
 
-UserDatabase.UserDatabase.hasMany(ChatDatabase.ChatDatabase, { foreignKey: "userId" });
+UserDatabase.UserDatabase.hasMany(ChatDatabase.ChatDatabase, { foreignKey: "userId", onDelete: "CASCADE", hooks: true });
 ChatDatabase.ChatDatabase.belongsTo(UserDatabase.UserDatabase, { foreignKey: "userId" });
 
-ChatDatabase.ChatDatabase.hasMany(MessageDatabase.MessageDatabase, { foreignKey: "chatId" });
+ChatDatabase.ChatDatabase.hasMany(MessageDatabase.MessageDatabase, { foreignKey: "chatId", onDelete: "CASCADE", hooks: true });
 MessageDatabase.MessageDatabase.belongsTo(ChatDatabase.ChatDatabase, { foreignKey: "chatId" });
 
 async function initialize() {
