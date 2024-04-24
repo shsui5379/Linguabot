@@ -49,15 +49,15 @@ export default function Home() {
         <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
                         <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
-          <div id="feature-left">
+          <div className="overview-feature">
             <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
             <p className="feature-description">Create a new account or <br></br>log in if you already have one!</p>
           </div>
-          <div>
+          <div className="overview-feature">
             <p className="feature-title"><FontAwesomeIcon icon={faLanguage} /> Language Selection</p>
             <p className="feature-description">Select a target language <br></br>to practice with the bot!</p>
           </div>
-          <div id="feature-right">
+          <div className="overview-feature">
             <p className="feature-title"><FontAwesomeIcon icon={faRobot} /> AI Partner</p>
             <p className="feature-description">Linguabot will chat with <br></br>you only in your target language!</p>
           </div>
@@ -66,33 +66,29 @@ export default function Home() {
 
       {/** Highlighted Features */}
       <div id="feature-display">
-        <div className="feature-highlight-overview">
-          <img className="feature-image-left"
+        <div className="feature-highlight-overview left">
+          <img className="feature-image"
                src={require("../assets/features/chat.png")}
                alt="Feature"></img>
-          <div className="feature-highlight-right">
-            <div className="inner-feature-highlight">
+            <div className="feature-highlight">
               <p className="feature-highlight-title">Chat with Your Language Partner</p>
               <p className="feature-highlight-description">
                 Linguabot will respond to your messages in your target language, regardless of any mistakes.
                 Talk about any topic and ask it any questions! 
               </p>
             </div>
-          </div>
         </div>
-        <div className="feature-highlight-overview">
-          <div className="feature-highlight-left">
-            <div className="inner-feature-highlight">
+        <div className="feature-highlight-overview right">
+          <img className="feature-image" 
+                src={require("../assets/features/saved-conversations.png")}
+                alt="Feature"></img>
+            <div className="feature-highlight">
               <p className="feature-highlight-title">Organize Your Conversations</p>
               <p className="feature-highlight-description">
                 Start a new conversation, pick up from where you last left off, or remove a saved conversation! <br></br><br></br>
                 You can save up to <b>10 chats</b> with each one lasting up to 30 days if it's not used. 
               </p>
-            </div>
-          </div>
-          <img className="feature-image-right" 
-               src={require("../assets/features/saved-conversations.png")}
-               alt="Feature"></img>
+            </div> 
         </div>
         {/* <div className="feature-highlight-overview">
           <img className="feature-image-left"
