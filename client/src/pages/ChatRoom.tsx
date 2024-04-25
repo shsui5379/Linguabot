@@ -20,8 +20,8 @@ export default function ChatRoom() {
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
   const [micStatus, setMicStatus] = useState(false);
-  const [ttsAlways, setTTSAlways] = useState(false);
-  const [sttAlways, setSTTAlways] = useState(false);
+  const [ttsStatus, setTTSStatus] = useState(false);
+  const [sttStatus, setSTTStatus] = useState(false);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
@@ -166,6 +166,14 @@ export default function ChatRoom() {
     }
   }
 
+  document.getElementById("setting-tts")?.addEventListener("click", function() {
+    setTTSStatus(!ttsStatus);
+  });
+
+  document.getElementById("setting-stt")?.addEventListener("click", function() {
+    setSTTStatus(!sttStatus);
+  });
+
   const openSettings = () => {
     document.getElementById("chatroom")!.style.visibility = "hidden";
     document.getElementById("settings")!.style.visibility = "visible";
@@ -182,6 +190,7 @@ export default function ChatRoom() {
   
   return(
   <>
+  {/** Settings */}
     <div id="settings">
       <div id="settings-header">
         <h2>Settings</h2>
@@ -202,7 +211,9 @@ export default function ChatRoom() {
           <span className="slider round"></span>
         </label>
       </div>
+      <span style={{marginTop: "5px"}}>If on, your mic will always pick up what you say when it's your turn to send a message!</span>
     </div>
+    
   {/** Side panel for saved chats and creating a new chat */}
   <div id="chatroom">
     <div id="sidebar">
