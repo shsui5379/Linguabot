@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone, faGear} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
@@ -143,12 +143,12 @@ export default function ChatRoom() {
       setTranslatedStatus(!translatedStatus);
       console.log(datas['translatedText']); 
     }
-}
+  }
 
-//Revert translated Text 
-async function revertTranslation() { 
+  //Revert translated Text 
+  async function revertTranslation() { 
 
-}
+  }
 
   // Handles form submission
   async function handleFormSubmit(event) {
@@ -164,31 +164,38 @@ async function revertTranslation() {
     }
   }
 
+  const openSettings = () => {
+
+  }
+
   const handleLogout = () => { 
     window.location.href = '/logout'
   }
   
   return(
   <>
+    
   {/** Side panel for saved chats and creating a new chat */}
     <div id="sidebar">
       <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
       {saved_chats}
       
-      <div id="sidebar-nav-wrapper">
-        <div id="sidebar-nav">
-          <Link className="sidebar-nav-link" to="/"> 
-            <FontAwesomeIcon icon={faHouse} /> 
-            <span className="tooltiptext" id="toolkit-home">Return Home</span>
-          </Link>
-          <Link className="sidebar-nav-link" to="/Notes"> 
-            <FontAwesomeIcon icon={faNoteSticky} /> 
-            <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
-          </Link>
-          <div className="sidebar-nav-link" onClick={handleLogout}> 
-            <FontAwesomeIcon icon={faRightFromBracket} /> 
-            <span className="tooltiptext" id="toolkit-logout">Log Out</span>
-          </div>
+      <div id="sidebar-nav">
+        <Link className="sidebar-nav-link" to="/"> 
+          <FontAwesomeIcon icon={faHouse} /> 
+          <span className="tooltiptext" id="toolkit-home">Return Home</span>
+        </Link>
+        <Link className="sidebar-nav-link" to="/Notes"> 
+          <FontAwesomeIcon icon={faNoteSticky} /> 
+          <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
+        </Link>
+        <div className="sidebar-nav-link" onClick={openSettings}> 
+          <FontAwesomeIcon icon={faGear} /> 
+          <span className="tooltiptext" id="toolkit-settings">Settings</span>
+        </div>
+        <div className="sidebar-nav-link" onClick={handleLogout}> 
+          <FontAwesomeIcon icon={faRightFromBracket} /> 
+          <span className="tooltiptext" id="toolkit-logout">Log Out</span>
         </div>
       </div>
     </div>
