@@ -11,7 +11,7 @@ const router = require("express").Router();
 const OpenAIClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 /**
- * Authorize Incoming requests
+ * Authorize incoming requests
  */
 router.use((req, res, next) => {
     if (req.oidc.isAuthenticated()) {
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
 /**
  * Create a conversation
  * 
- * Expects a userId, nickname, and language in the post request body
+ * Expects a nickname and language in the post request body
  */
 router.post("/", async (req, res) => {
     let result;
@@ -40,11 +40,11 @@ router.post("/", async (req, res) => {
         result = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
     }
     catch (error) {
-        res.status(422).send(error.message);
+        res.status(422).send(error.message).end();
     }
     // Check if conversation already existed
     if (!result[1]) {
-        res.status(409).send("Conversation already exists");
+        res.status(409).send("Conversation already exists").end();
     }
     res.status(200).end();
 });
@@ -58,7 +58,11 @@ router.patch("/", async (req, res) => {
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     // Check if conversation was found
     if (conversation === null) {
-        res.status(404).send("Conversation not found");
+        res.status(404).send("Conversation not found").end();
+    }
+    // Ensure that the client is the owner of the conversation to be modified
+    if (conversation.userId !== req.oidc.user.sub) {
+        res.status(401).send("Unauthorized access").end();
     }
     try {
         if (req.body.hasOwnProperty("nickname") && req.body.nickname !== conversation.nickname) {
@@ -66,7 +70,7 @@ router.patch("/", async (req, res) => {
         }
     }
     catch (error) {
-        res.status(422).send(error.message);
+        res.status(422).send(error.message).end();
     }
     res.status(200).end();
 });
@@ -80,7 +84,11 @@ router.delete("/", async (req, res) => {
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     // Check if conversation exists
     if (conversation === null) {
-        res.status(404).send("Conversation not found");
+        res.status(404).send("Conversation not found").end();
+    }
+    // Ensure that the client is the owner of the conversation to be deleted
+    if (conversation.userId !== req.oidc.user.sub) {
+        res.status(401).send("Unauthorized access").end();
     }
     await conversation.delete();
     res.status(200).end();
@@ -109,6 +117,14 @@ router.post("/send", async (req, res, next) => {
  * Get the messages for a conversation
  */
 router.get("/:conversationId/messages", async (req, res) => {
+    // Check that the conversation exists and that it belongs to the client
+    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+    if (conversation === null) {
+        res.status(404).send("No such conversation found").end();
+    }
+    if (conversation.userId !== req.oidc.user.sub) {
+        res.status(401).send("Unauthorized access").end();
+    }
     res.json(await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false));
 });
 
@@ -118,16 +134,24 @@ router.get("/:conversationId/messages", async (req, res) => {
  * Expects arguments for chatId, role, and content in the post request body
  */
 router.post("/message", async (req, res) => {
+    // Check that the corresponding conversation both exists and belongs to the client
+    let conversation = await ChatDatabase.fetchChat(req.body.chatId);
+    if (conversation === null) {
+        res.status(404).send("No such conversation found").end();
+    }
+    if (conversation.userId !== req.oidc.user.sub) {
+        res.status(401).send("Unauthorized access").end();
+    }
     let result;
     try {
         result = await MessageDatabase.createMessage(uuidv4(), req.body.chatId, req.body.content, req.body.role);
     }
     catch (error) {
-        res.status(422).send(error.message);
+        res.status(422).send(error.message).end();
     }
     // Check if message already existed
     if (!result[1]) {
-        res.status(409).send("Message already exists");
+        res.status(409).send("Message already exists").end();
     }
     res.status(200).end();
 });
@@ -141,8 +165,18 @@ router.patch("/message", async (req, res) => {
     let message = await MessageDatabase.fetchMessage(req.body.messageId);
     // Check if message was found
     if (message === null) {
-        res.status(404).send("Message not found");
+        res.status(404).send("Message not found").end();
     }
+    // Check that message belongs to the client
+    try {
+        if (await message.getUserId() !== req.oidc.user.sub) {
+            res.status(401).send("Unauthorized access").end();
+        }
+    }
+    catch (error) {
+        res.status(404).send(error.message).end();
+    }
+    // Proceed with message modifications
     try {
         if (req.body.hasOwnProperty("note") && req.body.note !== message.note) {
             await message.setNote(req.body.note);
@@ -155,7 +189,7 @@ router.patch("/message", async (req, res) => {
         }
     }
     catch (error) {
-        res.status(422).send(error.message);
+        res.status(422).send(error.message).end();
     }
     res.status(200).end();
 });
@@ -167,10 +201,20 @@ router.patch("/message", async (req, res) => {
  */
 router.delete("/message", async (req, res) => {
     let message = await MessageDatabase.fetchMessage(req.body.messageId);
-    // Check if message exists
+    // Check if message was found
     if (message === null) {
-        res.status(404).send("Message not found");
+        res.status(404).send("Message not found").end();
     }
+    // Check that message belongs to the client
+    try {
+        if (await message.getUserId() !== req.oidc.user.sub) {
+            res.status(401).send("Unauthorized access").end();
+        }
+    }
+    catch (error) {
+        res.status(404).send(error.message).end();
+    }
+    // Proceed with message deletion
     await message.delete();
     res.status(200).end();
 });

@@ -4,7 +4,7 @@ GET /api/chat/
 
 POST /api/chat/
     Expects:
-        A userId, nickname, and language
+        A nickname and language
     Description:
         Creates a conversation with the provided arguments
 
