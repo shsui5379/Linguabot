@@ -117,8 +117,12 @@ async function createMessage(messageId: string, chatId: string, content: string,
     if (chatId.length === 0) throw new Error("Chat ID cannot be empty");
     if (content.length === 0 || content.length > 1024) throw new Error("Content length needs to be 1-1024 characters long");
 
+    // index 0: instance
+    // index 1: justCreated
+    let result;
+
     try {
-        const [instance, justCreated] = await MessageDatabase.findOrCreate({
+        result = await MessageDatabase.findOrCreate({
             where: { messageId: messageId },
             defaults: {
                 chatId: chatId,
@@ -129,13 +133,13 @@ async function createMessage(messageId: string, chatId: string, content: string,
                 timestamp: Date.now()
             }
         });
-
-        if (!justCreated) throw new Error("Message ID collision");
-
-        return new Message(instance);
     } catch (error) {
         console.error("Error creating message ", messageId, chatId, content, role);
     }
+
+    if (!result[1]) throw new Error("Message ID collision");
+
+    return new Message(result[0]);
 }
 
 export default { init, MessageDatabase, fetchMessage, createMessage, fetchMessages }
