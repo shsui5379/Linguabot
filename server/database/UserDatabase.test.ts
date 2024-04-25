@@ -1,6 +1,7 @@
 import "dotenv/config";
 import Database from "./Database";
 import UserDatabase from "./UserDatabase";
+import ChatDatabase from "./ChatDatabase";
 
 beforeAll(async () => await Database.initialize());
 
@@ -95,11 +96,17 @@ test("modifications persist", async () => {
 });
 
 test("deleting user", async () => {
+    await ChatDatabase.createChat("achat", "animpossibleid", "a chat", "English");
+
     let user = await UserDatabase.fetchUser("animpossibleid");
+    let chats = await ChatDatabase.fetchChats("animpossibleid");
+
+    expect(chats.length === 1);
 
     await user.delete();
 
     user = await UserDatabase.fetchUser("animpossibleid");
 
     expect(user).toBe(null);
+    expect(chats.length === 0);
 });
