@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone, faGear} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone, faGear, faX} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
@@ -20,6 +20,8 @@ export default function ChatRoom() {
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
   const [micStatus, setMicStatus] = useState(false);
+  const [ttsAlways, setTTSAlways] = useState(false);
+  const [sttAlways, setSTTAlways] = useState(false);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
@@ -165,7 +167,13 @@ export default function ChatRoom() {
   }
 
   const openSettings = () => {
+    document.getElementById("chatroom")!.style.visibility = "hidden";
+    document.getElementById("settings")!.style.visibility = "visible";
+  }
 
+  const closeSettings = () => {
+    document.getElementById("chatroom")!.style.visibility = "visible";
+    document.getElementById("settings")!.style.visibility = "hidden";
   }
 
   const handleLogout = () => { 
@@ -174,8 +182,29 @@ export default function ChatRoom() {
   
   return(
   <>
-    
+    <div id="settings">
+      <div id="settings-header">
+        <h2>Settings</h2>
+        <FontAwesomeIcon id="exit-settings" icon={faX} onClick={closeSettings}></FontAwesomeIcon>
+      </div>
+      <div className="setting-wrapper">
+        <p style={{margin: "0"}}>Toggle automatic text-to-speech: </p>
+        <label className="switch">
+          <input id="setting-tts" type="checkbox" />
+          <span className="slider round"></span>
+        </label>
+      </div>
+      <span style={{marginTop: "5px"}}>If on, Linguabot will always read out loud its texts!</span>
+      <div className="setting-wrapper">
+        <p>Toggle automatic speech-to-text: </p>
+        <label className="switch">
+          <input id="setting-stt" type="checkbox" />
+          <span className="slider round"></span>
+        </label>
+      </div>
+    </div>
   {/** Side panel for saved chats and creating a new chat */}
+  <div id="chatroom">
     <div id="sidebar">
       <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
       {saved_chats}
@@ -227,6 +256,7 @@ export default function ChatRoom() {
         </form>
       </div>
     </div>
+  </div>
   </>
   );
 }
