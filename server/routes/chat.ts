@@ -26,7 +26,8 @@ router.use((req, res, next) => {
  * Fetch conversations for a user
  */
 router.get("/", async (req, res) => {
-    res.json(await ChatDatabase.fetchChats(req.oidc.user.sub, ".*"));
+    let conversations = await ChatDatabase.fetchChats(req.oidc.user.sub, ".*");
+    res.json(conversations.map((conversation) => conversation.toJSON()));
 });
 
 /**
@@ -99,7 +100,7 @@ router.delete("/", async (req, res) => {
  * 
  * Refer to https://platform.openai.com/docs/guides/error-codes/api-errors for error codes
  */
-router.post("/send", async (req, res, next) => {
+router.post("/completions", async (req, res, next) => {
     let completions;
     try {
         completions = await OpenAIClient.chat.completions.create({
@@ -125,7 +126,8 @@ router.get("/:conversationId/messages", async (req, res) => {
     if (conversation.userId !== req.oidc.user.sub) {
         res.status(401).send("Unauthorized access").end();
     }
-    res.json(await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false));
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false);
+    res.json(messages.map((message) => message.toJSON()));
 });
 
 /**

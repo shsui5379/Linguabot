@@ -20,7 +20,7 @@ DELETE /api/chat/
     Description:
         Deletes a specific conversation
 
-POST /api/chat/send/
+POST /api/chat/completions/
     Expects:
         A ConversationMessage[] array consisting of every message in a conversation
     Returns:
