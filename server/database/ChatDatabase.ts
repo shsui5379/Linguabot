@@ -28,7 +28,7 @@ function init(sequelize: Sequelize.Sequelize) {
             allowNull: false
         },
         timestamp: {
-            type: Sequelize.DataTypes.INTEGER,
+            type: Sequelize.DataTypes.BIGINT,
             allowNull: false,
             defaultValue: () => Date.now()
         }
@@ -48,8 +48,12 @@ async function createChat(chatId: string, userId: string, nickname: string, lang
     if (userId.length === 0) throw new Error("userId cannot have 0 length");
     if (nickname.length === 0 || nickname.length > 255) throw new Error("Nickname needs to be between 1-255 length");
 
+    // index 0: instance
+    // index 1: justCreated
+    let result;
+
     try {
-        const [instance, justCreated] = await ChatDatabase.findOrCreate({
+        result = await ChatDatabase.findOrCreate({
             where: { chatId: chatId },
             defaults: {
                 userId: userId,
@@ -58,14 +62,14 @@ async function createChat(chatId: string, userId: string, nickname: string, lang
                 timestamp: Date.now()
             }
         });
-
-        if (justCreated) {
-            return new Chat(instance);
-        } else {
-            throw new Error("Chat already exists in database");
-        }
     } catch (error) {
         console.error("Error creating chat ", chatId, userId, language, error);
+    }
+
+    if (result[1]) {
+        return new Chat(result[0]);
+    } else {
+        throw new Error("Chat already exists in database");
     }
 }
 
