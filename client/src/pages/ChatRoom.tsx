@@ -197,13 +197,13 @@ export default function ChatRoom() {
         <FontAwesomeIcon id="exit-settings" icon={faX} onClick={closeSettings}></FontAwesomeIcon>
       </div>
       <div className="setting-wrapper">
-        <p style={{margin: "0"}}>Toggle automatic text-to-speech: </p>
+        <p>Toggle automatic text-to-speech: </p>
         <label className="switch">
           <input id="setting-tts" type="checkbox" />
           <span className="slider round"></span>
         </label>
       </div>
-      <span style={{marginTop: "5px"}}>If on, Linguabot will always read out loud its texts!</span>
+      <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
       <div className="setting-wrapper">
         <p>Toggle automatic speech-to-text: </p>
         <label className="switch">
@@ -211,9 +211,9 @@ export default function ChatRoom() {
           <span className="slider round"></span>
         </label>
       </div>
-      <span style={{marginTop: "5px"}}>If on, your mic will always pick up what you say when it's your turn to send a message!</span>
+      <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
     </div>
-    
+
   {/** Side panel for saved chats and creating a new chat */}
   <div id="chatroom">
     <div id="sidebar">

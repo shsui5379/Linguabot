@@ -376,6 +376,12 @@ button:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.setting-description {
+   margin-bottom: 20px;
+   width: 70%;
 }
 
 #exit-settings:hover {
@@ -403,8 +409,6 @@ button:hover {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
 }
   
   .slider:before {
@@ -420,11 +424,11 @@ button:hover {
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: var(--blue);
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px var(--blue);
   }
   
   input:checked + .slider:before {
