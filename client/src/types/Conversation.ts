@@ -52,7 +52,7 @@ class Conversation {
     });
 
     if (response.status !== 200) {
-      console.error(await response.text());
+      throw new Error(await response.text());
     }
   }
 
@@ -64,11 +64,11 @@ class Conversation {
     try {
       if (this.#messages.length === 0) {
         await Message.createMessage(this.#conversationId, configurationMessage, "system");
+        this.#messages = await Message.fetchMessages(this.#conversationId);
       }
       else {
-        this.#messages[0].setContent(configurationMessage);
+        await this.#messages[0].setContent(configurationMessage);
       }
-      this.#messages = await Message.fetchMessages(this.#conversationId);
     }
     catch (error) {
       console.error(error.message);
@@ -129,13 +129,18 @@ class Conversation {
     });
 
     if (response.status !== 200) {
-      console.error(await response.text());
+      throw new Error(await response.text());
     }
   }
 
   async setNickname(nickname: string) {
-    this.#nickname = nickname;
-    await this.updateConversation();
+    try {
+      this.#nickname = nickname;
+      await this.updateConversation();
+    }
+    catch (error) {
+
+    }
   }
 
   get conversationId(): string {
