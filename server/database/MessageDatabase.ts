@@ -2,6 +2,7 @@ import Sequelize from "sequelize";
 
 import Message from "../types/Message";
 import { Language } from "../types/Language";
+import ChatDatabase from "./ChatDatabase";
 
 class MessageDatabase extends Sequelize.Model { };
 
@@ -66,10 +67,14 @@ async function fetchMessages(userId: string, chatId: string = ".*", language: La
 
     const results = await MessageDatabase.findAll({
         where: {
-            userId: userId,
+            "$Chats.userId$": userId,
             chatId: { [Sequelize.Op.regexp]: chatId },
-            language: { [Sequelize.Op.regexp]: language },
+            "$Chats.language$": { [Sequelize.Op.regexp]: language },
             ...additionalFilters
+        },
+        include: {
+            model: ChatDatabase.ChatDatabase,
+            as: "Chats"
         },
         order: [
             ["timestamp", "ASC"]
