@@ -39,7 +39,7 @@ class Message {
         return chat.userId;
     }
 
-    get note(): string {
+    get note(): string | null {
         return this.#databaseRecord.note;
     }
 
