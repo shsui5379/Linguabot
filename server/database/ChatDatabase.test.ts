@@ -2,6 +2,7 @@ import "dotenv/config"
 import Database from "./Database"
 import ChatDatabase from "./ChatDatabase"
 import UserDatabase from "./UserDatabase";
+import MessageDatabase from "./MessageDatabase";
 
 beforeAll(async () => {
     await Database.initialize()
@@ -137,9 +138,17 @@ test("fetching Chats array with with language with nothing", async () => {
 });
 
 test("deleting Chat", async () => {
+    await MessageDatabase.createMessage("testmessage1", "some-chat-1-id", "meow", "user");
+
+    let message = await MessageDatabase.fetchMessage("testmessage1");
+    expect(message).not.toBeNull();
+
     let chat = await ChatDatabase.fetchChat("some-chat-1-id");
     await chat.delete();
 
     chat = await ChatDatabase.fetchChat("some-chat-1-id");
     expect(chat).toBeNull()
+
+    message = await MessageDatabase.fetchMessage("testmessage1");
+    expect(message).toBeNull();
 });
