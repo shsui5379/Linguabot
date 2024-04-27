@@ -52,7 +52,7 @@ class Message {
             this.#databaseRecord.note = newNote;
         }
 
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving note of " + this.#databaseRecord.messageId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving note of " + this.#databaseRecord.messageId, e) });
     }
 
     get starred(): boolean {
@@ -62,7 +62,7 @@ class Message {
     async setStarred(newStatus: boolean) {
         this.#databaseRecord.starred = newStatus;
 
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving starred status of " + this.#databaseRecord.messageId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving starred status of " + this.#databaseRecord.messageId, e) });
     }
 
     get content(): string {
@@ -75,7 +75,7 @@ class Message {
         }
 
         this.#databaseRecord.content = newContent;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving content of " + this.#databaseRecord.messageId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving content of " + this.#databaseRecord.messageId, e) });
 
     }
 
