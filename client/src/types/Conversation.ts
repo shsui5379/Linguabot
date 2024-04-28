@@ -81,7 +81,7 @@ class Conversation {
     let createdMessageHistory = [];
     createdMessageHistory.push(await Message.createMessage(conversation.chatId, configurationMessage, "system"));
     createdMessageHistory.push(await Message.createMessage(conversation.chatId, greetingMessage, "assistant"));
-    return new Conversation(conversation.conversationId, conversation.language, conversation.nickname, createdMessageHistory);
+    return new Conversation(conversation.chatId, conversation.language, conversation.nickname, createdMessageHistory);
   }
 
   async configure(configurationMessage: string) {

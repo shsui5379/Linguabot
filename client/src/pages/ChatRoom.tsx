@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
 
@@ -108,7 +108,7 @@ export default function ChatRoom() {
   <>
   {/** Side panel for saved chats and creating a new chat */}
     <div id="sidebar">
-      <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
+      <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
       {conversationList}
       <div id="sidebar-nav-wrapper">
         <div id="sidebar-nav">
