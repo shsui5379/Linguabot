@@ -2,11 +2,12 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
 import User from "../types/User";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatRoom() {
   // States for keeping track of message history and current input message
@@ -17,6 +18,7 @@ export default function ChatRoom() {
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
+  const navigateTo = useNavigate();
 
   // Saved chats
   var chats_list = ["Chat 1", "Chat 2"];
@@ -38,13 +40,17 @@ export default function ChatRoom() {
       user_info.current = user;
       setMessages(new Conversation([], `You are a conversational language partner. Only respond back to the user in ${user_info.current.targetLanguages[0]}. Do not ever respond back in another language even if the user switches language.`));
       initial_message.current = initial_message_map.current.get(user_info.current.targetLanguages[0]);
+    }).catch((error) => {
+      if (error.message === "User doesn't exist") {
+        navigateTo("/register");
+      }
     });
   }, []);
 
   // Add message to favorites and change star icon
   function favMessage() {
     setSavedMessage(!savedMessage);
-    setStarIcon(savedMessage ?  faStarReg : faStarSolid);
+    setStarIcon(savedMessage ? faStarReg : faStarSolid);
   }
 
   function getMessages() {
@@ -53,18 +59,18 @@ export default function ChatRoom() {
       if (index === 0)
         return <></>;
       return (
-      <>
-        <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
-          <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
-            <div id="message-tools-bot">
-              <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-              <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
+        <>
+          <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
+            <p className={message.role === "user" ? "user-text" : "bot-text"}>{message.content?.toString()}</p>
+            <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
+              <div id="message-tools-bot">
+                <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon} />}</button>
+                <button className="message-tools-button" id="message-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+                <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
+              </div>
             </div>
           </div>
-        </div>
-      </>
+        </>
       );
     }).reverse();
   }
@@ -82,61 +88,61 @@ export default function ChatRoom() {
     setMessages(updated_messages);
   }
 
-  const handleLogout = () => { 
+  const handleLogout = () => {
     window.location.href = '/logout'
   }
-  
-  return(
-  <>
-  {/** Side panel for saved chats and creating a new chat */}
-    <div id="sidebar">
-      <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
-      {saved_chats}
-      
-      <div id="sidebar-nav-wrapper">
-        <div id="sidebar-nav">
-          <Link className="sidebar-nav-link" to="/"> 
-            <FontAwesomeIcon icon={faHouse} /> 
-            <span className="tooltiptext" id="toolkit-home">Return Home</span>
-          </Link>
-          <Link className="sidebar-nav-link" to="/Notes"> 
-            <FontAwesomeIcon icon={faNoteSticky} /> 
-            <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
-          </Link>
-          <div className="sidebar-nav-link" onClick={handleLogout}> 
-            <FontAwesomeIcon icon={faRightFromBracket} /> 
-            <span className="tooltiptext" id="toolkit-logout">Log Out</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div id="chat-box">
-      {/** Text messages */}
-      <div id="chat-messages-wrapper">
-        <div id="chat-messages">
-          {getMessages()}
-          <div className="text">
-            <p className="bot-text">{initial_message.current}</p>
+  return (
+    <>
+      {/** Side panel for saved chats and creating a new chat */}
+      <div id="sidebar">
+        <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
+        {saved_chats}
+
+        <div id="sidebar-nav-wrapper">
+          <div id="sidebar-nav">
+            <Link className="sidebar-nav-link" to="/">
+              <FontAwesomeIcon icon={faHouse} />
+              <span className="tooltiptext" id="toolkit-home">Return Home</span>
+            </Link>
+            <Link className="sidebar-nav-link" to="/Notes">
+              <FontAwesomeIcon icon={faNoteSticky} />
+              <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
+            </Link>
+            <div className="sidebar-nav-link" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span className="tooltiptext" id="toolkit-logout">Log Out</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/** Input and send message box */}
-      <div id="chat-text-wrapper">
-        <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
-          <input type="text"
-                id="user-text-type"
-                name="user-text-type"
-                required-minlength="1"
-                placeholder="Type something..."
-                value={inputMessage}
-                onChange={(event) => {setInputMessage(event.target.value)}}>
-          </input>
-          <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
-        </form>
+      <div id="chat-box">
+        {/** Text messages */}
+        <div id="chat-messages-wrapper">
+          <div id="chat-messages">
+            {getMessages()}
+            <div className="text">
+              <p className="bot-text">{initial_message.current}</p>
+            </div>
+          </div>
+        </div>
+
+        {/** Input and send message box */}
+        <div id="chat-text-wrapper">
+          <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
+            <input type="text"
+              id="user-text-type"
+              name="user-text-type"
+              required-minlength="1"
+              placeholder="Type something..."
+              value={inputMessage}
+              onChange={(event) => { setInputMessage(event.target.value) }}>
+            </input>
+            <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
+          </form>
+        </div>
       </div>
-    </div>
-  </>
+    </>
   );
 }
