@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid, faVolumeHigh, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Message({ message, selectedLanguage }) {
-    const [isStarred, setIsStarred] = useState(message.starred);
+    const [isStarred, setIsStarred] = useState(false);
+
+    useEffect(() => setIsStarred(message.starred), [message.starred]);
 
     // Performing text-to-speech
     function speak(message: string) {

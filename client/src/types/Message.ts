@@ -1,5 +1,3 @@
-import { Language } from "./Language";
-
 class Message {
     constructor(messageId: string, note: string, starred: boolean, content: string, 
                         role: "system" | "assistant" | "user", timestamp: number) {
