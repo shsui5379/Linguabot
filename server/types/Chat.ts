@@ -16,7 +16,7 @@ class Chat {
     }
 
     get language(): Language {
-        return this.#databaseRecord.chatId;
+        return this.#databaseRecord.language;
     }
 
     get nickname(): string {

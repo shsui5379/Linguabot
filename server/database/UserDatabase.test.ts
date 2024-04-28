@@ -19,45 +19,45 @@ test("guards against unreasonable user data parameters during creation", async (
 test("create new user and verify its members are set correctly", async () => {
     let result = await UserDatabase.createUser("animpossibleid", "John", "Doe", "English", ["Spanish", "French"]);
 
-    expect(result[1] === true);
+    expect(result[1]).toBe(true);
 
     let user = result[0];
 
-    expect(user.firstName === "John");
-    expect(user.lastName === "Doe");
-    expect(user.userLanguage === "English");
-    expect(JSON.stringify(user.targetLanguages) === JSON.stringify(["Spanish", "French"]));
-    expect(user.userId === "animpossibleid");
+    expect(user.firstName).toBe("John");
+    expect(user.lastName).toBe("Doe");
+    expect(user.userLanguage).toBe("English");
+    expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
+    expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON()) === JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
 });
 
 test("create new user that already exists and verify overwriting didn't happen", async () => {
     let result = await UserDatabase.createUser("animpossibleid", "Jane", "Doe", "Spanish", ["Mandarin"]);
 
-    expect(result[1] === false);
+    expect(result[1]).toBe(false);
 
     let user = result[0];
 
-    expect(user.firstName === "John");
-    expect(user.lastName === "Doe");
-    expect(user.userLanguage === "English");
-    expect(JSON.stringify(user.targetLanguages) === JSON.stringify(["Spanish", "French"]));
-    expect(user.userId === "animpossibleid");
+    expect(user.firstName).toBe("John");
+    expect(user.lastName).toBe("Doe");
+    expect(user.userLanguage).toBe("English");
+    expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
+    expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON()) === JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
 });
 
 test("fetching user by id returns the correct user", async () => {
     let user = await UserDatabase.fetchUser("animpossibleid");
 
-    expect(user.firstName === "John");
-    expect(user.lastName === "Doe");
-    expect(user.userLanguage === "English");
-    expect(JSON.stringify(user.targetLanguages) === JSON.stringify(["Spanish", "French"]));
-    expect(user.userId === "animpossibleid");
+    expect(user.firstName).toBe("John");
+    expect(user.lastName).toBe("Doe");
+    expect(user.userLanguage).toBe("English");
+    expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
+    expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON()) === JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
 });
 
 test("null on nonexisting id", async () => {
@@ -86,12 +86,12 @@ test("modifications persist", async () => {
 
     user = await UserDatabase.fetchUser("animpossibleid");
 
-    expect(user.firstName === "Jane");
-    expect(user.lastName === "Williams");
-    expect(user.userLanguage === "Mandarin");
-    expect(JSON.stringify(user.targetLanguages) === JSON.stringify(["Japanese"]));
+    expect(user.firstName).toBe("Jane");
+    expect(user.lastName).toBe("Williams");
+    expect(user.userLanguage).toBe("Mandarin");
+    expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Japanese"]));
 
-    expect(JSON.stringify(user.toJSON()) === JSON.stringify({ firstName: "Jane", lastName: "Williams", userLanguage: "Mandarin", targetLanguages: ["Japanese"], userId: "animpossibleid" }));
+    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "Jane", lastName: "Williams", userLanguage: "Mandarin", targetLanguages: ["Japanese"], userId: "animpossibleid" }));
 
 });
 
@@ -101,12 +101,13 @@ test("deleting user", async () => {
     let user = await UserDatabase.fetchUser("animpossibleid");
     let chats = await ChatDatabase.fetchChats("animpossibleid");
 
-    expect(chats.length === 1);
+    expect(chats.length).toBe(1);
 
     await user.delete();
 
     user = await UserDatabase.fetchUser("animpossibleid");
+    chats = await ChatDatabase.fetchChats("animpossibleid");
 
     expect(user).toBe(null);
-    expect(chats.length === 0);
+    expect(chats.length).toBe(0);
 });
