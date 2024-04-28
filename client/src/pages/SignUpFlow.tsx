@@ -5,17 +5,17 @@ import User from "../types/User";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUpFlow() {
-    enum FLOW_STATE {
-        USERNAME,
+    enum FlowState {
+        NAME_ENTRY,
         TARGET_LANGUAGE_SELECTION,
         FINISHED
     };
 
-    const [flowState, setFlowState] = useState(FLOW_STATE.USERNAME);
+    const [flowState, setFlowState] = useState(FlowState.NAME_ENTRY);
     const [firstName, setFirstName]= useState('');
     const [lastName, setLastName] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('');
-    const navigation = useNavigate();
+    const navigateTo = useNavigate();
 
     async function createUser(firstName: string, lastName: string, userLanguage: string, targetLanguages: string[]) {
         try {
@@ -26,25 +26,27 @@ export default function SignUpFlow() {
         }
     }
 
-    if (flowState === FLOW_STATE.USERNAME) {
-        return (<UserName
-            firstName={firstName}
-            lastName={lastName}
-            setFirstName={setFirstName}
-            setLastName={setLastName}
-            setFlowState={() => setFlowState(FLOW_STATE.TARGET_LANGUAGE_SELECTION)}
+    if (flowState === FlowState.NAME_ENTRY) {
+        return (
+            <UserName
+                firstName={firstName}
+                lastName={lastName}
+                setFirstName={setFirstName}
+                setLastName={setLastName}
+                setFlowState={() => setFlowState(FlowState.TARGET_LANGUAGE_SELECTION)}
             />
         );
     }
-    else if (flowState === FLOW_STATE.TARGET_LANGUAGE_SELECTION) {
-        return (<SelectLanguage
-            selected={selectedLanguage}
-            setSelected={setSelectedLanguage}
-            setFlowState={() => setFlowState(FLOW_STATE.FINISHED)}
+    else if (flowState === FlowState.TARGET_LANGUAGE_SELECTION) {
+        return (
+            <SelectLanguage
+                selected={selectedLanguage}
+                setSelected={setSelectedLanguage}
+                setFlowState={() => setFlowState(FlowState.FINISHED)}
             />
         );
     }
     else {
-        createUser(firstName, lastName, "English", [selectedLanguage]).then(() => navigation("/chat"));
+        createUser(firstName, lastName, "English", [selectedLanguage]).then(() => navigateTo("/chat"));
     }
 }

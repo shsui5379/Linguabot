@@ -3,10 +3,14 @@ import "../css/Home.css"
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from "react-router-dom";
+import User from "../types/User";
 
 export default function Home() {
   // Used to display flags of supported languages 
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
+  const navigateTo = useNavigate();
+
   var displayed_languages = [languages.map(item => 
     <p className="language" id={item + "-home"}>
       <img className="lang-flag" 
@@ -16,6 +20,10 @@ export default function Home() {
       {item}
     </p>
   )];
+
+  // Probably look to repurpose upper-level "App" component as overarching "Client" for organizational reasons
+  // Check if user is logged in, and then check if a db record exists
+  // if doesn't exist, navigate to /register
   
   return (
     <>
@@ -39,7 +47,7 @@ export default function Home() {
       <div id="major-features">
         <h3 id="problem">Struggling to find a language practice partner?</h3>
         <p id="solution">Look no further! Linguabot uses GPT technology to help you practice 
-                         <br></br>communication skills by simulating real-life conversations.</p>
+                        <br></br>communication skills by simulating real-life conversations.</p>
         <div id="overview">
           <div id="feature-left">
             <p className="feature-title"><FontAwesomeIcon icon={faUser} /> Your Account</p>
