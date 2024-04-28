@@ -43,20 +43,15 @@
 
 
 /* Navigation links at bottom of sidebar */
-#sidebar-nav-wrapper {
+
+#sidebar-nav {
     width: 20%;
     margin-bottom: 30px;
     position: fixed;
     left: 0%;
     bottom:0%;
     display: flex;
-    justify-content: center;
-}
-
-#sidebar-nav {
-    width: 100px;
-    display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .sidebar-nav-link {
@@ -93,17 +88,20 @@
     border-color: black transparent transparent transparent;
 }
 
-
 #toolkit-home {
-    left: -35px;
+    left: -34px;
 }
 
 #toolkit-notes {
     left: -45px;
 }
 
+#toolkit-settings {
+    right: -28px;
+}
+
 #toolkit-logout {
-    left: -25px;
+    right: -25px;
 }
 
 .sidebar-nav-link:hover .tooltiptext {
@@ -352,3 +350,98 @@ button:hover {
     color: #2d95fcd3;
     cursor: default;
 }
+
+/* Settings */
+#settings {
+    padding-right: 20%;
+    padding-left: 20%;
+    margin-top: 75px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 60%;
+    z-index: 2;
+    visibility: hidden;
+}
+
+.setting-wrapper {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#settings-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-description {
+   margin-bottom: 20px;
+   width: 70%;
+}
+
+#exit-settings:hover {
+    cursor: pointer;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+  
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+}
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--blue);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px var(--blue);
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }

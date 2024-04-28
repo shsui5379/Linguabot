@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faStar as faStarSolid, faVolumeHigh, faLanguage, faNoteSticky, faMicrophone, faGear, faX} from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useRef } from "react";
 import { Conversation } from "../types/Conversation";
@@ -20,6 +20,8 @@ export default function ChatRoom() {
   const [speechStatus, setSpeechStatus] = useState('Type Something...');
   const [starIcon, setStarIcon] = useState(faStarReg);
   const [micStatus, setMicStatus] = useState(false);
+  const [ttsStatus, setTTSStatus] = useState(false);
+  const [sttStatus, setSTTStatus] = useState(false);
   const user_info: any = useRef();
   const initial_message = useRef("");
   const initial_message_map = useRef(new Map());
@@ -144,12 +146,12 @@ export default function ChatRoom() {
       setTranslatedStatus(!translatedStatus);
       console.log(datas['translatedText']); 
     }
-}
+  }
 
-//Revert translated Text 
-async function revertTranslation() { 
+  //Revert translated Text 
+  async function revertTranslation() { 
 
-}
+  }
 
   // Handles form submission
   async function handleFormSubmit(event) {
@@ -165,31 +167,76 @@ async function revertTranslation() {
     }
   }
 
+  document.getElementById("setting-tts")?.addEventListener("click", function() {
+    setTTSStatus(!ttsStatus);
+  });
+
+  document.getElementById("setting-stt")?.addEventListener("click", function() {
+    setSTTStatus(!sttStatus);
+  });
+
+  const openSettings = () => {
+    document.getElementById("chatroom")!.style.visibility = "hidden";
+    document.getElementById("settings")!.style.visibility = "visible";
+  }
+
+  const closeSettings = () => {
+    document.getElementById("chatroom")!.style.visibility = "visible";
+    document.getElementById("settings")!.style.visibility = "hidden";
+  }
+
   const handleLogout = () => { 
     window.location.href = '/logout'
   }
   
   return(
   <>
+  {/** Settings */}
+    <div id="settings">
+      <div id="settings-header">
+        <h2>Settings</h2>
+        <FontAwesomeIcon id="exit-settings" icon={faX} onClick={closeSettings}></FontAwesomeIcon>
+      </div>
+      <div className="setting-wrapper">
+        <p>Toggle automatic text-to-speech: </p>
+        <label className="switch">
+          <input id="setting-tts" type="checkbox" />
+          <span className="slider round"></span>
+        </label>
+      </div>
+      <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
+      <div className="setting-wrapper">
+        <p>Toggle automatic speech-to-text: </p>
+        <label className="switch">
+          <input id="setting-stt" type="checkbox" />
+          <span className="slider round"></span>
+        </label>
+      </div>
+      <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
+    </div>
+
   {/** Side panel for saved chats and creating a new chat */}
+  <div id="chatroom">
     <div id="sidebar">
       <button id="sidebar-addchat"><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
       {saved_chats}
       
-      <div id="sidebar-nav-wrapper">
-        <div id="sidebar-nav">
-          <Link className="sidebar-nav-link" to="/"> 
-            <FontAwesomeIcon icon={faHouse} /> 
-            <span className="tooltiptext" id="toolkit-home">Return Home</span>
-          </Link>
-          <Link className="sidebar-nav-link" to="/Notes"> 
-            <FontAwesomeIcon icon={faNoteSticky} /> 
-            <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
-          </Link>
-          <div className="sidebar-nav-link" onClick={handleLogout}> 
-            <FontAwesomeIcon icon={faRightFromBracket} /> 
-            <span className="tooltiptext" id="toolkit-logout">Log Out</span>
-          </div>
+      <div id="sidebar-nav">
+        <Link className="sidebar-nav-link" to="/"> 
+          <FontAwesomeIcon icon={faHouse} /> 
+          <span className="tooltiptext" id="toolkit-home">Return Home</span>
+        </Link>
+        <Link className="sidebar-nav-link" to="/Notes"> 
+          <FontAwesomeIcon icon={faNoteSticky} /> 
+          <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
+        </Link>
+        <div className="sidebar-nav-link" onClick={openSettings}> 
+          <FontAwesomeIcon icon={faGear} /> 
+          <span className="tooltiptext" id="toolkit-settings">Settings</span>
+        </div>
+        <div className="sidebar-nav-link" onClick={handleLogout}> 
+          <FontAwesomeIcon icon={faRightFromBracket} /> 
+          <span className="tooltiptext" id="toolkit-logout">Log Out</span>
         </div>
       </div>
     </div>
@@ -221,6 +268,7 @@ async function revertTranslation() {
         </form>
       </div>
     </div>
+  </div>
   </>
   );
 }
