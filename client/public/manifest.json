@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Linguabot",
+  "name": "Linguabot",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +18,36 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#285f99",
+  "background_color": "#285f99",
+  "description": "Language partner: Improve your language fluency by chatting with Linguabot!",
+  "shortcuts": [
+    {
+      "name": "Chat",
+      "url": "chat"
+    },
+    {
+      "name": "Notes",
+      "url": "notes"
+    }
+  ],
+  "categories": [
+    "education"
+  ],
+  "screenshots": [
+    {
+      "src": "static/media/chat.d6c460fe6a180ee481fa.png",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Chat with your language partner"
+    },
+    {
+      "src": "static/media/saved-conversations.7135b658c7847a6152ea.png",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Organize your conversations"
+    }
+  ]
 }
