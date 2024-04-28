@@ -3,7 +3,6 @@ import SelectLanguage from "./SelectLanguage";
 import { useState } from "react";
 import User from "../types/User";
 import { useNavigate } from "react-router-dom";
-import { Language } from "../types/Language";
 
 export default function SignUpFlow() {
     enum FlowState {
@@ -14,18 +13,15 @@ export default function SignUpFlow() {
     };
 
     const [flowState, setFlowState] = useState(FlowState.CHECK_IF_EXISTS);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('');
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [selectedLanguage, setSelectedLanguage] = useState("");
     const navigateTo = useNavigate();
 
-    async function createUser(firstName: string, lastName: string, userLanguage: string, targetLanguages: string[]) {
-        try {
-            return await User.createUser(firstName, lastName, userLanguage as Language, targetLanguages as Language[]);
-        }
-        catch (error) {
-            console.log(error.message);
-        }
+    if (flowState === FlowState.FINISHED) {
+        User.createUser(firstName, lastName, "English", [selectedLanguage])
+            .then(() => navigateTo("/chat"))
+            .catch((error) => console.error(error.message));
     }
 
     if (flowState === FlowState.CHECK_IF_EXISTS) {
@@ -59,8 +55,5 @@ export default function SignUpFlow() {
                 setFlowState={() => setFlowState(FlowState.FINISHED)}
             />
         );
-    }
-    else {
-        createUser(firstName, lastName, "English", [selectedLanguage]).then(() => navigateTo("/chat"));
     }
 }
