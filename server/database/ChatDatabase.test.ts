@@ -2,6 +2,7 @@ import "dotenv/config"
 import Database from "./Database"
 import ChatDatabase from "./ChatDatabase"
 import UserDatabase from "./UserDatabase";
+import MessageDatabase from "./MessageDatabase";
 
 beforeAll(async () => {
     await Database.initialize()
@@ -24,10 +25,10 @@ test("Chat creation and verify data is set correctly", async () => {
     let initDate = Date.now();
     let result = await ChatDatabase.createChat("some-chat-1-id", "some-chatdb-test-user-id", "main chat", "Spanish");
 
-    expect(result.chatId === "some-chat-1-id");
-    expect(result.language === "Spanish");
-    expect(result.nickname === "main chat");
-    expect(result.userId === "some-chatdb-test-user-id");
+    expect(result.chatId).toBe("some-chat-1-id");
+    expect(result.language).toBe("Spanish");
+    expect(result.nickname).toBe("main chat");
+    expect(result.userId).toBe("some-chatdb-test-user-id");
     expect(result.timestamp >= initDate && result.timestamp <= Date.now());
 });
 
@@ -41,10 +42,10 @@ test("Chat ID collision", async () => {
 test("fetching Chat by ID", async () => {
     let chat = await ChatDatabase.fetchChat("some-chat-2-id");
 
-    expect(chat.chatId === "some-chat-2-id");
-    expect(chat.language === "English");
-    expect(chat.nickname === "a second chat");
-    expect(chat.userId === "some-chatdb-test-user-id");
+    expect(chat.chatId).toBe("some-chat-2-id");
+    expect(chat.language).toBe("English");
+    expect(chat.nickname).toBe("a second chat");
+    expect(chat.userId).toBe("some-chatdb-test-user-id");
     expect(chat.timestamp <= Date.now());
 });
 
@@ -66,7 +67,7 @@ test("Chat property setter data persists", async () => {
     await chat.setNickname("a changed nickname");
 
     chat = await ChatDatabase.fetchChat("some-chat-1-id");
-    expect(chat.nickname === "a changed nickname");
+    expect(chat.nickname).toBe("a changed nickname");
 });
 
 test("fetching Chats array by user ID", async () => {
@@ -74,30 +75,30 @@ test("fetching Chats array by user ID", async () => {
 
     let chats = await ChatDatabase.fetchChats("some-chatdb-test-user-id");
 
-    expect(chats.length === 3);
+    expect(chats.length).toBe(3);
 
-    expect(chats[0].chatId === "some-chat-1-id");
-    expect(chats[0].language === "Spanish");
-    expect(chats[0].nickname === "a changed nickname");
-    expect(chats[0].userId === "some-chatdb-test-user-id");
+    expect(chats[0].chatId).toBe("some-chat-1-id");
+    expect(chats[0].language).toBe("Spanish");
+    expect(chats[0].nickname).toBe("a changed nickname");
+    expect(chats[0].userId).toBe("some-chatdb-test-user-id");
     expect(chats[0].timestamp <= Date.now());
 
-    expect(chats[1].chatId === "some-chat-2-id");
-    expect(chats[1].language === "English");
-    expect(chats[1].nickname === "a second chat");
-    expect(chats[1].userId === "some-chatdb-test-user-id");
+    expect(chats[1].chatId).toBe("some-chat-2-id");
+    expect(chats[1].language).toBe("English");
+    expect(chats[1].nickname).toBe("a second chat");
+    expect(chats[1].userId).toBe("some-chatdb-test-user-id");
     expect(chats[1].timestamp <= Date.now());
 
-    expect(chats[2].chatId === "some-chat-3-id");
-    expect(chats[2].language === "Spanish");
-    expect(chats[2].nickname === "a third chat");
-    expect(chats[2].userId === "some-chatdb-test-user-id");
+    expect(chats[2].chatId).toBe("some-chat-3-id");
+    expect(chats[2].language).toBe("Spanish");
+    expect(chats[2].nickname).toBe("a third chat");
+    expect(chats[2].userId).toBe("some-chatdb-test-user-id");
     expect(chats[2].timestamp <= Date.now());
 });
 
 test("fetching Chats array with invalid ID", async () => {
     let chats = await ChatDatabase.fetchChats("aninvaliduserid");
-    expect(chats.length === 0);
+    expect(chats.length).toBe(0);
 });
 
 test("fetching Chats array by langauge for a user", async () => {
@@ -105,41 +106,49 @@ test("fetching Chats array by langauge for a user", async () => {
 
     let chats = await ChatDatabase.fetchChats("some-chatdb-test-user-id", "Spanish");
 
-    expect(chats.length === 3);
+    expect(chats.length).toBe(3);
 
-    expect(chats[0].chatId === "some-chat-1-id");
-    expect(chats[0].language === "Spanish");
-    expect(chats[0].nickname === "a changed nickname");
-    expect(chats[0].userId === "some-chatdb-test-user-id");
+    expect(chats[0].chatId).toBe("some-chat-1-id");
+    expect(chats[0].language).toBe("Spanish");
+    expect(chats[0].nickname).toBe("a changed nickname");
+    expect(chats[0].userId).toBe("some-chatdb-test-user-id");
     expect(chats[0].timestamp <= Date.now());
 
-    expect(chats[1].chatId === "some-chat-3-id");
-    expect(chats[1].language === "Spanish");
-    expect(chats[1].nickname === "a third chat");
-    expect(chats[1].userId === "some-chatdb-test-user-id");
+    expect(chats[1].chatId).toBe("some-chat-3-id");
+    expect(chats[1].language).toBe("Spanish");
+    expect(chats[1].nickname).toBe("a third chat");
+    expect(chats[1].userId).toBe("some-chatdb-test-user-id");
     expect(chats[1].timestamp <= Date.now());
 
-    expect(chats[2].chatId === "some-chat-4-id");
-    expect(chats[2].language === "Spanish");
-    expect(chats[2].nickname === "a fourth chat");
-    expect(chats[2].userId === "some-chatdb-test-user-id");
+    expect(chats[2].chatId).toBe("some-chat-4-id");
+    expect(chats[2].language).toBe("Spanish");
+    expect(chats[2].nickname).toBe("a fourth chat");
+    expect(chats[2].userId).toBe("some-chatdb-test-user-id");
     expect(chats[2].timestamp <= Date.now());
 });
 
 test("fetching Chats array with invalid ID with language", async () => {
     let chats = await ChatDatabase.fetchChats("aninvaliduserid", "French");
-    expect(chats.length === 0);
+    expect(chats.length).toBe(0);
 });
 
 test("fetching Chats array with with language with nothing", async () => {
     let chats = await ChatDatabase.fetchChats("some-chatdb-test-user-id", "French");
-    expect(chats.length === 0);
+    expect(chats.length).toBe(0);
 });
 
 test("deleting Chat", async () => {
+    await MessageDatabase.createMessage("testmessage1", "some-chat-1-id", "meow", "user");
+
+    let message = await MessageDatabase.fetchMessage("testmessage1");
+    expect(message).not.toBeNull();
+
     let chat = await ChatDatabase.fetchChat("some-chat-1-id");
     await chat.delete();
 
     chat = await ChatDatabase.fetchChat("some-chat-1-id");
     expect(chat).toBeNull()
+
+    message = await MessageDatabase.fetchMessage("testmessage1");
+    expect(message).toBeNull();
 });

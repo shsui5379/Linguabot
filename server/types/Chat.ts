@@ -28,7 +28,7 @@ class Chat {
 
         this.#databaseRecord.nickname = newNickname;
 
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving nickname of chat " + this.#databaseRecord.chatId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving nickname of chat " + this.#databaseRecord.chatId, e) });
     }
 
     get timestamp(): number {
