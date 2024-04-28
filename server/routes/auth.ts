@@ -13,7 +13,7 @@ router.get("/auth", (req, res) => {
 
 router.get("/signup", (req, res) => {
   res.oidc.login({
-    returnTo: '/register',
+    returnTo: '/',
     authorizationParams: {
       screen_hint: 'signup'
     },

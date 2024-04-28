@@ -16,7 +16,7 @@ class Chat {
     }
 
     get language(): Language {
-        return this.#databaseRecord.chatId;
+        return this.#databaseRecord.language;
     }
 
     get nickname(): string {
@@ -37,6 +37,14 @@ class Chat {
 
     async delete() {
         await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.chatId, e) });
+    }
+
+    toJSON() : Object {
+        return {
+            chatId: this.chatId,
+            language: this.language,
+            nickname: this.nickname
+        };
     }
 }
 

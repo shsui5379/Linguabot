@@ -9,7 +9,6 @@ import chat from "./routes/chat";
 import user from "./routes/user";
 
 import Database from "./database/Database";
-import UserDatabase from "./database/UserDatabase";
 
 import "dotenv/config";
 
