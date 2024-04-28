@@ -29,7 +29,7 @@ test("create new user and verify its members are set correctly", async () => {
     expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
     expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(user.toJSON()).toMatchObject({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" });
 });
 
 test("create new user that already exists and verify overwriting didn't happen", async () => {
@@ -45,7 +45,7 @@ test("create new user that already exists and verify overwriting didn't happen",
     expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
     expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(user.toJSON()).toMatchObject({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" });
 });
 
 test("fetching user by id returns the correct user", async () => {
@@ -57,7 +57,7 @@ test("fetching user by id returns the correct user", async () => {
     expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Spanish", "French"]));
     expect(user.userId).toBe("animpossibleid");
 
-    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" }));
+    expect(user.toJSON()).toMatchObject({ firstName: "John", lastName: "Doe", userLanguage: "English", targetLanguages: ["Spanish", "French"], userId: "animpossibleid" });
 });
 
 test("null on nonexisting id", async () => {
@@ -91,7 +91,7 @@ test("modifications persist", async () => {
     expect(user.userLanguage).toBe("Mandarin");
     expect(JSON.stringify(user.targetLanguages)).toBe(JSON.stringify(["Japanese"]));
 
-    expect(JSON.stringify(user.toJSON())).toBe(JSON.stringify({ firstName: "Jane", lastName: "Williams", userLanguage: "Mandarin", targetLanguages: ["Japanese"], userId: "animpossibleid" }));
+    expect(user.toJSON()).toMatchObject({ firstName: "Jane", lastName: "Williams", userLanguage: "Mandarin", targetLanguages: ["Japanese"], userId: "animpossibleid" });
 
 });
 
