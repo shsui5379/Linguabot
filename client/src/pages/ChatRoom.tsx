@@ -78,10 +78,11 @@ export default function ChatRoom() {
  
   // Text to Speech 
   async function textToSpeech(message_to_speak: string) {  
-    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Mandarin: "zh-CN", French: "fr-FR"};  
     setOriginalText(message_to_speak);
     if ('speechSynthesis' in window) {
-      // Speech Synthesis supported 🎉
+      // Speech Synthesis supported 🎉 
+      console.log("supporterd"+locales[user_info.current.targetLanguages[0] as keyof typeof locales],user_info.current.targetLanguages[0] as keyof typeof locales)
     } else {
       alert("Sorry, your browser doesn't support text to speech!");
     }
@@ -95,7 +96,7 @@ export default function ChatRoom() {
   //Speech to Text 
   async function speechToText() { 
     setMicStatus(!micStatus);
-    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Chinese: "zn-CN", French: "fr-FR"};  
+    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Mandarin: "zh-CN", French: "fr-FR"};  
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
     recognition.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
     recognition.interimResults = false;
