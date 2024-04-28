@@ -6,13 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignUpFlow() {
     enum FlowState {
+        CHECK_IF_EXISTS,
         NAME_ENTRY,
         TARGET_LANGUAGE_SELECTION,
         FINISHED
     };
 
-    const [flowState, setFlowState] = useState(FlowState.NAME_ENTRY);
-    const [firstName, setFirstName]= useState("");
+    const [flowState, setFlowState] = useState(FlowState.CHECK_IF_EXISTS);
+    const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [selectedLanguage, setSelectedLanguage] = useState("");
     const navigateTo = useNavigate();
@@ -23,7 +24,19 @@ export default function SignUpFlow() {
             .catch((error) => console.error(error.message));
     }
 
-    if (flowState === FlowState.NAME_ENTRY) {
+    if (flowState === FlowState.CHECK_IF_EXISTS) {
+        User.fetchUser().then((user) => {
+            if (user !== null) {
+                navigateTo("/chat");
+            } else {
+                setFlowState(FlowState.NAME_ENTRY);
+            }
+        }).catch((error) => {
+            if (error.message === "User doesn't exist") {
+                setFlowState(FlowState.NAME_ENTRY);
+            }
+        })
+    } else if (flowState === FlowState.NAME_ENTRY) {
         return (
             <UserName
                 firstName={firstName}

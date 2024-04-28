@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import { useState, useEffect } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatRoom() {
   const [conversations, setConversations] = useState([]);
@@ -15,6 +16,7 @@ export default function ChatRoom() {
   const [inputMessage, setInputMessage] = useState("");
   const [micActive, setMicActive] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigateTo = useNavigate();
 
   // Fetch user and conversation data on mount
   useEffect(() => {
@@ -24,7 +26,11 @@ export default function ChatRoom() {
         Conversation.fetchConversations()
           .then((conversations) => setConversations(conversations.filter((conversation) => conversation.language === user.targetLanguages[0])));
       })
-      .catch((error) => console.error(error.message));
+      .catch((error) => {
+        if (error.message === "User doesn't exist") {
+          navigateTo("/register");
+        }
+      });
   }, []);
   
   // Performing speech-to-text
