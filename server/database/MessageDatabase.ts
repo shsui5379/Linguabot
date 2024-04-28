@@ -67,14 +67,13 @@ async function fetchMessages(userId: string, chatId: string = ".*", language: La
 
     const results = await MessageDatabase.findAll({
         where: {
-            "$Chats.userId$": userId,
+            "$ChatDatabase.userId$": userId,
             chatId: { [Sequelize.Op.regexp]: chatId },
-            "$Chats.language$": { [Sequelize.Op.regexp]: language },
+            "$ChatDatabase.language$": { [Sequelize.Op.regexp]: language },
             ...additionalFilters
         },
         include: {
-            model: ChatDatabase.ChatDatabase,
-            as: "Chats"
+            model: ChatDatabase.ChatDatabase
         },
         order: [
             ["timestamp", "ASC"]
