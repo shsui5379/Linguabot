@@ -87,7 +87,7 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -5px;
+    margin-left: -9px;
     border-width: 5px;
     border-style: solid;
     border-color: black transparent transparent transparent;
@@ -124,7 +124,7 @@ input:focus {
     outline: none;
 }
 
-button:hover, #user-text-send {
+button:hover {
     cursor: pointer;
 }
 
@@ -159,7 +159,7 @@ button:hover, #user-text-send {
     padding-left: 25px;
 }
 
-#user-text-send {
+#user-text-send, #speech-to-text {
     margin-right: 20px;
     font-size: 16px;
     background-color: transparent;
@@ -174,12 +174,25 @@ button:hover, #user-text-send {
     height: 20px;
 }
 
+#speech-to-text-icon, #speech-to-text-icon-active {
+    display: flex;
+    width: 13px;
+}
+
+#speech-to-text-icon-active, #user-text-send:active {
+    color: var(--blue);
+}
+
+#user-text-send:active {
+    cursor: default;    
+}
+
 /* Text messages */
 #chat-messages-wrapper {
     height: 100%;
     width: 80%;
     margin-left: 20%;
-    margin-bottom: 120px;
+    margin-bottom: 100px;
     left: 0%;
     bottom: 0%;
     display: flex;
@@ -190,7 +203,7 @@ button:hover, #user-text-send {
 
 #chat-messages {
     width: 100%;
-    max-height: 82%;
+    max-height: 80%;
     padding-right: 8%;
     margin-left: 10%;
     display: flex;
@@ -263,7 +276,7 @@ button:hover, #user-text-send {
 }
 
 .bot-text {
-    margin-left: 3%;
+    left: 19px;
     float: left;
     color: var(--white);
     background-color: #1d5c9bd3;

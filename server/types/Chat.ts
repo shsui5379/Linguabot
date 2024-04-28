@@ -38,6 +38,15 @@ class Chat {
     async delete() {
         await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting " + this.#databaseRecord.chatId, e) });
     }
+
+    toJSON() : Object {
+        return {
+            chatId: this.chatId,
+            language: this.language,
+            nickname: this.nickname,
+            timestamp: this.timestamp
+        };
+    }
 }
 
 export default Chat;
