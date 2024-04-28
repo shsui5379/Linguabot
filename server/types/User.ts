@@ -30,24 +30,24 @@ class User {
     async setFirstName(newName: string) {
         if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
         this.#databaseRecord.firstName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#databaseRecord.userId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving first name of " + this.#databaseRecord.userId, e) });
     }
 
     async setLastName(newName: string) {
         if (newName.length === 0 || newName.length > 255) throw (new Error("Name length must be between 1 and 255"));
         this.#databaseRecord.lastName = newName;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#databaseRecord.userId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving last name of " + this.#databaseRecord.userId, e) });
     }
 
     async setUserLanguage(newLanguage: Language) {
         this.#databaseRecord.userLanguage = newLanguage;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#databaseRecord.userId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving UI language of " + this.#databaseRecord.userId, e) });
     }
 
     async setTargetLanguages(newLanguages: Language[]) {
         if (newLanguages.length === 0) throw new Error("Must set at least one target language");
         this.#databaseRecord.targetLanguages = newLanguages;
-        this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
+        await this.#databaseRecord.save().catch((e: Error) => { console.error("Error saving target learning languages of " + this.#databaseRecord.userId, e) });
     }
 
     async delete() {
@@ -63,10 +63,6 @@ class User {
             userId: this.userId
         };
     }
-
-    // fetchConversationHistory: post-MVP stretch goal
-
-    // fetchNotes: post-MVP stretch goal
-};
+}
 
 export default User;
