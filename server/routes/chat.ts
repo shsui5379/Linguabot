@@ -1,4 +1,4 @@
-import uuidv4 from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import "../database/ChatDatabase";
 import "../database/MessageDatabase";
 
@@ -33,21 +33,17 @@ router.get("/", async (req, res) => {
 /**
  * Create a conversation
  * 
- * Expects a nickname and language in the post request body
+ * Expects a nickname and language in the post request body. Returns information about the created conversation.
  */
 router.post("/", async (req, res) => {
-    let result;
+    let conversation;
     try {
-        result = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
+        conversation = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
     }
     catch (error) {
-        res.status(422).send(error.message).end();
+        res.status(400).send(error.message).end();
     }
-    // Check if conversation already existed
-    if (!result[1]) {
-        res.status(409).send("Conversation already exists").end();
-    }
-    res.status(200).end();
+    res.json(conversation);
 });
 
 /**
@@ -133,7 +129,7 @@ router.get("/:conversationId/messages", async (req, res) => {
 /**
  * Create a message
  * 
- * Expects arguments for chatId, role, and content in the post request body
+ * Expects arguments for chatId, role, and content in the post request body. Returns information about the created message.
  */
 router.post("/message", async (req, res) => {
     // Check that the corresponding conversation both exists and belongs to the client
@@ -144,18 +140,14 @@ router.post("/message", async (req, res) => {
     if (conversation.userId !== req.oidc.user.sub) {
         res.status(401).send("Unauthorized access").end();
     }
-    let result;
+    let message;
     try {
-        result = await MessageDatabase.createMessage(uuidv4(), req.body.chatId, req.body.content, req.body.role);
+        message = await MessageDatabase.createMessage(uuidv4(), req.body.chatId, req.body.content, req.body.role);
     }
     catch (error) {
-        res.status(422).send(error.message).end();
+        res.status(400).send(error.message).end();
     }
-    // Check if message already existed
-    if (!result[1]) {
-        res.status(409).send("Message already exists").end();
-    }
-    res.status(200).end();
+    res.json(message);
 });
 
 /**

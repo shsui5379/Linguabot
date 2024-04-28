@@ -54,6 +54,34 @@ class Conversation {
     if (response.status !== 200) {
       throw new Error(await response.text());
     }
+
+    let conversation = await response.json();
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${language}. Do not ever respond back in another language even if the user switches language.`;
+    let greetingMessage;
+    switch(language) {
+      case "English":
+        greetingMessage = "Hello! I'm Linguabot, your personal conversational partner. What would you like to talk about today?";
+        break;
+      case "French":
+        greetingMessage = "Bonjour! Je suis Linguabot, votre interlocuteur personnel. De quoi aimeriez-vous parler aujourd’hui?";
+        break;
+      case "Japanese":
+        greetingMessage = "こんにちは！ あなたの個人的な会話パートナー、Linguabot です。今日は何について話したいですか?";
+        break;
+      case "Korean":
+        greetingMessage = "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?";
+        break;
+      case "Mandarin":
+        greetingMessage = "你好！我是 Linguabot，你的私人对话伙伴。今天你想聊什么？";
+        break;
+      case "Spanish":
+        greetingMessage = "¡Hola! Soy Linguabot, tu compañero de conversación personal. ¿De qué te gustaría hablar hoy?";
+        break;
+    }
+    let createdMessageHistory = [];
+    createdMessageHistory.push(await Message.createMessage(conversation.chatId, configurationMessage, "system"));
+    createdMessageHistory.push(await Message.createMessage(conversation.chatId, greetingMessage, "assistant"));
+    return new Conversation(conversation.conversationId, conversation.language, conversation.nickname, createdMessageHistory);
   }
 
   async configure(configurationMessage: string) {
@@ -63,8 +91,7 @@ class Conversation {
 
     try {
       if (this.#messages.length === 0) {
-        await Message.createMessage(this.#conversationId, configurationMessage, "system");
-        this.#messages = await Message.fetchMessages(this.#conversationId);
+        this.#messages.push(await Message.createMessage(this.#conversationId, configurationMessage, "system"));
       }
       else {
         await this.#messages[0].setContent(configurationMessage);
@@ -77,8 +104,7 @@ class Conversation {
 
   async send(message: string) {
     try {
-      await Message.createMessage(this.#conversationId, message, "user");
-      this.#messages = await Message.fetchMessages(this.#conversationId);
+      this.#messages.push(await Message.createMessage(this.#conversationId, message, "user"));
     }
     catch (error) {
       console.error(error.message);
@@ -111,8 +137,8 @@ class Conversation {
     }
 
     try {
-      await Message.createMessage(this.#conversationId, await response.json(), "assistant");
-      this.#messages = await Message.fetchMessages(this.#conversationId);
+      let completion = await response.json();
+      this.#messages.push(await Message.createMessage(this.#conversationId, completion.content, "assistant"));
     }
     catch (error) {
       console.error(error.message);

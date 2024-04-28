@@ -58,6 +58,16 @@ class Message {
         if (response.status !== 200) {
             throw new Error(await response.text());
         }
+
+        let message = await response.json();
+        return new Message(
+            message.messageId,
+            message.language,
+            message.note,
+            message.starred,
+            message.content,
+            message.role
+        );
     }
 
     async delete() {

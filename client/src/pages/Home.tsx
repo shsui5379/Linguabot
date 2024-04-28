@@ -11,19 +11,21 @@ export default function Home() {
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
   const navigateTo = useNavigate();
 
-  var displayed_languages = [languages.map(item => 
+  User.fetchUser().catch((error) => {
+    if (error.message === "User doesn't exist") {
+      navigateTo("/register");
+    }
+  });
+
+  let displayedLanguages = languages.map((item) =>
     <p className="language" id={item + "-home"}>
-      <img className="lang-flag" 
+      <img className="lang-flag"
            id={item + "-home-flag"}
            src={require("/src/assets/flags/" + item +".png")}
            alt={item}></img>
       {item}
     </p>
-  )];
-
-  // Probably look to repurpose upper-level "App" component as overarching "Client" for organizational reasons
-  // Check if user is logged in, and then check if a db record exists
-  // if doesn't exist, navigate to /register
+  );
   
   return (
     <>
@@ -41,7 +43,7 @@ export default function Home() {
       </div>
 
       {/** Languages Offered */}
-      <div id="languages-offered">{displayed_languages}</div>
+      <div id="languages-offered">{displayedLanguages}</div>
 
       {/** Major Feature Overview */}
       <div id="major-features">

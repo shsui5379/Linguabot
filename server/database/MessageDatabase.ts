@@ -66,9 +66,7 @@ async function fetchMessages(userId: string, chatId: string = ".*", language: La
 
     const results = await MessageDatabase.findAll({
         where: {
-            userId: userId,
             chatId: { [Sequelize.Op.regexp]: chatId },
-            language: { [Sequelize.Op.regexp]: language },
             ...additionalFilters
         },
         order: [

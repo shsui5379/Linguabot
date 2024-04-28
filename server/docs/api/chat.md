@@ -7,6 +7,8 @@ POST /api/chat/
         A nickname and language
     Description:
         Creates a conversation with the provided arguments
+    Returns:
+        Information about the conversation that was created
 
 PATCH /api/chat/
     Expects:
@@ -35,6 +37,8 @@ POST /api/chat/message/
         A chatId, content, and role
     Description:
         Creates a message with the provided arguments
+    Returns:
+        Information about the message that was created
 
 PATCH /api/chat/message/
     Expects:
