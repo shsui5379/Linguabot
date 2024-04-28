@@ -5,6 +5,8 @@ import "../database/MessageDatabase";
 import OpenAI from "openai";
 import ChatDatabase from "../database/ChatDatabase";
 import MessageDatabase from "../database/MessageDatabase";
+import Message from "../types/Message";
+const createHttpError = require("http-errors");
 require("dotenv").config();
 
 const router = require("express").Router();
@@ -35,15 +37,53 @@ router.get("/", async (req, res) => {
  * 
  * Expects a nickname and language in the post request body. Returns information about the created conversation.
  */
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
     let conversation;
-    try {
-        conversation = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
+    let retry = false;
+    do {
+        try {
+            conversation = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
+            retry = false;
+        }
+        catch (error) {
+            if (error.message === "Chat already exists in database") {
+                retry = true;
+            }
+            else {
+                next(createHttpError(400, error.message));
+            }
+        }
+    } while (retry);
+    
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language.`;
+    let greetingMessage;
+    switch(req.body.language) {
+        case "English":
+            greetingMessage = "Hello! I'm Linguabot, your personal conversational partner. What would you like to talk about today?";
+            break;
+        case "French":
+            greetingMessage = "Bonjour! Je suis Linguabot, votre interlocuteur personnel. De quoi aimeriez-vous parler aujourd’hui?";
+            break;
+        case "Japanese":
+            greetingMessage = "こんにちは！ あなたの個人的な会話パートナー、Linguabot です。今日は何について話したいですか?";
+            break;
+        case "Korean":
+            greetingMessage = "안녕하세요! 너의 개인 대화 파트너 Linguabot입니다. 오늘은 어떤 이야기를 하고 싶으신가요?";
+            break;
+        case "Mandarin":
+            greetingMessage = "你好！我是 Linguabot，你的私人对话伙伴。今天你想聊什么？";
+            break;
+        case "Spanish":
+            greetingMessage = "¡Hola! Soy Linguabot, tu compañero de conversación personal. ¿De qué te gustaría hablar hoy?";
+            break;
     }
-    catch (error) {
-        res.status(400).send(error.message).end();
-    }
-    res.json(conversation);
+    let messages = [];
+    messages.push(await createMessage(conversation.chatId, configurationMessage, "system", next));
+    messages.push(await createMessage(conversation.chatId, greetingMessage, "assistant", next));
+    res.json({
+        conversation: conversation,
+        messages: messages
+    });
 });
 
 /**
@@ -131,7 +171,7 @@ router.get("/:conversationId/messages", async (req, res) => {
  * 
  * Expects arguments for chatId, role, and content in the post request body. Returns information about the created message.
  */
-router.post("/message", async (req, res) => {
+router.post("/message", async (req, res, next) => {
     // Check that the corresponding conversation both exists and belongs to the client
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     if (conversation === null) {
@@ -140,14 +180,7 @@ router.post("/message", async (req, res) => {
     if (conversation.userId !== req.oidc.user.sub) {
         res.status(401).send("Unauthorized access").end();
     }
-    let message;
-    try {
-        message = await MessageDatabase.createMessage(uuidv4(), req.body.chatId, req.body.content, req.body.role);
-    }
-    catch (error) {
-        res.status(400).send(error.message).end();
-    }
-    res.json(message);
+    res.json(await createMessage(req.body.chatId, req.body.content, req.body.role, next));
 });
 
 /**
@@ -212,5 +245,25 @@ router.delete("/message", async (req, res) => {
     await message.delete();
     res.status(200).end();
 });
+
+async function createMessage(chatId: string, content: string, role: "system" | "assistant" | "user", next) {
+    let message;
+    let retry = false;
+    do {
+        try {
+            message = await MessageDatabase.createMessage(uuidv4(), chatId, content, role);
+            retry = false;
+        }
+        catch (error) {
+            if (error.message === "Message ID collision") {
+                retry = true;
+            }
+            else {
+                next(createHttpError(400, error.message));
+            }
+        }
+    } while (retry);
+    return message;
+}
 
 export default router;

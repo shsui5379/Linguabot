@@ -8,9 +8,10 @@ Client-side class representing an instance of a conversation
 - #language: Language
 - #nickname: string
 - #messages: Message[]
+- #timestamp: number
 
 ## Methods
-- private constructor(chatId: string, language: Language, nickname: string, messages: Message[])
+- private constructor(chatId: string, language: Language, nickname: string, messages: Message[], timestamp: number)
 - private async updateConversation()
 - static async fetchConversations()
 - static async createConversation(language: Language, nickname: string)

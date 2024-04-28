@@ -43,7 +43,8 @@ class Chat {
         return {
             chatId: this.chatId,
             language: this.language,
-            nickname: this.nickname
+            nickname: this.nickname,
+            timestamp: this.timestamp
         };
     }
 }

@@ -1,14 +1,14 @@
 import { Language } from "./Language";
 
 class Message {
-    private constructor(messageId: string, language: Language, note: string, starred: boolean, 
-                        content: string, role: "system" | "assistant" | "user") {
+    constructor(messageId: string, note: string, starred: boolean, content: string, 
+                        role: "system" | "assistant" | "user", timestamp: number) {
         this.#messageId = messageId;
-        this.#language = language;
         this.#note = note;
         this.#starred = starred;
         this.#content = content;
         this.#role = role;
+        this.#timestamp = timestamp;
     }
 
     private async updateMessage() {
@@ -36,11 +36,11 @@ class Message {
         let messages = await response.json();
         return messages.map((message) => new Message(
             message.messageId,
-            message.language,
             message.note,
             message.starred,
             message.content,
-            message.role
+            message.role,
+            message.timestamp
         ));
     }
 
@@ -62,11 +62,11 @@ class Message {
         let message = await response.json();
         return new Message(
             message.messageId,
-            message.language,
             message.note,
             message.starred,
             message.content,
-            message.role
+            message.role,
+            message.timestamp
         );
     }
 
@@ -103,10 +103,6 @@ class Message {
         return this.#messageId;
     }
 
-    get language(): Language {
-        return this.#language;
-    }
-
     get note(): string {
         return this.#note;
     }
@@ -123,12 +119,16 @@ class Message {
         return this.#role;
     }
 
+    get timestamp(): number {
+        return this.#timestamp;
+    }
+
     #messageId: string;
-    #language: Language;
     #note: string;
     #starred: boolean;
     #content: string;
     #role: "system" | "assistant" | "user";
+    #timestamp: number;
 };
 
 export default Message;

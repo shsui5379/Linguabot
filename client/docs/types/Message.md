@@ -5,15 +5,15 @@ Client-side class representing an instance of a message
 
 ## Properties
 - #messageId: string
-- #language: Language
 - #note: string
 - #starred: boolean
 - #content: string
 - #role: "system" | "assistant" | "user"
+- #timestamp: number
 
 ## Methods
-- private constructor(messageId: string, language: Language, note: string, starred: boolean, 
-                      content: string, role: "system" | "assistant" | "user")
+- private constructor(messageId: string, note: string, starred: boolean, content: string, 
+                      role: "system" | "assistant" | "user", timestamp: number)
 - private async updateMessage()
 - static async fetchMessages(chatId: string)
 - static async createMessage(chatId: string, content: string, role: "system" | "assistant" | "user")
