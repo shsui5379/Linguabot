@@ -110,4 +110,4 @@ async function createUser(userId: string, firstName: string, lastName: string, u
 }
 
 
-export default { fetchUser, createUser, init };
+export default { fetchUser, createUser, init, UserDatabase };
