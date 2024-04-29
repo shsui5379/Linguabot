@@ -42,7 +42,7 @@ export default function Message({ message, selectedLanguage }) {
                 <p className={isUserMessage ? "user-text" : "bot-text"}>{message.content}</p>
                 <div className={isUserMessage ? "message-tools-user-wrapper" : "message-tools-bot-wraper"}>
                     <div id="message-tools-bot">
-                        <button className="message-tools-button" id="message-fav" onClick={handleStarClick}>{<FontAwesomeIcon icon={isStarred ? faStarReg : faStarSolid} />}</button>
+                        <button className="message-tools-button" id="message-fav" onClick={handleStarClick}>{<FontAwesomeIcon icon={isStarred ? faStarSolid : faStarReg} />}</button>
                         <button className="message-tools-button" id="message-listen" onClick={() => speak(message.content)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
                         <button className="message-tools-button" id="message-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
                     </div>
