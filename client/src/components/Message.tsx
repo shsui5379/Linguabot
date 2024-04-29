@@ -39,25 +39,25 @@ export default function Message({ message, selectedLanguage }) {
 
      //Translate Text 
     async function translate(message : string) { 
-        const original = document.getElementById(message);
-        if(translatedStatus) {
-            if(original) original.innerHTML = message;
-        } else {
-            const locales = {Spanish: "es", Korean: "ko", Japanese: "ja", English: "en", Chinese: "zh", French: "fr"};  
-            const res = await fetch("https://translate.terraprint.co/translate", {
-                method: "POST",
-                body: JSON.stringify({
-                    q: message,
-                    source: locales[selectedLanguage as keyof typeof locales],
-                    target: "en",
-                    format: "text"
-                }),
-                headers: { "Content-Type": "application/json" }
-            });
-            const datas = await res.json();
-            if(original) original.innerHTML = datas['translatedText'];
-        }
-        setTranslatedStatus(!translatedStatus);
+    //     const original = document.getElementById(message);
+    //     if(translatedStatus) {
+    //         if(original) original.innerHTML = message;
+    //     } else {
+    //         const locales = {Spanish: "es", Korean: "ko", Japanese: "ja", English: "en", Chinese: "zh", French: "fr"};  
+    //         const res = await fetch("https://translate.terraprint.co/translate", {
+    //             method: "POST",
+    //             body: JSON.stringify({
+    //                 q: message,
+    //                 source: locales[selectedLanguage as keyof typeof locales],
+    //                 target: "en",
+    //                 format: "text"
+    //             }),
+    //             headers: { "Content-Type": "application/json" }
+    //         });
+    //         const datas = await res.json();
+    //         if(original) original.innerHTML = datas['translatedText'];
+    //     }
+    //     setTranslatedStatus(!translatedStatus);
     }
 
     let isUserMessage = message.role === "user";
