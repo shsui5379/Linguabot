@@ -1,4 +1,5 @@
 import { Language } from "./Language";
+import Conversation from "./Conversation";
 
 class User {
     #userId: string;
@@ -78,6 +79,13 @@ class User {
 
         if (response.status === 422) {
             throw new Error(data.error);
+        }
+
+        try {
+            await Conversation.createConversation(targetLanguages[0], "Welcome!");
+        }
+        catch (error) {
+            console.error(error.message);
         }
 
         return new User(data.userId, data.firstName, data.lastName, data.userLanguage, data.targetLanguages);

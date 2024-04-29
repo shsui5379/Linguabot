@@ -91,12 +91,10 @@ class Message {
         await this.#databaseRecord.destroy().catch((e: Error) => { console.error("Error deleting message" + this.#databaseRecord.messageId, e) });
     }
 
-    async toJSON() {
+    toJSON() {
         return {
             chatId: this.chatId,
             messageId: this.messageId,
-            language: await this.getLanguage(),
-            userId: await this.getUserId(),
             note: this.note,
             starred: this.starred,
             content: this.content,
