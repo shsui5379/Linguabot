@@ -111,7 +111,12 @@ export default function ChatRoom() {
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
-        <button className="chat-overview" onClick={() => setSelectedConversation(index)}>{conversation.nickname}</button>
+        <button className="chat-overview" 
+                onClick={() => setSelectedConversation(index)}
+                id={`${index === selectedConversation ? "active-chat" : ""}`}>
+          {conversation.nickname}
+          <FontAwesomeIcon icon={faX} />
+        </button>
       </div>
     );
   }

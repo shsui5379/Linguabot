@@ -23,6 +23,7 @@
 #sidebar-addchat, .chat-overview {
     width: 90%;
     padding-left: 25px;
+    padding-right: 20px;
     border-radius: 5px;
     font-size: 12px;
     text-align: left;
@@ -110,12 +111,20 @@
   
 
 /* Saved chats */
+.chat {
+    display: flex;
+    justify-content: center;
+}
+
 .chat-overview {
     height: 40px;
     margin-bottom: 10px;
     border: 1px solid var(--white);
     background-color: var(--white);
     color: #4b4b4b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 input:focus {
@@ -124,6 +133,12 @@ input:focus {
 
 button:hover {
     cursor: pointer;
+}
+
+#active-chat {
+    background-color: var(--text-blue);
+    color: var(--white);
+    border: 2px solid var(--white);
 }
 
 /* Right section: send messages */
