@@ -258,6 +258,7 @@ button:hover {
     float: right;
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
+    margin-bottom: 0;
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -295,6 +296,7 @@ button:hover {
     background-color: #1d5c9bd3;
     box-shadow: 1px 1px 2px 1px gray;
     position: relative;
+    margin-bottom: 40px;
 }
 
 /* Blue triangle */
@@ -327,7 +329,7 @@ button:hover {
 
 .bot-text:hover + .message-tools-bot-wrapper,
 .message-tools-bot-wrapper:hover {
-    display: flex;
+    visibility: visible;
 }
 
 .message-tools-user-wrapper{
@@ -339,7 +341,8 @@ button:hover {
     height: 40px;
     margin-left: 19px;
     padding-bottom: 5px;
-    display: none;
+    display: flex;
+    visibility: hidden;
 }
 
 #message-tools-bot {
