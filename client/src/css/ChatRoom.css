@@ -147,6 +147,7 @@ button:hover {
     width: 80%;
     margin-left: 20%;
     margin-bottom: 30px;
+    margin-top: 5px;
     position: fixed;
     left: 0%;
     bottom:0%;
@@ -166,10 +167,18 @@ button:hover {
 
 #user-text-type {
     height: 35px;
+    line-height: 35px;
     font-size: 14px;
     width: 100%;
     border: none;
     padding-left: 25px;
+    overflow-y: auto;
+    resize: none;
+    font-family: "Varela Round", sans-serif;
+}
+
+textarea::placeholder {
+    line-height: 35px;
 }
 
 #user-text-send, #speech-to-text {
@@ -259,6 +268,7 @@ button:hover {
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
     margin-bottom: 0;
+    margin-top: 40px;
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -296,7 +306,6 @@ button:hover {
     background-color: #1d5c9bd3;
     box-shadow: 1px 1px 2px 1px gray;
     position: relative;
-    margin-bottom: 40px;
 }
 
 /* Blue triangle */

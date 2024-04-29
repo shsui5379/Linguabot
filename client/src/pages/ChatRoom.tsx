@@ -206,14 +206,14 @@ export default function ChatRoom() {
       {/** Input and send message box */}
       <div id="chat-text-wrapper">
         <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
-          <input type="text"
+          <textarea
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
                 placeholder={micActive ? "Say something..." : "Type something..."}
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
-          </input>
+          </textarea>
           <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={listen}/></button>
           <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
