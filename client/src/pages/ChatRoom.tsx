@@ -18,15 +18,44 @@ export default function ChatRoom() {
   const [micActive, setMicActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const sentMessageBuffer = useRef("");
+  const speechRecognition = useRef(null);
   const navigateTo = useNavigate();
 
-  // Fetch user and conversation data on mount
+  // Fetch user and conversation data on mount, and also initialize speech recognition
   useEffect(() => {
     User.fetchUser()
       .then((user) => {
         setSelectedLanguage(user.targetLanguages[0]);
         Conversation.fetchConversations()
-          .then((conversations) => setConversations(conversations.filter((conversation) => conversation.language === user.targetLanguages[0])));
+          .then((conversations) => setConversations(
+            conversations.filter((conversation) => conversation.language === user.targetLanguages[0])
+          ));
+
+        const locales = {
+          Spanish: "es-ES",
+          Korean: "ko-KR",
+          Japanese: "ja-JA",
+          English: "en-US",
+          Mandarin: "zn-CN",
+          French: "fr-FR"
+        };
+        speechRecognition.current = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        if (speechRecognition.current !== null) {
+          speechRecognition.current.lang = locales[user.targetLanguages[0] as keyof typeof locales];
+          speechRecognition.current.interimResults = true;
+          speechRecognition.current.maxAlternatives = 1;
+          speechRecognition.current.onresult = (event) => {
+            let message = Array.from(event.results).map((result) => result[0].transcript).join("");
+            setInputMessage(message);
+          };
+          speechRecognition.current.onspeechend = () => {
+            speechRecognition.current.stop();
+            setMicActive(false);
+          };
+          speechRecognition.current.onerror = (event) => {
+            setMicActive(false);
+          };
+        }
       })
       .catch((error) => {
         if (error.message === "User doesn't exist") {
@@ -36,36 +65,20 @@ export default function ChatRoom() {
   }, []);
   
   // Performing speech-to-text
-  function listen() {
-    setMicActive(true);
-    const locales = {
-      Spanish: "es-ES",
-      Korean: "ko-KR",
-      Japanese: "ja-JA",
-      English: "en-US",
-      Chinese: "zn-CN",
-      French: "fr-FR"
-    };
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-    recognition.lang = locales[selectedLanguage as keyof typeof locales];
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-    recognition.start();
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setInputMessage(transcript);
-      setMicActive(false);
-    };
-    
-    recognition.onspeechend = () => {
-      recognition.stop();
-      setMicActive(false);
-    };
+  function handleDictation() {
+    if (speechRecognition.current === null) {
+      alert("Sorry, your browser doesn't support speech recognition");
+      return;
+    }
 
-    recognition.onerror = (event) => {
-      alert("Error occurred while transcribing: " + event.error);
+    if (micActive) {
       setMicActive(false);
-    };
+      speechRecognition.current.stop();
+      return;
+    }
+
+    setMicActive(true);
+    speechRecognition.current.start();
   }
   
   async function handleFormSubmit(event) {
@@ -131,11 +144,12 @@ export default function ChatRoom() {
       if (index === 0) {
         return <></>;
       }
-      return <Message message={message} selectedLanguage={selectedLanguage} />;
+      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} />;
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
-        <Message 
+        <Message
+          key={"impossible-id"}
           message={{role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now()}}
           selectedLanguage={selectedLanguage}
         />
@@ -214,7 +228,7 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
           </input>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={listen}/></button>
+          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
           <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
