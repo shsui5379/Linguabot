@@ -16,7 +16,7 @@ export default function Message({ message, selectedLanguage }) {
             Korean: "ko-KR",
             Japanese: "ja-JA",
             English: "en-US",
-            Mandarin: "zn-CN",
+            Mandarin: "zh-CN",
             French: "fr-FR"
         };
 

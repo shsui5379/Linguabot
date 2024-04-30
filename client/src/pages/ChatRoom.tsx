@@ -36,7 +36,7 @@ export default function ChatRoom() {
           Korean: "ko-KR",
           Japanese: "ja-JA",
           English: "en-US",
-          Mandarin: "zn-CN",
+          Mandarin: "zh-CN",
           French: "fr-FR"
         };
         speechRecognition.current = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
