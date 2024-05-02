@@ -248,8 +248,8 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
           </textarea>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
-          <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
+          <button type="button" title="Speech to text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
+          <button title="Send text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
     </div>
