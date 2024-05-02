@@ -1,6 +1,7 @@
 import Sequelize from "sequelize";
 import { Language } from "../types/Language";
 import Chat from "../types/Chat";
+import MessageDatabase from "./MessageDatabase";
 
 class ChatDatabase extends Sequelize.Model { };
 
@@ -120,4 +121,25 @@ async function fetchChats(userId: string, language: Language | ".*" = ".*"): Pro
     return output;
 }
 
-export default { init, ChatDatabase, createChat, fetchChat, fetchChats }
+/**
+ * Deletes chats that haven't been messaged in for over 30 days
+ */
+async function deleteOldChats() {
+    const results = await ChatDatabase.findAll({
+        where: {
+            timestamp: { [Sequelize.Op.lt]: Date.now() - 30 * 24 * 60 * 60 * 1000 }
+        }
+    });
+
+    let chats = results.map((record) => { return new Chat(record) });
+
+    for (let chat of chats) {
+        let messages = await MessageDatabase.fetchMessages(chat.userId, chat.chatId, ".*", false, false);
+
+        if (messages[messages.length - 1].timestamp < Date.now() - 30 * 24 * 60 * 60 * 1000) {
+            await chat.delete()
+        }
+    }
+}
+
+export default { init, ChatDatabase, createChat, fetchChat, fetchChats, deleteOldChats }
