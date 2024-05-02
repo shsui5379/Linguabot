@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
 import { useState, useEffect, useRef } from "react";
 import Conversation from "../types/Conversation";
@@ -34,7 +34,7 @@ export default function ChatRoom() {
         }
       });
   }, []);
-  
+
   // Performing speech-to-text
   function listen() {
     setMicActive(true);
@@ -56,21 +56,21 @@ export default function ChatRoom() {
       setInputMessage(transcript);
       setMicActive(false);
     };
-    
+
     recognition.onspeechend = () => {
       recognition.stop();
       setMicActive(false);
     };
-    
+
     recognition.onerror = (event) => {
       alert("Error occurred while transcribing: " + event.error);
       setMicActive(false);
     };
   }
-  
+
   async function handleFormSubmit(event) {
     event.preventDefault();
-    if(inputMessage.trim().length > 0) {
+    if (inputMessage.trim().length > 0) {
       sentMessageBuffer.current = inputMessage;
       setInputMessage("");
       setJustSent(true);
@@ -86,17 +86,21 @@ export default function ChatRoom() {
     let conversation;
     try {
       conversation = await Conversation.createConversation(selectedLanguage, "new conversation");
+      setConversations([...conversations, conversation]);
     }
     catch (error) {
       console.error(error.message);
+
+      if (error.message === "reached max chat limit") {
+        alert("Max of 10 chats reached");
+      }
     }
-    setConversations([...conversations, conversation]);
   }
-  
+
   function handleLogout() {
     window.location.href = "/logout";
   }
-  
+
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
@@ -120,8 +124,8 @@ export default function ChatRoom() {
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
-        <Message 
-          message={{role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now()}}
+        <Message
+          message={{ role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now() }}
           selectedLanguage={selectedLanguage}
         />
       )
@@ -130,53 +134,53 @@ export default function ChatRoom() {
   }
 
   return (
-  <>
-  {/** Side panel for saved chats and creating a new chat */}
-    <div id="sidebar">
-      <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
-      {getConversationList()}
-      <div id="sidebar-nav-wrapper">
-        <div id="sidebar-nav">
-          <Link className="sidebar-nav-link" to="/"> 
-            <FontAwesomeIcon icon={faHouse} /> 
-            <span className="tooltiptext" id="toolkit-home">Return Home</span>
-          </Link>
-          <Link className="sidebar-nav-link" to="/Notes"> 
-            <FontAwesomeIcon icon={faNoteSticky} /> 
-            <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
-          </Link>
-          <div className="sidebar-nav-link" onClick={handleLogout}> 
-            <FontAwesomeIcon icon={faRightFromBracket} /> 
-            <span className="tooltiptext" id="toolkit-logout">Log Out</span>
+    <>
+      {/** Side panel for saved chats and creating a new chat */}
+      <div id="sidebar">
+        <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
+        {getConversationList()}
+        <div id="sidebar-nav-wrapper">
+          <div id="sidebar-nav">
+            <Link className="sidebar-nav-link" to="/">
+              <FontAwesomeIcon icon={faHouse} />
+              <span className="tooltiptext" id="toolkit-home">Return Home</span>
+            </Link>
+            <Link className="sidebar-nav-link" to="/Notes">
+              <FontAwesomeIcon icon={faNoteSticky} />
+              <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
+            </Link>
+            <div className="sidebar-nav-link" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span className="tooltiptext" id="toolkit-logout">Log Out</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div id="chat-box">
-      {/** Text messages */}
-      <div id="chat-messages-wrapper">
-        <div id="chat-messages">
-          {getMessageHistory()}
+      <div id="chat-box">
+        {/** Text messages */}
+        <div id="chat-messages-wrapper">
+          <div id="chat-messages">
+            {getMessageHistory()}
+          </div>
+        </div>
+
+        {/** Input and send message box */}
+        <div id="chat-text-wrapper">
+          <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
+            <input type="text"
+              id="user-text-type"
+              name="user-text-type"
+              required-minlength="1"
+              placeholder={micActive ? "Say something..." : "Type something..."}
+              value={inputMessage}
+              onChange={(event) => setInputMessage(event.target.value)}>
+            </input>
+            <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={listen} /></button>
+            <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
+          </form>
         </div>
       </div>
-
-      {/** Input and send message box */}
-      <div id="chat-text-wrapper">
-        <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
-          <input type="text"
-                id="user-text-type"
-                name="user-text-type"
-                required-minlength="1"
-                placeholder={micActive ? "Say something..." : "Type something..."}
-                value={inputMessage}
-                onChange={(event) => setInputMessage(event.target.value)}>
-          </input>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={listen}/></button>
-          <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
-        </form>
-      </div>
-    </div>
-  </>
+    </>
   );
 }
