@@ -122,8 +122,11 @@ export default function ChatRoom() {
                       if(window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
                       try {
                         await conversation.delete();
+                        if(selectedConversation > 0) {
+                          setSelectedConversation(selectedConversation - 1);
+                        }
                         conversations.splice(index, 1);
-                        setConversations(conversations);
+                        setConversations([...conversations]);
                       } catch (error) {
                         console.error(error);
                       }
