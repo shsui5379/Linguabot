@@ -189,6 +189,7 @@ button:hover {
     overflow-y: auto;
     resize: none;
     font-family: "Varela Round", sans-serif;
+    outline: 0;
 }
 
 textarea::placeholder {
