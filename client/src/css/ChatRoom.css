@@ -17,7 +17,8 @@
     background-color: var(--blue);
     box-shadow: 1px 0 2px 1px gray;
     position: fixed;
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #sidebar-addchat, .chat-overview {
@@ -30,12 +31,13 @@
 }
 
 #sidebar-addchat {
-    height: 50px;
-    margin: 25px auto 40px auto;
-    border-radius: 5px;
-    border: 1px solid var(--white);
-    color: var(--white);
+    flex: 0 0 auto;
     background-color: var(--blue);
+    border: 1px solid var(--white);
+    border-radius: 5px;
+    color: var(--white);
+    height: 55px;
+    margin: 25px auto 40px;
 }
 
 #sidebar-addchat:active {
@@ -57,13 +59,15 @@
 /* Navigation links at bottom of sidebar */
 
 #sidebar-nav {
-    width: 20%;
-    margin-bottom: 30px;
-    position: fixed;
-    left: 0%;
-    bottom:0%;
+    flex: 0 1 300px;
+    margin-top: 30px;
+    bottom: 0;
     display: flex;
     justify-content: space-evenly;
+    left: 0;
+    margin-bottom: 30px;
+    position: fixed;
+    width: 20%;
 }
 
 .sidebar-nav-link {
@@ -118,6 +122,30 @@
 
 .sidebar-nav-link:hover .tooltiptext {
     visibility: visible;
+}
+
+#sidebar-chat-list {
+    flex: 1 1 auto;
+    margin-bottom: 70px;
+    overflow-y: scroll;
+}
+
+#sidebar-chat-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#sidebar-chat-list::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey; 
+    border-radius: 10px;
+}
+
+#sidebar-chat-list::-webkit-scrollbar-thumb {
+    background: var(--blue); 
+    border-radius: 10px;
+}
+
+#sidebar-chat-list::-webkit-scrollbar-button { 
+    display:none;
 }
   
 

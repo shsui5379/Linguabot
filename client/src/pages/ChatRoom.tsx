@@ -206,7 +206,9 @@ export default function ChatRoom() {
   <div id="chatroom">
     <div id="sidebar">
       <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
-      {getConversationList()}
+      <div id="sidebar-chat-list">
+        {getConversationList()}
+      </div>
       <div id="sidebar-nav">
         <Link className="sidebar-nav-link" to="/"> 
           <FontAwesomeIcon icon={faHouse} /> 
