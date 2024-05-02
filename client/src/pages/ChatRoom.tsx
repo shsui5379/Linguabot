@@ -179,7 +179,25 @@ export default function ChatRoom() {
                 onClick={() => setSelectedConversation(index)}
                 id={`${index === selectedConversation ? "active-chat" : ""}`}>
           {conversation.nickname}
-          <FontAwesomeIcon icon={faX} />
+          <button id="chat-delete"
+                  onClick={async (e) => 
+                    {
+                      e.stopPropagation();
+                      if(window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
+                      try {
+                        await conversation.delete();
+                        if(selectedConversation > 0) {
+                          setSelectedConversation(selectedConversation - 1);
+                        }
+                        conversations.splice(index, 1);
+                        setConversations([...conversations]);
+                      } catch (error) {
+                        console.error(error);
+                      }
+                    }
+                  }}>
+                  <FontAwesomeIcon icon={faX} />
+          </button>
         </button>
       </div>
     );

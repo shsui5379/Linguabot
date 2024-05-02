@@ -38,10 +38,21 @@
     background-color: var(--blue);
 }
 
+#sidebar-addchat:active {
+    background-color: var(--text-blue);
+}
+
 #sidebar-plus {
     padding-right: 10px;
 }
 
+#chat-delete {
+    display: flex;
+    color: #4b4b4b;
+    background-color: initial;
+    border: none;
+    font-size: 12px;
+}
 
 /* Navigation links at bottom of sidebar */
 
@@ -141,13 +152,16 @@ button:hover {
     border: 2px solid var(--white);
 }
 
+#active-chat #chat-delete{
+    color: var(--white);
+}
+
 /* Right section: send messages */
 #chat-text-wrapper {
     height: 50px;
     width: 80%;
     margin-left: 20%;
     margin-bottom: 30px;
-    margin-top: 5px;
     position: fixed;
     left: 0%;
     bottom:0%;
@@ -175,6 +189,7 @@ button:hover {
     overflow-y: auto;
     resize: none;
     font-family: "Varela Round", sans-serif;
+    outline: 0;
 }
 
 textarea::placeholder {
@@ -267,8 +282,6 @@ textarea::placeholder {
     float: right;
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
-    margin-bottom: 0;
-    margin-top: 40px;
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -330,6 +343,8 @@ textarea::placeholder {
 
 .user-text-wrapper {
     align-items: flex-end;
+    margin-top: 35px;
+    margin-bottom: 5px;
 }
 
 .bot-text-wrapper {
