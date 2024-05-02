@@ -42,6 +42,13 @@
     padding-right: 10px;
 }
 
+#chat-delete {
+    display: flex;
+    color: #4b4b4b;
+    background-color: initial;
+    border: none;
+    font-size: 12px;
+}
 
 /* Navigation links at bottom of sidebar */
 
@@ -139,6 +146,10 @@ button:hover {
     background-color: var(--text-blue);
     color: var(--white);
     border: 2px solid var(--white);
+}
+
+#active-chat #chat-delete{
+    color: var(--white);
 }
 
 /* Right section: send messages */
