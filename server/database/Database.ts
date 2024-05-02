@@ -19,6 +19,8 @@ MessageDatabase.MessageDatabase.belongsTo(ChatDatabase.ChatDatabase, { foreignKe
 async function initialize() {
     await sequelize.authenticate().catch((error) => { console.error("Error connecting to database: ", error) });
     // await sequelize.sync({ alter: true }).catch((error) => { console.error("Error syncing database model: ", error) });
+
+    await ChatDatabase.deleteOldChats();
 }
 
 async function close() {
