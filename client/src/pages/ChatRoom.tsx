@@ -63,57 +63,6 @@ export default function ChatRoom() {
         }
       });
   }, []);
-
-  // Add message to favorites and change star icon
-  function favMessage() {
-    setSavedMessage(!savedMessage);
-    setStarIcon(savedMessage ?  faStarReg : faStarSolid);
-  }
-
-  function getMessages() {
-    return messages.messageHistory.map((message, index) => {
-      let message_string = message.content?.toString() as string;
-      // Skip the configuration message
-      if (index === 0)
-        return <></>;
-      return (
-      <>
-        <div className={message.role === "user" ? "user-text-wrapper" : "bot-text-wrapper"}>
-          <p className={message.role === "user" ? "user-text" : "bot-text"}>{message_string}</p>
-          <div className={message.role === "user" ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
-            <div id="message-tools-bot">
-              <button className="message-tools-button" id="message-fav" onClick={favMessage}>{<FontAwesomeIcon icon={starIcon}/>}</button>
-              <button className="message-tools-button" id="message-listen" onClick={()=> textToSpeech(message_string)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-              <button className="message-tools-button" id="message-translate" onClick={()=>translateText(message_string, translatedStatus)}>{<FontAwesomeIcon icon={faLanguage} />}</button>
-            </div>
-          </div>
-        </div>
-      </>
-      );
-    }).reverse();
-  }
- 
-  // Text to Speech 
-  async function textToSpeech(message_to_speak: string) {  
-    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Mandarin: "zh-CN", French: "fr-FR"};  
-    setOriginalText(message_to_speak);
-    if ('speechSynthesis' in window) {
-      // Speech Synthesis supported 🎉 
-      console.log("supporterd"+locales[user_info.current.targetLanguages[0] as keyof typeof locales],user_info.current.targetLanguages[0] as keyof typeof locales)
-    } else {
-      alert("Sorry, your browser doesn't support text to speech!");
-    }
-
-    var msg = new SpeechSynthesisUtterance(message_to_speak); 
-    msg.lang = locales[user_info.current.targetLanguages[0] as keyof typeof locales];
-    msg.rate = 0.9;
-    window.speechSynthesis.speak(msg);
-  }
-
-  //Speech to Text 
-  async function speechToText() { 
-    setMicStatus(!micStatus);
-    const locales = {Spanish: "es-ES", Korean: "ko-KR", Japanese: "ja-JA", English: "en-US", Mandarin: "zh-CN", French: "fr-FR"};  
   
   // Performing speech-to-text
   function handleDictation() {
@@ -257,7 +206,9 @@ export default function ChatRoom() {
   <div id="chatroom">
     <div id="sidebar">
       <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
-      {getConversationList()}
+      <div id="sidebar-chat-list">
+        {getConversationList()}
+      </div>
       <div id="sidebar-nav">
         <Link className="sidebar-nav-link" to="/"> 
           <FontAwesomeIcon icon={faHouse} /> 
@@ -297,8 +248,8 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
           </textarea>
-          <button type="button" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
-          <button id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
+          <button type="button" title="Speech to text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
+          <button title="Send text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
         </form>
       </div>
     </div>
