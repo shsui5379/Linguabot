@@ -239,8 +239,8 @@ textarea::placeholder {
     width: 13px;
 }
 
-#speech-to-text-icon-active, #user-text-send:active {
-    color: var(--blue);
+#speech-to-text-icon-active {
+    color: red;
 }
 
 #user-text-send:active {
@@ -406,7 +406,7 @@ textarea::placeholder {
     font-size: 14px;
 }
 
-#message-listen:active, #message-translate:active {
+.message-tools-listen:active, .message-tools-translate:active {
     color: #2d95fcd3;
     cursor: default;
 }
