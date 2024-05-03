@@ -78,7 +78,7 @@ export default function Message({ message, selectedLanguage }) {
                 <p className={isUserMessage ? "user-text" : "bot-text"} id={message.content}>{useTranslated ? translatedText.current : message.content}</p>
                 <div className={isUserMessage ? "message-tools-user-wrapper" : "message-tools-bot-wrapper"}>
                     <div id="message-tools-bot">
-                        <button title="Save message" className="message-tools-button" onClick={handleStarClick}>{<FontAwesomeIcon icon={isStarred ? faStarReg : faStarSolid} />}</button>
+                        <button title="Save message" className="message-tools-button" onClick={handleStarClick}>{<FontAwesomeIcon icon={isStarred ? faStarSolid : faStarReg} />}</button>
                         <button title="Hear message" className="message-tools-button" onClick={() => speak(message.content)}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
                         <button title="Translate message" className="message-tools-button" onClick={() => translate(message.content)}>{<FontAwesomeIcon icon={faLanguage} />}</button>
                     </div>

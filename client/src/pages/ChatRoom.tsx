@@ -127,7 +127,7 @@ export default function ChatRoom() {
         <button className="chat-overview" 
                 onClick={() => setSelectedConversation(index)}
                 id={`${index === selectedConversation ? "active-chat" : ""}`}>
-          {conversation.nickname}
+          <p className="chat-nickname">{conversation.nickname}</p>
           <button id="chat-delete"
                   onClick={async (e) => 
                     {
@@ -231,10 +231,8 @@ export default function ChatRoom() {
 
     <div id="chat-box">
       {/** Text messages */}
-      <div id="chat-messages-wrapper">
-        <div id="chat-messages">
-          {getMessageHistory()}
-        </div>
+      <div id="chat-messages">
+        {getMessageHistory()}
       </div>
 
       {/** Input and send message box */}
