@@ -4,7 +4,6 @@
     --gray-triangle-side: 10px solid #c4c4c4;
     --white-traingle-side: 10px solid var(--white);
     --blue-traingle-side: 10px solid var(--text-blue);
-    --triangle-distance: -19px;
 }
 
 /* Sidebar */
@@ -257,7 +256,7 @@ textarea::placeholder {
 }
 
 #chat-messages {
-    margin-left: 10%;
+    padding-left: 10%;
     padding-right: 10%;
     display: flex;
     flex: 1 1 auto;
@@ -296,10 +295,10 @@ textarea::placeholder {
 }
 
 .user-text {
-    margin-right: 3%;
     float: right;
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
+    right: -10px;
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -312,8 +311,8 @@ textarea::placeholder {
     border-left: var(--gray-triangle-side);
     border-right: var(--transparent-triangle-side);
     border-bottom: var(--transparent-triangle-side);
-    right: var(--triangle-distance);
     top: 5px;
+    right: -19px;
 }
 
 /* Inner white triangle */
@@ -331,7 +330,6 @@ textarea::placeholder {
 }
 
 .bot-text {
-    left: 19px;
     float: left;
     color: var(--white);
     background-color: #1d5c9bd3;
@@ -349,8 +347,8 @@ textarea::placeholder {
     border-right: var(--blue-traingle-side);
     border-left: var(--transparent-triangle-side);
     border-bottom: var(--transparent-triangle-side);
-    left: var(--triangle-distance);
     top: 6px;
+    left: -19px;
 }
 
 /* Message Tools */
@@ -361,8 +359,7 @@ textarea::placeholder {
 
 .user-text-wrapper {
     align-items: flex-end;
-    margin-top: 35px;
-    margin-bottom: 5px;
+    margin-top: 40px;
 }
 
 .bot-text-wrapper {
@@ -381,7 +378,6 @@ textarea::placeholder {
 .message-tools-bot-wrapper {
     width: 115px;
     height: 40px;
-    margin-left: 19px;
     padding-bottom: 5px;
     display: flex;
     visibility: hidden;
