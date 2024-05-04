@@ -219,6 +219,10 @@ router.patch("/message", async (req, res) => {
             await message.setStarred(req.body.starred);
         }
         if (req.body.hasOwnProperty("content") && req.body.content !== message.content) {
+            if (message.role !== "user") {
+                res.status(403).send("Cannot update content of non-user message").end();
+            }
+
             await message.setContent(req.body.content);
         }
     }
@@ -248,6 +252,11 @@ router.delete("/message", async (req, res) => {
     catch (error) {
         res.status(404).send(error.message).end();
     }
+
+    if (message.role !== "user") {
+        res.status(403).send("Cannot delete non-user message").end();
+    }
+
     // Proceed with message deletion
     await message.delete();
     res.status(200).end();
