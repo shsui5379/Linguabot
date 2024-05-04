@@ -254,7 +254,7 @@ router.delete("/message", async (req, res) => {
     }
 
     if (message.role !== "user") {
-        res.status(403).send("Cannot delete non-user message");
+        res.status(403).send("Cannot delete non-user message").end();
     }
 
     // Proceed with message deletion
