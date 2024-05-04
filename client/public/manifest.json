@@ -41,11 +41,25 @@
   "shortcuts": [
     {
       "name": "Chat",
-      "url": "chat"
+      "url": "chat",
+      "icons": [
+        {
+          "src": "convo.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Notes",
-      "url": "notes"
+      "url": "notes",
+      "icons": [
+        {
+          "src": "note.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
   "categories": [
