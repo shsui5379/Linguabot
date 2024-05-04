@@ -53,16 +53,18 @@
   ],
   "screenshots": [
     {
-      "src": "static/media/chat.d6c460fe6a180ee481fa.png",
+      "src": "chat.png",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Chat with your language partner"
+      "label": "Chat with your language partner",
+      "sizes": "2499x1435"
     },
     {
-      "src": "static/media/saved-conversations.7135b658c7847a6152ea.png",
+      "src": "saved-conversations.png",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Organize your conversations"
+      "label": "Organize your conversations",
+      "sizes": "2499x1435"
     }
   ]
 }
