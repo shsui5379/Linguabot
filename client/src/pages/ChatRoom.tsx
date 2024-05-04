@@ -123,7 +123,9 @@ export default function ChatRoom() {
         }, 3000);
       } 
       if(autostt) { 
-        handleDictation();
+        setTimeout(()=>{
+          handleDictation();
+        },5000); 
       }
     }
   }
