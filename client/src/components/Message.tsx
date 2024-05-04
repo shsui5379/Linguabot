@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid, faVolumeHigh, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
-import { useRef, useState } from "react";
+import { useRef, useState } from "react"; 
 import "../css/ChatRoom.css";
 
 export default function Message({ message, selectedLanguage }) {
@@ -68,6 +68,8 @@ export default function Message({ message, selectedLanguage }) {
             headers: { "Content-Type": "application/json" }
         });
         const data = await response.json();
+        handleTranslate();
+        console.log(data.translatedText);
         return data.translatedText;
     }
 

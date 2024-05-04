@@ -7,9 +7,11 @@ import Message from "../components/Message";
 import { useState, useEffect, useRef } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 export default function ChatRoom() {
+  const [autotts, setAutotts] = useState(false); 
+  const [autostt, setAutostt] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState("");
@@ -79,6 +81,28 @@ export default function ChatRoom() {
 
     setMicActive(true);
     speechRecognition.current.start();
+  } 
+
+  // Performing text-to-speech
+  function speak(message: string) {
+    const locales = {
+        Spanish: "es-ES",
+        Korean: "ko-KR",
+        Japanese: "ja-JA",
+        English: "en-US",
+        Mandarin: "zh-CN",
+        French: "fr-FR"
+    }
+    // Alert if speech synthesis is not supported by browser
+    if (!("speechSynthesis" in window)) {
+        alert("Sorry, your browser doesn't support text to speech!");
+        return;
+    }
+    
+    let voiceMessage = new SpeechSynthesisUtterance(message);
+    voiceMessage.lang = locales[selectedLanguage as keyof typeof locales];
+    voiceMessage.rate = 0.9;
+    window.speechSynthesis.speak(voiceMessage); 
   }
   
   async function handleFormSubmit(event) {
@@ -87,11 +111,20 @@ export default function ChatRoom() {
       sentMessageBuffer.current = inputMessage;
       setInputMessage("");
       setJustSent(true);
-      await conversations[selectedConversation].send(sentMessageBuffer.current);
+      await conversations[selectedConversation].send(sentMessageBuffer.current); 
       setJustSent(false);
       setConversations([...conversations]);
       await conversations[selectedConversation].receive();
       setConversations([...conversations]);
+      if(autotts) {
+        let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
+        setTimeout(()=>{
+          speak(readMsg);
+        }, 3000);
+      } 
+      if(autostt) { 
+        handleDictation();
+      }
     }
   }
 
@@ -188,7 +221,7 @@ export default function ChatRoom() {
         <p>Toggle automatic text-to-speech: </p>
         <label className="switch">
           <input id="setting-tts" type="checkbox" />
-          <span className="slider round"></span>
+          <span className="slider round" onClick={() => {setAutotts(prevState => !prevState)}}></span>
         </label>
       </div>
       <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
@@ -196,7 +229,7 @@ export default function ChatRoom() {
         <p>Toggle automatic speech-to-text: </p>
         <label className="switch">
           <input id="setting-stt" type="checkbox" />
-          <span className="slider round"></span>
+          <span className="slider round" onClick={() => {setAutostt(prevState => !prevState)}}></span>
         </label>
       </div>
       <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
