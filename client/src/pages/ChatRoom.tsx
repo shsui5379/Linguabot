@@ -231,7 +231,7 @@ export default function ChatRoom() {
         <p>Toggle automatic speech-to-text: </p>
         <label className="switch">
           <input id="setting-stt" type="checkbox" />
-          <span className="slider round" onClick={() => {setAutostt(prevState => !prevState)}}></span>
+          <span className="slider round" onClick={() => {setAutostt(prevState => !prevState); setTimeout(()=>{handleDictation();},5000); }}></span>
         </label>
       </div>
       <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
