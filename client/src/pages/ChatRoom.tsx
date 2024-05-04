@@ -124,11 +124,11 @@ export default function ChatRoom() {
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
-        <button className="chat-overview" title="Delete chat"
+        <button className="chat-overview"
           onClick={() => setSelectedConversation(index)}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
           <p className="chat-nickname">{conversation.nickname}</p>
-          <button className="chat-delete"
+          <button className="chat-delete" title="Delete chat"
             onClick={async (e) => {
               e.stopPropagation();
               if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
