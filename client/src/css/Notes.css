@@ -42,9 +42,9 @@
     cursor: default;
 }
 
-#saved-text-delete {
+.saved-text-delete {
     margin-left: 20px;
-    color: red; 
+    color: red;
 }
 
 .notes-input {

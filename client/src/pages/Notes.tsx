@@ -18,9 +18,9 @@ export default function Notes() {
             <div className="saved-message-text">
                 <p className="saved-text"> 안녕하세요 </p> {/** display the text */}
                 <div className="saved-text-tools">
-                    <button className="saved-text-tools-button" id="saved-text-listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
-                    <button className="saved-text-tools-button" id="saved-text-translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
-                    <button className="saved-text-tools-button" id="saved-text-delete">{<FontAwesomeIcon icon={faX} />}</button>
+                    <button className="saved-text-tools-button saved-text-listen" title="Listen">{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
+                    <button className="saved-text-tools-button saved-text-translate" title="Translate">{<FontAwesomeIcon icon={faLanguage} />}</button>
+                    <button className="saved-text-tools-button saved-text-delete" title="Delete">{<FontAwesomeIcon icon={faX} />}</button>
                 </div>
             </div>
             <form className="saved-message-notes">

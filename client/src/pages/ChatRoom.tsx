@@ -150,8 +150,8 @@ export default function ChatRoom() {
         <button className="chat-overview"
           onClick={() => setSelectedConversation(index)}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
-          {conversation.nickname}
-          <button id="chat-delete"
+          <p className="chat-nickname">{conversation.nickname}</p>
+          <button className="chat-delete" title="Delete chat"
             onClick={async (e) => {
               e.stopPropagation();
               if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
@@ -261,10 +261,8 @@ export default function ChatRoom() {
 
         <div id="chat-box">
           {/** Text messages */}
-          <div id="chat-messages-wrapper">
-            <div id="chat-messages">
-              {getMessageHistory()}
-            </div>
+          <div id="chat-messages">
+            {getMessageHistory()}
           </div>
 
           {/** Input and send message box */}
@@ -278,8 +276,8 @@ export default function ChatRoom() {
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
-              <button type="button" title="Speech to text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
-              <button title="Send text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
+              <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
+              <button title="Send Text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
             </form>
           </div>
         </div>

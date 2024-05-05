@@ -255,7 +255,7 @@ span {
 /* Join Now Block */
 
 #join-now {
-    height: 50vh;
+    height: 300px;
     background-color: var(--blue);
     color: var(--white);
     display: flex;
