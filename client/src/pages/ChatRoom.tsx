@@ -164,6 +164,10 @@ export default function ChatRoom() {
                   setConversations([...conversations]);
                 } catch (error) {
                   console.error(error);
+
+                  if (error.message === "Must have at least one chat open") {
+                    alert("Must have at least one chat open");
+                  }
                 }
               }
             }}>
