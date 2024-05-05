@@ -62,8 +62,6 @@ test("Fetching Message by message id", async () => {
     let json = {
         chatId: "sample-chat-1-id",
         messageId: "c1,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello world",
@@ -136,8 +134,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-1-id",
         messageId: "c1,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "aloha world!",
@@ -147,8 +143,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-2-id",
         messageId: "c2,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello there",
@@ -158,8 +152,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[2].toJSON()).toMatchObject({
         chatId: "sample-chat-2-id",
         messageId: "c2,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: "a greeting",
         starred: false,
         content: "hello there again",
@@ -169,8 +161,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[3].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -180,8 +170,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[4].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m2",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hola amigos",
@@ -191,8 +179,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[5].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m3",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "2w",
         starred: false,
         content: "hola todos",
@@ -202,8 +188,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[6].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello 1",
@@ -213,8 +197,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[7].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 2",
@@ -224,8 +206,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[8].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m3",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello 3",
@@ -235,8 +215,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[9].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m4",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 4",
@@ -252,8 +230,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -263,8 +239,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m2",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hola amigos",
@@ -274,8 +248,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[2].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m3",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "2w",
         starred: false,
         content: "hola todos",
@@ -291,8 +263,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-1-id",
         messageId: "c1,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "aloha world!",
@@ -302,8 +272,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-2-id",
         messageId: "c2,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello there",
@@ -313,8 +281,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[2].toJSON()).toMatchObject({
         chatId: "sample-chat-2-id",
         messageId: "c2,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: "a greeting",
         starred: false,
         content: "hello there again",
@@ -324,8 +290,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[3].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m1",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello 1",
@@ -335,8 +299,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[4].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 2",
@@ -346,8 +308,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[5].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m3",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: false,
         content: "hello 3",
@@ -357,8 +317,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[6].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m4",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 4",
@@ -374,8 +332,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -385,8 +341,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 2",
@@ -396,8 +350,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[2].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m4",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 4",
@@ -413,8 +365,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-2-id",
         messageId: "c2,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: "a greeting",
         starred: false,
         content: "hello there again",
@@ -424,8 +374,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -435,8 +383,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[2].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m3",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "2w",
         starred: false,
         content: "hola todos",
@@ -452,8 +398,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 2",
@@ -463,8 +407,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m4",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 4",
@@ -480,8 +422,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -491,8 +431,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m3",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "2w",
         starred: false,
         content: "hola todos",
@@ -508,8 +446,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m2",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 2",
@@ -519,8 +455,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-4-id",
         messageId: "c4,m4",
-        language: "English",
-        userId: "some-messagedb-test-user-id",
         note: null,
         starred: true,
         content: "hello 4",
@@ -536,8 +470,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -547,8 +479,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[1].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m3",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "2w",
         starred: false,
         content: "hola todos",
@@ -565,8 +495,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -584,8 +512,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
@@ -601,8 +527,6 @@ test("fetching messages array by filtering options", async () => {
     expect(await messages[0].toJSON()).toMatchObject({
         chatId: "sample-chat-3-id",
         messageId: "c3,m1",
-        language: "Korean",
-        userId: "some-messagedb-test-user-id",
         note: "1w",
         starred: true,
         content: "hola",
