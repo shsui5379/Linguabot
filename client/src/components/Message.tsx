@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStarSolid, faVolumeHigh, faLanguage } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarReg } from "@fortawesome/free-regular-svg-icons";
-import { useRef, useState } from "react"; 
+import { useRef, useState } from "react";
 import "../css/ChatRoom.css";
 
-export default function Message({ message, selectedLanguage }) {
+export default function Message({ message, selectedLanguage, userLanguage }) {
     const [isStarred, setIsStarred] = useState(message.starred);
     const [useTranslated, setUseTranslated] = useState(false);
     const translatedText = useRef(null);
@@ -25,7 +25,7 @@ export default function Message({ message, selectedLanguage }) {
             alert("Sorry, your browser doesn't support text to speech!");
             return;
         }
-        
+
         let voiceMessage = new SpeechSynthesisUtterance(message);
         voiceMessage.lang = locales[selectedLanguage as keyof typeof locales];
         voiceMessage.rate = 0.9;
@@ -56,13 +56,13 @@ export default function Message({ message, selectedLanguage }) {
             English: "en",
             Mandarin: "zh",
             French: "fr"
-        };  
+        };
         const response = await fetch("https://translate.terraprint.co/translate", {
             method: "POST",
             body: JSON.stringify({
                 q: message,
                 source: locales[selectedLanguage as keyof typeof locales],
-                target: "en",
+                target: locales[userLanguage as keyof typeof locales],
                 format: "text"
             }),
             headers: { "Content-Type": "application/json" }

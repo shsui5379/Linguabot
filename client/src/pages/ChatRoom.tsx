@@ -7,10 +7,10 @@ import Message from "../components/Message";
 import { useState, useEffect, useRef } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 export default function ChatRoom() {
-  const [autotts, setAutotts] = useState(false); 
+  const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(0);
@@ -21,12 +21,14 @@ export default function ChatRoom() {
   const [loading, setLoading] = useState(false);
   const sentMessageBuffer = useRef("");
   const speechRecognition = useRef(null);
+  const [userLanguage, setUserLanguage] = useState("");
   const navigateTo = useNavigate();
 
   // Fetch user and conversation data on mount, and also initialize speech recognition
   useEffect(() => {
     User.fetchUser()
       .then((user) => {
+        setUserLanguage(user.userLanguage);
         setSelectedLanguage(user.targetLanguages[0]);
         Conversation.fetchConversations()
           .then((conversations) => setConversations(
@@ -65,7 +67,7 @@ export default function ChatRoom() {
         }
       });
   }, []);
-  
+
   // Performing speech-to-text
   function handleDictation() {
     if (speechRecognition.current === null) {
@@ -81,51 +83,51 @@ export default function ChatRoom() {
 
     setMicActive(true);
     speechRecognition.current.start();
-  } 
+  }
 
   // Performing text-to-speech
   function speak(message: string) {
     const locales = {
-        Spanish: "es-ES",
-        Korean: "ko-KR",
-        Japanese: "ja-JA",
-        English: "en-US",
-        Mandarin: "zh-CN",
-        French: "fr-FR"
+      Spanish: "es-ES",
+      Korean: "ko-KR",
+      Japanese: "ja-JA",
+      English: "en-US",
+      Mandarin: "zh-CN",
+      French: "fr-FR"
     }
     // Alert if speech synthesis is not supported by browser
     if (!("speechSynthesis" in window)) {
-        alert("Sorry, your browser doesn't support text to speech!");
-        return;
+      alert("Sorry, your browser doesn't support text to speech!");
+      return;
     }
-    
+
     let voiceMessage = new SpeechSynthesisUtterance(message);
     voiceMessage.lang = locales[selectedLanguage as keyof typeof locales];
     voiceMessage.rate = 0.9;
-    window.speechSynthesis.speak(voiceMessage); 
+    window.speechSynthesis.speak(voiceMessage);
   }
-  
+
   async function handleFormSubmit(event) {
     event.preventDefault();
-    if(inputMessage.trim().length > 0) {
+    if (inputMessage.trim().length > 0) {
       sentMessageBuffer.current = inputMessage;
       setInputMessage("");
       setJustSent(true);
-      await conversations[selectedConversation].send(sentMessageBuffer.current); 
+      await conversations[selectedConversation].send(sentMessageBuffer.current);
       setJustSent(false);
       setConversations([...conversations]);
       await conversations[selectedConversation].receive();
       setConversations([...conversations]);
-      if(autotts) {
+      if (autotts) {
         let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
-        setTimeout(()=>{
+        setTimeout(() => {
           speak(readMsg);
         }, 3000);
-      } 
-      if(autostt) { 
-        setTimeout(()=>{
+      }
+      if (autostt) {
+        setTimeout(() => {
           handleDictation();
-        },5000); 
+        }, 5000);
       }
     }
   }
@@ -140,7 +142,7 @@ export default function ChatRoom() {
     }
     setConversations([...conversations, conversation]);
   }
-  
+
   function handleLogout() {
     window.location.href = "/logout";
   }
@@ -154,33 +156,32 @@ export default function ChatRoom() {
     document.getElementById("chatroom")!.style.visibility = "visible";
     document.getElementById("settings")!.style.visibility = "hidden";
   }
-  
+
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
-        <button className="chat-overview" 
-                onClick={() => setSelectedConversation(index)}
-                id={`${index === selectedConversation ? "active-chat" : ""}`}>
+        <button className="chat-overview"
+          onClick={() => setSelectedConversation(index)}
+          id={`${index === selectedConversation ? "active-chat" : ""}`}>
           {conversation.nickname}
           <button id="chat-delete"
-                  onClick={async (e) => 
-                    {
-                      e.stopPropagation();
-                      if(window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
-                      try {
-                        await conversation.delete();
-                        if(selectedConversation > 0) {
-                          setSelectedConversation(selectedConversation - 1);
-                        }
-                        conversations.splice(index, 1);
-                        setConversations([...conversations]);
-                      } catch (error) {
-                        console.error(error);
-                      }
-                    }
-                  }}>
-                  <FontAwesomeIcon icon={faX} />
+            onClick={async (e) => {
+              e.stopPropagation();
+              if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
+                try {
+                  await conversation.delete();
+                  if (selectedConversation > 0) {
+                    setSelectedConversation(selectedConversation - 1);
+                  }
+                  conversations.splice(index, 1);
+                  setConversations([...conversations]);
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+            }}>
+            <FontAwesomeIcon icon={faX} />
           </button>
         </button>
       </div>
@@ -197,13 +198,13 @@ export default function ChatRoom() {
       if (index === 0) {
         return <></>;
       }
-      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} />;
+      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} />;
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
         <Message
           key={"impossible-id"}
-          message={{role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now()}}
+          message={{ role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now() }}
           selectedLanguage={selectedLanguage}
         />
       )
@@ -212,83 +213,83 @@ export default function ChatRoom() {
   }
 
   return (
-  <>
-  {/** Settings */}
-    <div id="settings">
-      <div id="settings-header">
-        <h2>Settings</h2>
-        <FontAwesomeIcon id="exit-settings" icon={faX} onClick={closeSettings}></FontAwesomeIcon>
-      </div>
-      <div className="setting-wrapper">
-        <p>Toggle automatic text-to-speech: </p>
-        <label className="switch">
-          <input id="setting-tts" type="checkbox" />
-          <span className="slider round" onClick={() => {setAutotts(prevState => !prevState)}}></span>
-        </label>
-      </div>
-      <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
-      <div className="setting-wrapper">
-        <p>Toggle automatic speech-to-text: </p>
-        <label className="switch">
-          <input id="setting-stt" type="checkbox" />
-          <span className="slider round" onClick={() => {setAutostt(prevState => !prevState); setTimeout(()=>{handleDictation();},5000); }}></span>
-        </label>
-      </div>
-      <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
-    </div>
-
-  {/** Side panel for saved chats and creating a new chat */}
-  <div id="chatroom">
-    <div id="sidebar">
-      <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus"/> Create New Chat</button>
-      <div id="sidebar-chat-list">
-        {getConversationList()}
-      </div>
-      <div id="sidebar-nav">
-        <Link className="sidebar-nav-link" to="/"> 
-          <FontAwesomeIcon icon={faHouse} /> 
-          <span className="tooltiptext" id="toolkit-home">Return Home</span>
-        </Link>
-        <Link className="sidebar-nav-link" to="/Notes"> 
-          <FontAwesomeIcon icon={faNoteSticky} /> 
-          <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
-        </Link>
-        <div className="sidebar-nav-link" onClick={openSettings}> 
-          <FontAwesomeIcon icon={faGear} /> 
-          <span className="tooltiptext" id="toolkit-settings">Settings</span>
+    <>
+      {/** Settings */}
+      <div id="settings">
+        <div id="settings-header">
+          <h2>Settings</h2>
+          <FontAwesomeIcon id="exit-settings" icon={faX} onClick={closeSettings}></FontAwesomeIcon>
         </div>
-        <div className="sidebar-nav-link" onClick={handleLogout}> 
-          <FontAwesomeIcon icon={faRightFromBracket} /> 
-          <span className="tooltiptext" id="toolkit-logout">Log Out</span>
+        <div className="setting-wrapper">
+          <p>Toggle automatic text-to-speech: </p>
+          <label className="switch">
+            <input id="setting-tts" type="checkbox" />
+            <span className="slider round" onClick={() => { setAutotts(prevState => !prevState) }}></span>
+          </label>
         </div>
-      </div>
-    </div>
-
-    <div id="chat-box">
-      {/** Text messages */}
-      <div id="chat-messages-wrapper">
-        <div id="chat-messages">
-          {getMessageHistory()}
+        <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
+        <div className="setting-wrapper">
+          <p>Toggle automatic speech-to-text: </p>
+          <label className="switch">
+            <input id="setting-stt" type="checkbox" />
+            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { handleDictation(); }, 5000); }}></span>
+          </label>
         </div>
+        <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
       </div>
 
-      {/** Input and send message box */}
-      <div id="chat-text-wrapper">
-        <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
-          <textarea
+      {/** Side panel for saved chats and creating a new chat */}
+      <div id="chatroom">
+        <div id="sidebar">
+          <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
+          <div id="sidebar-chat-list">
+            {getConversationList()}
+          </div>
+          <div id="sidebar-nav">
+            <Link className="sidebar-nav-link" to="/">
+              <FontAwesomeIcon icon={faHouse} />
+              <span className="tooltiptext" id="toolkit-home">Return Home</span>
+            </Link>
+            <Link className="sidebar-nav-link" to="/Notes">
+              <FontAwesomeIcon icon={faNoteSticky} />
+              <span className="tooltiptext" id="toolkit-notes">Saved Messages</span>
+            </Link>
+            <div className="sidebar-nav-link" onClick={openSettings}>
+              <FontAwesomeIcon icon={faGear} />
+              <span className="tooltiptext" id="toolkit-settings">Settings</span>
+            </div>
+            <div className="sidebar-nav-link" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              <span className="tooltiptext" id="toolkit-logout">Log Out</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="chat-box">
+          {/** Text messages */}
+          <div id="chat-messages-wrapper">
+            <div id="chat-messages">
+              {getMessageHistory()}
+            </div>
+          </div>
+
+          {/** Input and send message box */}
+          <div id="chat-text-wrapper">
+            <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
+              <textarea
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
                 placeholder={micActive ? "Say something..." : "Type something..."}
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
-          </textarea>
-          <button type="button" title="Speech to text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation}/></button>
-          <button title="Send text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane"/></button>
-        </form>
+              </textarea>
+              <button type="button" title="Speech to text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
+              <button title="Send text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-  </>
+    </>
   );
 }
