@@ -59,7 +59,7 @@ export default function NavigationBar() {
         <Link className="navbar-button" id="notes-button" to="/notes">NOTES</Link>
         <Link className="navbar-button" id="chat-button" to="/chat">CHAT</Link>
         <Link className="navbar-button" id="logout-button" to="/">
-          <p onClick={handleLogout}> LOG OUT </p>
+          <p id="logout-button-text" onClick={handleLogout}> LOG OUT </p>
         </Link>
       </div>
         
