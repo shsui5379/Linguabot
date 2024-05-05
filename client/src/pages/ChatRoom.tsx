@@ -8,6 +8,8 @@ import { useState, useEffect, useRef } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
 import { useNavigate } from "react-router-dom";
+import messagetools from "../utilities/messagetools";
+import { Language } from "../types/Language";
 
 export default function ChatRoom() {
   const [autotts, setAutotts] = useState(false);
@@ -87,25 +89,7 @@ export default function ChatRoom() {
 
   // Performing text-to-speech
   function speak(message: string) {
-    const locales = {
-      Spanish: "es-ES",
-      Korean: "ko-KR",
-      Japanese: "ja-JA",
-      English: "en-US",
-      Mandarin: "zh-CN",
-      French: "fr-FR"
-    }
-    // Alert if speech synthesis is not supported by browser
-    if (!("speechSynthesis" in window)) {
-      alert("Sorry, your browser doesn't support text to speech!");
-      return;
-    }
-
-    let voiceMessage = new SpeechSynthesisUtterance(message);
-    voiceMessage.lang = locales[selectedLanguage as keyof typeof locales];
-    voiceMessage.rate = 0.9;
-    window.speechSynthesis.speak(voiceMessage);
-    return voiceMessage;
+    return messagetools.speak(message, selectedLanguage as Language);
   }
 
   async function handleFormSubmit(event) {
@@ -196,11 +180,18 @@ export default function ChatRoom() {
       return [];
     }
 
+    let lastIndex = conversations[selectedConversation].messages.length - 1;
+
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
       if (index === 0) {
         return <></>;
       }
-      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} />;
+
+      if (index === lastIndex) {
+        return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={true} />;
+      }
+
+      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={false} />;
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
@@ -208,6 +199,7 @@ export default function ChatRoom() {
           key={"impossible-id"}
           message={{ role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now() }}
           selectedLanguage={selectedLanguage}
+          mostRecent={true}
         />
       )
     }
