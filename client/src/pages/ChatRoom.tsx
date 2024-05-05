@@ -105,6 +105,7 @@ export default function ChatRoom() {
     voiceMessage.lang = locales[selectedLanguage as keyof typeof locales];
     voiceMessage.rate = 0.9;
     window.speechSynthesis.speak(voiceMessage);
+    return voiceMessage;
   }
 
   async function handleFormSubmit(event) {
@@ -118,16 +119,17 @@ export default function ChatRoom() {
       setConversations([...conversations]);
       await conversations[selectedConversation].receive();
       setConversations([...conversations]);
+      let speaker;
       if (autotts) {
         let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
-        setTimeout(() => {
-          speak(readMsg);
-        }, 3000);
+        speaker = speak(readMsg);
       }
       if (autostt) {
-        setTimeout(() => {
+        if (autotts) { // wait until linguabot finishes speaking
+          speaker!.onend = handleDictation;
+        } else {
           handleDictation();
-        }, 5000);
+        }
       }
     }
   }
