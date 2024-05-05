@@ -24,7 +24,7 @@
     justify-content: center;
 }
 
-.navbar-button {
+.navbar-button, #logout-button-text {
     width: 90px;
     height: 35px;
     font-weight: 600;
