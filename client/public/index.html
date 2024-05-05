@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#285f99" />
   <meta name="description" content="Language partner: Improve your language fluency by chatting with Linguabot!" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo-192.png" />
+  <meta name="battery-savings" content="allow-reduced-framerate">
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -23,9 +24,19 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>Linguabot</title>
+
+  <script>
+    function setTheme() {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { //read OS theme : dark
+        document.body.className = "dark-mode";
+      } else {
+        document.body.className = "light-mode";
+      }
+    }
+  </script>
 </head>
 
-<body>
+<body onload="setTheme()">
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <!--
