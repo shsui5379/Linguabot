@@ -3,17 +3,32 @@
   "name": "Linguabot",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "logo-48.png",
+      "sizes": "48x48",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo-72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "logo-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "logo-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "logo-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logo-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -26,11 +41,25 @@
   "shortcuts": [
     {
       "name": "Chat",
-      "url": "chat"
+      "url": "chat",
+      "icons": [
+        {
+          "src": "convo.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "Notes",
-      "url": "notes"
+      "url": "notes",
+      "icons": [
+        {
+          "src": "note.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
     }
   ],
   "categories": [
@@ -38,16 +67,18 @@
   ],
   "screenshots": [
     {
-      "src": "static/media/chat.d6c460fe6a180ee481fa.png",
+      "src": "chat.png",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Chat with your language partner"
+      "label": "Chat with your language partner",
+      "sizes": "2499x1435"
     },
     {
-      "src": "static/media/saved-conversations.7135b658c7847a6152ea.png",
+      "src": "saved-conversations.png",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Organize your conversations"
+      "label": "Organize your conversations",
+      "sizes": "2499x1435"
     }
   ]
 }

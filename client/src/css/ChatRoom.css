@@ -243,8 +243,11 @@ textarea::placeholder {
     width: 13px;
 }
 
-#speech-to-text-icon-active {
-    color: red;
+#speech-to-text-icon-active,
+#user-text-send:active,
+.translation-active,
+.speaking-active {
+    color: red !important;
 }
 
 #user-text-send:active {

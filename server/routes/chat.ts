@@ -40,6 +40,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res, next) => {
     let conversation;
     let retry = false;
+
+    let count = (await ChatDatabase.fetchChats(req.oidc.user.sub)).length;
+
+    if (count === 10) {
+        return res.status(507).send("reached max chat limit");
+    }
+
     do {
         try {
             conversation = await ChatDatabase.createChat(uuidv4(), req.oidc.user.sub, req.body.nickname, req.body.language);
@@ -54,10 +61,10 @@ router.post("/", async (req, res, next) => {
             }
         }
     } while (retry);
-    
+
     let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language.`;
     let greetingMessage;
-    switch(req.body.language) {
+    switch (req.body.language) {
         case "English":
             greetingMessage = "Hello! I'm Linguabot, your personal conversational partner. What would you like to talk about today?";
             break;
@@ -212,6 +219,10 @@ router.patch("/message", async (req, res) => {
             await message.setStarred(req.body.starred);
         }
         if (req.body.hasOwnProperty("content") && req.body.content !== message.content) {
+            if (message.role !== "user") {
+                res.status(403).send("Cannot update content of non-user message").end();
+            }
+
             await message.setContent(req.body.content);
         }
     }
@@ -241,6 +252,11 @@ router.delete("/message", async (req, res) => {
     catch (error) {
         res.status(404).send(error.message).end();
     }
+
+    if (message.role !== "user") {
+        res.status(403).send("Cannot delete non-user message").end();
+    }
+
     // Proceed with message deletion
     await message.delete();
     res.status(200).end();

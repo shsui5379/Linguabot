@@ -8,8 +8,12 @@ import { useState, useEffect, useRef } from "react";
 import Conversation from "../types/Conversation";
 import User from "../types/User";
 import { useNavigate } from "react-router-dom";
+import messagetools from "../utilities/messagetools";
+import { Language } from "../types/Language";
 
 export default function ChatRoom() {
+  const [autotts, setAutotts] = useState(false);
+  const [autostt, setAutostt] = useState(false);
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useState("");
@@ -19,12 +23,14 @@ export default function ChatRoom() {
   const [loading, setLoading] = useState(false);
   const sentMessageBuffer = useRef("");
   const speechRecognition = useRef(null);
+  const [userLanguage, setUserLanguage] = useState("");
   const navigateTo = useNavigate();
 
   // Fetch user and conversation data on mount, and also initialize speech recognition
   useEffect(() => {
     User.fetchUser()
       .then((user) => {
+        setUserLanguage(user.userLanguage);
         setSelectedLanguage(user.targetLanguages[0]);
         Conversation.fetchConversations()
           .then((conversations) => setConversations(
@@ -81,6 +87,11 @@ export default function ChatRoom() {
     speechRecognition.current.start();
   }
 
+  // Performing text-to-speech
+  function speak(message: string) {
+    return messagetools.speak(message, selectedLanguage as Language);
+  }
+
   async function handleFormSubmit(event) {
     event.preventDefault();
     if (inputMessage.trim().length > 0) {
@@ -92,6 +103,18 @@ export default function ChatRoom() {
       setConversations([...conversations]);
       await conversations[selectedConversation].receive();
       setConversations([...conversations]);
+      let speaker;
+      if (autotts) {
+        let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
+        speaker = speak(readMsg);
+      }
+      if (autostt) {
+        if (autotts) { // wait until linguabot finishes speaking
+          speaker!.onend = handleDictation;
+        } else {
+          handleDictation();
+        }
+      }
     }
   }
 
@@ -157,11 +180,18 @@ export default function ChatRoom() {
       return [];
     }
 
+    let lastIndex = conversations[selectedConversation].messages.length - 1;
+
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
       if (index === 0) {
         return <></>;
       }
-      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} />;
+
+      if (index === lastIndex) {
+        return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={true} />;
+      }
+
+      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={false} />;
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
@@ -169,6 +199,7 @@ export default function ChatRoom() {
           key={"impossible-id"}
           message={{ role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now() }}
           selectedLanguage={selectedLanguage}
+          mostRecent={true}
         />
       )
     }
@@ -187,7 +218,7 @@ export default function ChatRoom() {
           <p>Toggle automatic text-to-speech: </p>
           <label className="switch">
             <input id="setting-tts" type="checkbox" />
-            <span className="slider round"></span>
+            <span className="slider round" onClick={() => { setAutotts(prevState => !prevState) }}></span>
           </label>
         </div>
         <span className="setting-description">If on, Linguabot will always read out loud its texts!</span>
@@ -195,7 +226,7 @@ export default function ChatRoom() {
           <p>Toggle automatic speech-to-text: </p>
           <label className="switch">
             <input id="setting-stt" type="checkbox" />
-            <span className="slider round"></span>
+            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { handleDictation(); }, 5000); }}></span>
           </label>
         </div>
         <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>

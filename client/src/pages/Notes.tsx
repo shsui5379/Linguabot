@@ -3,6 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import "../css/Notes.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faLanguage, faX } from "@fortawesome/free-solid-svg-icons";
+import messagetools from "../utilities/messagetools";
 
 export default function Notes() {
     // Update unique notes onchange
