@@ -274,6 +274,11 @@ export default function ChatRoom() {
                 required-minlength="1"
                 placeholder={micActive ? "Say something..." : "Type something..."}
                 value={inputMessage}
+                onKeyDown={(e) => {
+                  if (e.key === "NumpadEnter" || e.key === "Enter") {
+                    handleFormSubmit(e);
+                  }
+                }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
               <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
