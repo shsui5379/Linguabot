@@ -20,8 +20,13 @@
     flex-direction: column;
 }
 
+select#chat-lang-select {
+    height: 40px;
+}
+
 #sidebar-addchat,
-.chat-overview {
+.chat-overview,
+#chat-lang-select {
     width: 90%;
     padding-left: 25px;
     padding-right: 20px;

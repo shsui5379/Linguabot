@@ -206,6 +206,21 @@ export default function ChatRoom() {
     return messageHistory;
   }
 
+  function handleNewLang(e) {
+    setUserLanguage(e.target.value);
+  }
+
+  function getNewLanguage() {
+    const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
+    return(
+      <select id="chat-lang-select" value={userLanguage} onChange={handleNewLang}>
+        {languages_supported.map((lang, index) => 
+          <option value={lang}>{lang}</option>)
+        }
+      </select>
+    )
+  }
+
   return (
     <>
       {/** Settings */}
@@ -235,6 +250,7 @@ export default function ChatRoom() {
       {/** Side panel for saved chats and creating a new chat */}
       <div id="chatroom">
         <div id="sidebar">
+          {getNewLanguage()}
           <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
           <div id="sidebar-chat-list">
             {getConversationList()}
