@@ -145,8 +145,17 @@ export default function ChatRoom() {
     return messageHistory;
   }
 
-  function handleNewLang(e) {
-    setUserLanguage(e.target.value);
+  async function handleNewLang(e) {
+    let selectedLanguage = e.target.value;
+    let targetLanguages = user.targetLanguages;
+    let index = targetLanguages.indexOf(selectedLanguage);
+    if (index === -1) {
+      targetLanguages.unshift(selectedLanguage);
+    }
+    else {
+      [targetLanguages[0], targetLanguages[index]] = [targetLanguages[index], targetLanguages[0]];
+    }
+    setUser(await user.setTargetLanguages(targetLanguages));
   }
 
   function getNewLanguage() {
