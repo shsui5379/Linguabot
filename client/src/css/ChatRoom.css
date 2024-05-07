@@ -1,10 +1,3 @@
-:root {
-    --transparent-triangle-side: 10px solid transparent;
-    --gray-triangle-side: 10px solid #c4c4c4;
-    --white-traingle-side: 10px solid var(--main-white);
-    --blue-traingle-side: 10px solid var(--text-blue);
-}
-
 /* Sidebar */
 #sidebar {
     margin: 0;
@@ -331,10 +324,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--gray-triangle-side);
-    border-left: var(--gray-triangle-side);
-    border-right: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid #c4c4c4;
+    border-left: 10px solid #c4c4c4;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     top: 5px;
     right: -19px;
 }
@@ -345,10 +338,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--white-traingle-side);
-    border-left: var(--white-traingle-side);
-    border-right: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid var(--main-white);
+    border-left: 10px solid var(--main-white);
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     right: -15px;
     top: 6px;
 }
@@ -368,10 +361,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--blue-traingle-side);
-    border-right: var(--blue-traingle-side);
-    border-left: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid var(--text-blue);
+    border-right: 10px solid var(--text-blue);
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     top: 6px;
     left: -19px;
 }
