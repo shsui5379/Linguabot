@@ -277,12 +277,13 @@ export default function ChatRoom() {
           <div id="chat-text-wrapper">
             <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
               <textarea
-                minLength={0}
+                disabled={conversations.length === 0}
+                minLength={1}
                 maxLength={1024}
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder={micActive ? "Say something..." : "Type something..."}
+                placeholder={conversations.length === 0 ? "Create a chat to get started" : (micActive ? "Say something..." : "Type something...")}
                 value={inputMessage}
                 onKeyDown={(e) => {
                   if (e.key === "NumpadEnter" || e.key === "Enter") {
