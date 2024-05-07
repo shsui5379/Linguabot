@@ -26,8 +26,9 @@ class Message {
         }
     }
 
-    static async fetchMessages(conversationId: string): Promise<Message[]> {
-        let response = await fetch(`/api/chat/${conversationId}/messages`);
+    static async fetchMessages(conversationId: string, isStarred: boolean = false): Promise<Message[]> {
+        let query = `?starred=${isStarred}`;
+        let response = await fetch(`/api/chat/${conversationId}/messages${query}`);
         if (response.status !== 200) {
             throw new Error(await response.text());
         }

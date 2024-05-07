@@ -26,14 +26,15 @@ class Conversation {
     }
   }
 
-  static async fetchConversations(): Promise<Conversation[]> {
-    let response = await fetch("/api/chat");
+  static async fetchConversations(language: Language | ".*" = ".*", onlyStarredMessages: boolean = false): Promise<Conversation[]> {
+    let query = `?language=${language}`;
+    let response = await fetch(`/api/chat${query}`);
     let conversations = await response.json();
     let results = [];
     for (const conversation of conversations) {
       let messages;
       try {
-        messages = await Message.fetchMessages(conversation.chatId);
+        messages = await Message.fetchMessages(conversation.chatId, onlyStarredMessages);
       }
       catch (error) {
         console.error(error.message);
