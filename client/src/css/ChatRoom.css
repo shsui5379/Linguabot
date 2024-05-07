@@ -231,7 +231,7 @@ textarea::placeholder {
     font-size: 16px;
     background-color: transparent;
     border: none;
-    color: var(--dark-gray);
+    color: var(--black-contrast);
 }
 
 #user-text-send-icon {
@@ -252,10 +252,8 @@ textarea::placeholder {
 .translation-active,
 .speaking-active {
     color: red !important;
-}
-
-#user-text-send:active {
     cursor: default;
+
 }
 
 /* Text messages */
@@ -419,12 +417,6 @@ textarea::placeholder {
     color: var(--white-contrast);
     border: none;
     font-size: 14px;
-}
-
-.message-tools-listen:active,
-.message-tools-translate:active {
-    color: #2d95fcd3;
-    cursor: default;
 }
 
 /* Settings */
