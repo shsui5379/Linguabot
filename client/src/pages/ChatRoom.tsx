@@ -4,92 +4,31 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Conversation from "../types/Conversation";
-import User from "../types/User";
 import { useNavigate } from "react-router-dom";
 import messagetools from "../utilities/messagetools";
 import { Language } from "../types/Language";
+import useDictation from "../hooks/useDictation";
+import useFetchUserData from "../hooks/useFetchUserData";
+import useFetchConversationData from "../hooks/useFetchConversationData";
 
 export default function ChatRoom() {
   const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
-  const [conversations, setConversations] = useState([]);
+  const [user, setUser] = useFetchUserData();
+  const [conversations, setConversations] = useFetchConversationData((user === null) ? "" : user.targetLanguages[0], false);
   const [selectedConversation, setSelectedConversation] = useState(0);
-  const [selectedLanguage, setSelectedLanguage] = useState("");
   const [inputMessage, setInputMessage] = useState("");
+  const [dictationActive, toggleDictation] = useDictation((user === null) ? "" : user.targetLanguages[0], setInputMessage);
   const [justSent, setJustSent] = useState(false);
-  const [micActive, setMicActive] = useState(false);
-  const [loading, setLoading] = useState(false);
   const sentMessageBuffer = useRef("");
-  const speechRecognition = useRef(null);
-  const [userLanguage, setUserLanguage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigateTo = useNavigate();
-
-  // Fetch user and conversation data on mount, and also initialize speech recognition
-  useEffect(() => {
-    User.fetchUser()
-      .then((user) => {
-        setUserLanguage(user.userLanguage);
-        setSelectedLanguage(user.targetLanguages[0]);
-        Conversation.fetchConversations()
-          .then((conversations) => setConversations(
-            conversations.filter((conversation) => conversation.language === user.targetLanguages[0])
-          ));
-
-        const locales = {
-          Spanish: "es-ES",
-          Korean: "ko-KR",
-          Japanese: "ja-JA",
-          English: "en-US",
-          Mandarin: "zh-CN",
-          French: "fr-FR"
-        };
-        speechRecognition.current = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
-        if (speechRecognition.current !== null) {
-          speechRecognition.current.lang = locales[user.targetLanguages[0] as keyof typeof locales];
-          speechRecognition.current.interimResults = true;
-          speechRecognition.current.maxAlternatives = 1;
-          speechRecognition.current.onresult = (event) => {
-            let message = Array.from(event.results).map((result) => result[0].transcript).join("");
-            setInputMessage(message);
-          };
-          speechRecognition.current.onspeechend = () => {
-            speechRecognition.current.stop();
-            setMicActive(false);
-          };
-          speechRecognition.current.onerror = (event) => {
-            setMicActive(false);
-          };
-        }
-      })
-      .catch((error) => {
-        if (error.message === "User doesn't exist") {
-          navigateTo("/register");
-        }
-      });
-  }, []);
-
-  // Performing speech-to-text
-  function handleDictation() {
-    if (speechRecognition.current === null) {
-      alert("Sorry, your browser doesn't support speech recognition");
-      return;
-    }
-
-    if (micActive) {
-      setMicActive(false);
-      speechRecognition.current.stop();
-      return;
-    }
-
-    setMicActive(true);
-    speechRecognition.current.start();
-  }
 
   // Performing text-to-speech
   function speak(message: string) {
-    return messagetools.speak(message, selectedLanguage as Language);
+    return messagetools.speak(message, user.targetLanguages[0] as Language);
   }
 
   async function handleFormSubmit(event) {
@@ -110,9 +49,9 @@ export default function ChatRoom() {
       }
       if (autostt) {
         if (autotts) { // wait until linguabot finishes speaking
-          speaker!.onend = handleDictation;
+          speaker!.onend = toggleDictation;
         } else {
-          handleDictation();
+          toggleDictation();
         }
       }
     }
@@ -121,7 +60,7 @@ export default function ChatRoom() {
   async function handleCreateNewChat() {
     let conversation;
     try {
-      conversation = await Conversation.createConversation(selectedLanguage, "new conversation");
+      conversation = await Conversation.createConversation(user.targetLanguages[0], "new conversation");
     }
     catch (error) {
       console.error(error.message);
@@ -188,17 +127,17 @@ export default function ChatRoom() {
       }
 
       if (index === lastIndex) {
-        return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={true} />;
+        return <Message key={message.messageId} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} mostRecent={true} />;
       }
 
-      return <Message key={message.messageId} message={message} selectedLanguage={selectedLanguage} userLanguage={userLanguage} mostRecent={false} />;
+      return <Message key={message.messageId} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} mostRecent={false} />;
     }).reverse();
     if (justSent) {
       messageHistory.unshift(
         <Message
           key={"impossible-id"}
           message={{ role: "user", content: sentMessageBuffer.current, starred: false, timestamp: Date.now() }}
-          selectedLanguage={selectedLanguage}
+          selectedLanguage={user.targetLanguages[0]}
           mostRecent={true}
         />
       )
@@ -213,7 +152,7 @@ export default function ChatRoom() {
   function getNewLanguage() {
     const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
     return(
-      <select id="chat-lang-select" value={userLanguage} onChange={handleNewLang}>
+      <select id="chat-lang-select" value={user.userLanguage} onChange={handleNewLang}>
         {languages_supported.map((lang, index) => 
           <option value={lang}>{lang}</option>)
         }
@@ -241,7 +180,7 @@ export default function ChatRoom() {
           <p>Toggle automatic speech-to-text: </p>
           <label className="switch">
             <input id="setting-stt" type="checkbox" />
-            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { handleDictation(); }, 5000); }}></span>
+            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { toggleDictation(); }, 5000); }}></span>
           </label>
         </div>
         <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
@@ -288,11 +227,11 @@ export default function ChatRoom() {
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder={micActive ? "Say something..." : "Type something..."}
+                placeholder={dictationActive ? "Say something..." : "Type something..."}
                 value={inputMessage}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
-              <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
+              <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={dictationActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={toggleDictation} /></button>
               <button title="Send Text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
             </form>
           </div>
