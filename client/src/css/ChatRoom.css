@@ -1,8 +1,7 @@
 :root {
-    --text-blue: #4478ac;
     --transparent-triangle-side: 10px solid transparent;
     --gray-triangle-side: 10px solid #c4c4c4;
-    --white-traingle-side: 10px solid var(--white);
+    --white-traingle-side: 10px solid var(--main-white);
     --blue-traingle-side: 10px solid var(--text-blue);
 }
 
@@ -12,12 +11,13 @@
     padding: 0;
     width: 20%;
     height: 100vh;
-    color: var(--white);
-    background-color: var(--blue);
-    box-shadow: 1px 0 2px 1px gray;
+    color: var(--main-white);
+    background-color: var(--main-blue);
+    box-shadow: 1px 0 2px 1px var(--main-blue);
     position: fixed;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 select#chat-lang-select {
@@ -38,7 +38,7 @@ select#chat-lang-select {
 
 #sidebar-addchat {
     height: auto;
-    background-color: var(--blue);
+    background-color: var(--main-blue);
     border: 1px solid var(--white);
     border-radius: 5px;
     color: var(--white);
@@ -57,7 +57,7 @@ select#chat-lang-select {
 
 .chat-delete {
     display: flex;
-    color: #4b4b4b;
+    color: var(--main-black);
     background-color: initial;
     border: none;
     font-size: 12px;
@@ -79,7 +79,7 @@ select#chat-lang-select {
 
 .sidebar-nav-link {
     font-size: 18px;
-    color: var(--white);
+    color: var(--main-white);
     text-decoration: none;
     position: relative;
     display: inline-block;
@@ -88,8 +88,8 @@ select#chat-lang-select {
 
 .tooltiptext {
     width: max-content;
-    color: var(--white);
-    background-color: black;
+    color: var(--main-white);
+    background-color: #1b1b1b;
     text-align: center;
     font-size: 12px;
     padding: 10px;
@@ -108,7 +108,7 @@ select#chat-lang-select {
     margin-left: -9px;
     border-width: 5px;
     border-style: solid;
-    border-color: black transparent transparent transparent;
+    border-color: #1b1b1b transparent transparent transparent;
 }
 
 #toolkit-home {
@@ -132,6 +132,8 @@ select#chat-lang-select {
 }
 
 #sidebar-chat-list {
+    margin-left: 10px;
+    padding-right: 10px;
     flex: 1 1 auto;
     margin-bottom: 70px;
     overflow-y: scroll;
@@ -160,13 +162,14 @@ select#chat-lang-select {
 
 .chat-overview {
     align-items: center;
-    background-color: var(--white);
-    border: 1px solid var(--white);
-    color: #4b4b4b;
+    background-color: var(--main-white);
+    border: none;
+    color: black;
     display: flex;
     height: fit-content;
     margin-bottom: 10px;
     min-height: 40px;
+    width: 100%;
 }
 
 .chat-nickname {
@@ -184,8 +187,9 @@ button:hover {
 
 #active-chat {
     background-color: var(--text-blue);
-    color: var(--white);
-    border: 2px solid var(--white);
+    color: var(--main-white);
+    border: 2px solid var(--main-white);
+    width: 100%;
 }
 
 #active-chat .chat-delete {
@@ -202,7 +206,7 @@ button:hover {
 #chat-text {
     height: 45px;
     border-radius: 5px;
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--body-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -220,6 +224,8 @@ button:hover {
     resize: none;
     font-family: "Varela Round", sans-serif;
     outline: 0;
+    background-color: transparent;
+    color: var(--body-color);
 }
 
 textarea::placeholder {
@@ -315,6 +321,8 @@ textarea::placeholder {
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
     right: -10px;
+    background-color: var(--main-white);
+    color: var(--main-black)
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -348,8 +356,8 @@ textarea::placeholder {
 .bot-text {
     margin: 0;
     float: left;
-    color: var(--white);
-    background-color: #1d5c9bd3;
+    color: var(--main-white);
+    background-color: var(--text-blue);
     box-shadow: 1px 1px 2px 1px gray;
     position: relative;
 }
@@ -404,7 +412,7 @@ textarea::placeholder {
 #message-tools-bot {
     width: 115px;
     height: 40px;
-    background-color: #171717e0;
+    background-color: var(--black-contrast);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -415,7 +423,7 @@ textarea::placeholder {
     width: 35px;
     height: 35px;
     background-color: transparent;
-    color: var(--white);
+    color: var(--white-contrast);
     border: none;
     font-size: 14px;
 }
@@ -499,7 +507,7 @@ textarea::placeholder {
 }
 
 input:checked+.slider {
-    background-color: var(--blue);
+    background-color: var(--main-blue);
 }
 
 input:focus+.slider {

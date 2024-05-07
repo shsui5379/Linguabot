@@ -1,6 +1,6 @@
 .navigation-menu {
     height: 55px;
-    background-color: var(--blue);
+    background-color: var(--main-blue);
     letter-spacing: 1px;
 }
 
@@ -46,6 +46,6 @@
 
 #signup-button, #logout-button {
     background-color: var(--white); 
-    color: var(--blue);
+    color: var(--main-blue);
     border-radius: 5px;
 }
