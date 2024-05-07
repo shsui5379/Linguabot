@@ -125,6 +125,7 @@ select#chat-lang-select {
 }
 
 #sidebar-chat-list {
+    width: 90%;
     margin-left: 10px;
     padding-right: 10px;
     flex: 1 1 auto;
@@ -251,9 +252,8 @@ textarea::placeholder {
 #user-text-send:active,
 .translation-active,
 .speaking-active {
-    color: red !important;
+    color: var(--text-blue) !important;
     cursor: default;
-
 }
 
 /* Text messages */
