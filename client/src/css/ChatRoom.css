@@ -236,9 +236,9 @@ textarea::placeholder {
 
 #user-text-send-icon {
     display: flex;
-    filter: opacity(0.8);
     width: 25px;
     height: 20px;
+    filter: var(--send-text-icon);
 }
 
 #speech-to-text-icon,
@@ -286,7 +286,7 @@ textarea::placeholder {
 }
 
 #chat-messages::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--main-blue);
     border-radius: 10px;
 }
 

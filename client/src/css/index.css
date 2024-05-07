@@ -8,6 +8,7 @@
     --white-contrast: var(--main-white);
     --black-contrast: var(--main-black);
     --subtext-color: #757575;
+    --send-text-icon: invert(0);
 }
 
 .dark-mode {
@@ -20,6 +21,7 @@
     --white-contrast: var(--main-black);
     --black-contrast: var(--main-white);
     --subtext-color: #757575;
+    --send-text-icon: invert(1);
 }
 
 body { 
