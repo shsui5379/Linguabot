@@ -235,7 +235,7 @@ router.patch("/message", async (req, res) => {
     // Proceed with message modifications
     try {
         if (req.body.hasOwnProperty("note") && req.body.note !== message.note) {
-            await message.setNote(req.body.note);
+            await message.setNote(req.body.note.substring(0, 1024));
         }
         if (req.body.hasOwnProperty("starred") && req.body.starred !== message.starred) {
             await message.setStarred(req.body.starred);
@@ -245,7 +245,7 @@ router.patch("/message", async (req, res) => {
                 return res.status(403).send("Cannot update content of non-user message").end();
             }
 
-            await message.setContent(req.body.content);
+            await message.setContent(req.body.content.substring(0, 1024));
         }
     }
     catch (error) {
@@ -289,7 +289,7 @@ async function createMessage(chatId: string, content: string, role: "system" | "
     let retry = false;
     do {
         try {
-            message = await MessageDatabase.createMessage(uuidv4(), chatId, content, role);
+            message = await MessageDatabase.createMessage(uuidv4(), chatId, content.substring(0, 1024), role);
             retry = false;
         }
         catch (error) {

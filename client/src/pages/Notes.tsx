@@ -26,6 +26,7 @@ export default function Notes() {
             <form className="saved-message-notes">
                 <textarea
                     name="note"
+                    maxLength={1024}
                     // onChange={saveNewNote()}
                     placeholder="Add a note..."
                     className="notes-input">

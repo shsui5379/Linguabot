@@ -277,6 +277,8 @@ export default function ChatRoom() {
           <div id="chat-text-wrapper">
             <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
               <textarea
+                minLength={0}
+                maxLength={1024}
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
