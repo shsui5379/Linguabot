@@ -16,6 +16,7 @@ import useRegistrationCheck from "../hooks/useRegistrationCheck";
 export default function ChatRoom() {
   const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
+  useRegistrationCheck();
   const [user, setUser] = useFetchUserData();
   const [conversations, setConversations] = useFetchConversationData((user === null) ? "" : user.targetLanguages[0], false);
   const [selectedConversation, setSelectedConversation] = useState(0);
@@ -24,7 +25,6 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
-  useRegistrationCheck();
 
   // Performing text-to-speech
   function speak(message: string) {
