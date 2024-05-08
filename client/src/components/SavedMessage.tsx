@@ -1,31 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faLanguage, faX } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import useTranslation from "../hooks/useTranslation";
 import messagetools from "../utilities/messagetools";
 
 export default function SavedMessage({ message, selectedLanguage, userLanguage }) {
     const [noteInput, setNoteInput] = useState(message.note);
-    const [shouldSync, setShouldSync] = useState(false);
     const [showTranslation, translatedText, toggleTranslation] = useTranslation(message.content, selectedLanguage, userLanguage);
-    const syncInitiated = useRef(false);
-
-    useEffect(() => {
-        if (shouldSync) {
-            message.setNote(noteInput);
-            setShouldSync(false);
-        }
-    }, [shouldSync, noteInput, message]);
 
     function handleNoteInput(event) {
         setNoteInput(event.target.value);
-        if (!syncInitiated.current) {
-            syncInitiated.current = true;
-            setTimeout(() => {
-                setShouldSync(true);
-                syncInitiated.current = false;
-            }, 5000);
-        }
+    }
+
+    function handleSaveNote() {
+        message.setNote(noteInput);
     }
 
     function speak() {
@@ -46,6 +34,7 @@ export default function SavedMessage({ message, selectedLanguage, userLanguage }
                 <textarea
                     name="note"
                     onChange={handleNoteInput}
+                    onBlur={handleSaveNote}
                     placeholder="Add a note..."
                     className="notes-input"
                     maxLength={1024}
