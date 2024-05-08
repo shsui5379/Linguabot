@@ -1,6 +1,8 @@
 GET /api/chat/
+    Expects:
+        An optional "language" query parameter
     Returns:
-        An array of all conversation instances for a user (without the messages)
+        An array of all conversation instances for a user (without the messages) that satisfies the language filter, if specified
 
 POST /api/chat/
     Expects:
@@ -29,8 +31,10 @@ POST /api/chat/completions/
         A ConversationMessage object representing the chatbot response
 
 GET /api/chat/:conversationId/messages/
+    Expects:
+        An optional "starred" query parameter
     Returns:
-        An array of messages comprising a conversation specified by conversationId
+        An array of messages comprising a conversation specified by conversationId that also satisfies the "starred" filter, if specified
 
 POST /api/chat/message/
     Expects:

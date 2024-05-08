@@ -15,7 +15,7 @@ Client-side class representing an instance of a message
 - private constructor(messageId: string, note: string, starred: boolean, content: string, 
                       role: "system" | "assistant" | "user", timestamp: number)
 - private async updateMessage()
-- static async fetchMessages(chatId: string)
+- static async fetchMessages(chatId: string, isStarred: boolean = false)
 - static async createMessage(chatId: string, content: string, role: "system" | "assistant" | "user")
 - async delete()
 - async setNote(note: string)

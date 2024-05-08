@@ -13,7 +13,7 @@ Client-side class representing an instance of a conversation
 ## Methods
 - private constructor(chatId: string, language: Language, nickname: string, messages: Message[], timestamp: number)
 - private async updateConversation()
-- static async fetchConversations()
+- static async fetchConversations(language: Language | ".*" = ".*", onlyStarredMessages: boolean = false)
 - static async createConversation(language: Language, nickname: string)
 - async configure(configurationMessage: string)
 - async send(message: string)

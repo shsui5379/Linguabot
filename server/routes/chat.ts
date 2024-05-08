@@ -28,7 +28,8 @@ router.use((req, res, next) => {
  * Fetch conversations for a user
  */
 router.get("/", async (req, res) => {
-    let conversations = await ChatDatabase.fetchChats(req.oidc.user.sub, ".*");
+    let language = req.query.language ?? ".*";
+    let conversations = await ChatDatabase.fetchChats(req.oidc.user.sub, language);
     res.json(conversations.map((conversation) => conversation.toJSON()));
 });
 
@@ -190,7 +191,8 @@ router.get("/:conversationId/messages", async (req, res) => {
     if (conversation.userId !== req.oidc.user.sub) {
         return res.status(401).send("Unauthorized access").end();
     }
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false);
+    let mustHaveStar = req.query.starred ?? false;
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
     res.json(messages.map((message) => message.toJSON()));
 });
 
