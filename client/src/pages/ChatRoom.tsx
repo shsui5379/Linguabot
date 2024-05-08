@@ -141,6 +141,10 @@ export default function ChatRoom() {
   function closeSettings() {
     document.getElementById("chatroom")!.style.visibility = "visible";
     document.getElementById("settings")!.style.visibility = "hidden";
+
+    if (autostt) {
+      handleDictation();
+    }
   }
 
   // Generate the conversation list
@@ -164,6 +168,10 @@ export default function ChatRoom() {
                   setConversations([...conversations]);
                 } catch (error) {
                   console.error(error);
+
+                  if (error.message === "Must have at least one chat open") {
+                    alert("Must have at least one chat open");
+                  }
                 }
               }
             }}>
@@ -206,6 +214,21 @@ export default function ChatRoom() {
     return messageHistory;
   }
 
+  function handleNewLang(e) {
+    setUserLanguage(e.target.value);
+  }
+
+  function getNewLanguage() {
+    const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
+    return(
+      <select id="chat-lang-select" value={userLanguage} onChange={handleNewLang}>
+        {languages_supported.map((lang, index) => 
+          <option value={lang}>{lang}</option>)
+        }
+      </select>
+    )
+  }
+
   return (
     <>
       {/** Settings */}
@@ -226,7 +249,7 @@ export default function ChatRoom() {
           <p>Toggle automatic speech-to-text: </p>
           <label className="switch">
             <input id="setting-stt" type="checkbox" />
-            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { handleDictation(); }, 5000); }}></span>
+            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState) }}></span>
           </label>
         </div>
         <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
@@ -235,6 +258,7 @@ export default function ChatRoom() {
       {/** Side panel for saved chats and creating a new chat */}
       <div id="chatroom">
         <div id="sidebar">
+          {getNewLanguage()}
           <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
           <div id="sidebar-chat-list">
             {getConversationList()}
@@ -269,11 +293,19 @@ export default function ChatRoom() {
           <div id="chat-text-wrapper">
             <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
               <textarea
+                disabled={conversations.length === 0}
+                minLength={1}
+                maxLength={1024}
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder={micActive ? "Say something..." : "Type something..."}
+                placeholder={conversations.length === 0 ? "Create a chat to get started" : (micActive ? "Say something..." : "Type something...")}
                 value={inputMessage}
+                onKeyDown={(e) => {
+                  if (e.key === "NumpadEnter" || e.key === "Enter") {
+                    handleFormSubmit(e);
+                  }
+                }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
               <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={micActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={handleDictation} /></button>
