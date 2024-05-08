@@ -1,7 +1,6 @@
 // Notes component
 import NavigationBar from "../components/NavigationBar";
 import "../css/Notes.css"
-import messagetools from "../utilities/messagetools";
 import useRegistrationCheck from "../hooks/useRegistrationCheck";
 import useFetchUserData from "../hooks/useFetchUserData";
 import useFetchConversationData from "../hooks/useFetchConversationData";
