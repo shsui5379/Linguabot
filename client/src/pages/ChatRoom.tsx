@@ -169,7 +169,7 @@ export default function ChatRoom() {
   function getNewLanguage() {
     const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
     return(
-      <select id="chat-lang-select" value={""} onChange={handleNewLang}>
+      <select id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
         {languages_supported.map((lang, index) => 
           <option value={lang}>{lang}</option>)
         }
@@ -241,10 +241,13 @@ export default function ChatRoom() {
           <div id="chat-text-wrapper">
             <form id="chat-text" onSubmit={(event) => handleFormSubmit(event)}>
               <textarea
+                disabled={conversations.length === 0}
+                minLength={1}
+                maxLength={1024}
                 id="user-text-type"
                 name="user-text-type"
                 required-minlength="1"
-                placeholder={dictationActive ? "Say something..." : "Type something..."}
+                placeholder={conversations.length === 0 ? "Create a chat to get started" : (dictationActive ? "Say something..." : "Type something...")}
                 value={inputMessage}
                 onKeyDown={(e) => {
                   if (e.key === "NumpadEnter" || e.key === "Enter") {

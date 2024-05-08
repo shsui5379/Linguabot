@@ -47,7 +47,9 @@ export default function SavedMessage({ message, selectedLanguage, userLanguage }
                     name="note"
                     onChange={handleNoteInput}
                     placeholder="Add a note..."
-                    className="notes-input">
+                    className="notes-input"
+                    maxLength={1024}
+                >
                     {/** display the note */}
                     {noteInput ?? ""}
                 </textarea>

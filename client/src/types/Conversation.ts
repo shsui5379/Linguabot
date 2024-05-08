@@ -14,7 +14,7 @@ class Conversation {
   private async updateConversation() {
     let response = await fetch("/api/chat", {
       method: "PATCH",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chatId: this.#conversationId,
         nickname: this.#nickname
@@ -47,7 +47,7 @@ class Conversation {
   static async createConversation(language: Language, nickname: string) {
     let response = await fetch("/api/chat/", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         language: language,
         nickname: nickname
@@ -58,7 +58,7 @@ class Conversation {
       throw new Error(await response.text());
     }
 
-    let {conversation, messages} = await response.json();
+    let { conversation, messages } = await response.json();
     let messageInstances = messages.map((message) => new Conversation.Message(
       message.messageId,
       message.note,
@@ -100,16 +100,13 @@ class Conversation {
   async receive() {
     let response = await fetch("/api/chat/completions", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(this.#messages.map((message) => {
-        return {
-          role: message.role,
-          content: message.content
-        };
-      }))
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chatId: this.#conversationId
+      })
     });
 
-    switch(response.status) {
+    switch (response.status) {
       case 401:
         throw new Error("Unauthorized OpenAI access");
       case 403:
@@ -124,7 +121,7 @@ class Conversation {
 
     try {
       let completion = await response.json();
-      this.#messages.push(await Message.createMessage(this.#conversationId, completion.content, "assistant"));
+      this.#messages.push(new Message(completion.messageId, completion.note, completion.starred, completion.content, completion.role, completion.timestamp));
     }
     catch (error) {
       console.error(error.message);
@@ -134,7 +131,7 @@ class Conversation {
   async delete() {
     let response = await fetch("/api/chat/", {
       method: "DELETE",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chatId: this.#conversationId
       })

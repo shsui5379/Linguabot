@@ -149,20 +149,34 @@ router.delete("/", async (req, res) => {
 /**
  * Get a response for a conversation
  * 
+ * Expects a Chat ID, and returns the Message of response
+ * 
  * Refer to https://platform.openai.com/docs/guides/error-codes/api-errors for error codes
  */
 router.post("/completions", async (req, res, next) => {
+    let history = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.body.chatId, ".*", false, false);
+
+    if (history.length === 0) {
+        return res.status(404).send("Chat not found").end();
+    }
+
     let completions;
     try {
         completions = await OpenAIClient.chat.completions.create({
-            messages: req.body,
+            messages: history.map((message) => {
+                return {
+                    role: message.role,
+                    content: message.content
+                }
+            }),
             model: "gpt-3.5-turbo"
         });
     }
     catch (error) {
         next(error);
     }
-    res.json(completions.choices[0].message);
+    let response = await createMessage(req.body.chatId, completions.choices[0].message.content, completions.choices[0].message.role, next);
+    res.json(response.toJSON()).end();
 });
 
 /**
@@ -185,7 +199,8 @@ router.get("/:conversationId/messages", async (req, res) => {
 /**
  * Create a message
  * 
- * Expects arguments for chatId, role, and content in the post request body. Returns information about the created message.
+ * Expects arguments for chatId, and content in the post request body. Returns information about the created message.
+ * Role is always user.
  */
 router.post("/message", async (req, res, next) => {
     // Check that the corresponding conversation both exists and belongs to the client
@@ -196,7 +211,7 @@ router.post("/message", async (req, res, next) => {
     if (conversation.userId !== req.oidc.user.sub) {
         return res.status(401).send("Unauthorized access").end();
     }
-    res.json(await createMessage(req.body.chatId, req.body.content, req.body.role, next));
+    res.json(await createMessage(req.body.chatId, req.body.content, "user", next));
 });
 
 /**
@@ -222,7 +237,7 @@ router.patch("/message", async (req, res) => {
     // Proceed with message modifications
     try {
         if (req.body.hasOwnProperty("note") && req.body.note !== message.note) {
-            await message.setNote(req.body.note);
+            await message.setNote(req.body.note.substring(0, 1024));
         }
         if (req.body.hasOwnProperty("starred") && req.body.starred !== message.starred) {
             await message.setStarred(req.body.starred);
@@ -232,7 +247,7 @@ router.patch("/message", async (req, res) => {
                 return res.status(403).send("Cannot update content of non-user message").end();
             }
 
-            await message.setContent(req.body.content);
+            await message.setContent(req.body.content.substring(0, 1024));
         }
     }
     catch (error) {
@@ -276,7 +291,7 @@ async function createMessage(chatId: string, content: string, role: "system" | "
     let retry = false;
     do {
         try {
-            message = await MessageDatabase.createMessage(uuidv4(), chatId, content, role);
+            message = await MessageDatabase.createMessage(uuidv4(), chatId, content.substring(0, 1024), role);
             retry = false;
         }
         catch (error) {
