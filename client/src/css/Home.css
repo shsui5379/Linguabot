@@ -1,26 +1,11 @@
 :root {
-    --blue: #1D5D9B;
+    --main-blue: #1D5D9B;
     --white: #f2f2f2;
-    --subtext-gray: #757575;
-    --dark-gray: #3c3c3c;
     --section-margin-side: 10vw;
     --section-margin: 15vw;
     --title-font-size: 30px;
     --text-font-size: 16px;
     --flag-size: 28px;
-}
-/* 
-.light-mode {
-    --bg-color: #f2f2f2;
-}
-
-.dark-mode {
-    --bg-color: #1b1b1b;
-} */
-
-body { 
-    color: var(--dark-gray);
-    background-color: #f2f2f2;
 }
 
 /* Full Screen Desktop */
@@ -137,7 +122,7 @@ h1 {
 /* Title block */
 
 #welcome-block {
-    background-color: var(--blue);
+    background-color: var(--main-blue);
     color: #f2f2f2;
     padding-bottom: 30px;
 }
@@ -188,7 +173,7 @@ h1 {
     font-weight: 600;
     font-size: var(--text-font-size);
     letter-spacing: 1px;
-    color: var(--subtext-gray);
+    color: var(--subtext-color);
     justify-content: space-around;
     flex-wrap: wrap;
 }
@@ -212,7 +197,7 @@ h1 {
 }
 
 #Japanese-home-flag, #Korean-home-flag {
-    border: 1px solid var(--subtext-gray);
+    border: 1px solid var(--subtext-color);
 }
 
 
@@ -239,7 +224,7 @@ h1 {
 }
 
 .gray-text, span{
-    color: var(--subtext-gray);
+    color: var(--subtext-color);
 }
 
 span {
@@ -264,7 +249,7 @@ span {
 
 #join-now {
     height: 300px;
-    background-color: var(--blue);
+    background-color: var(--main-blue);
     color: #f2f2f2;
     display: flex;
     flex-direction: column;
@@ -278,7 +263,7 @@ span {
     text-decoration: none;
     line-height: 50px;
     margin-top: 3%;
-    color: var(--blue);
+    color: var(--main-blue);
     background-color: #f2f2f2;
     font-size: 16px;    
     border-radius: 5px;

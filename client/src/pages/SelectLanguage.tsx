@@ -2,13 +2,18 @@
 import "../css/SelectLanguage.css"
 import { SetStateAction, MouseEvent } from "react"
 
-export default function SelectLanguage({selected, setSelected, setFlowState}) {
+export default function SelectLanguage({ selected, setSelected, setFlowState }) {
   const isSelected = (item: SetStateAction<string>) => {
     setSelected(item);
   }
 
   const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (selected === "") {
+      return alert("Please select a langauge");
+    }
+
     setFlowState();
   };
 

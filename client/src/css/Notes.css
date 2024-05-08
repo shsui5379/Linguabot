@@ -14,7 +14,7 @@
     height: fit-content;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 1px solid var(--body-color);
     border-radius: 5px;
 }
 
@@ -35,6 +35,7 @@
     background-color: transparent;
     border: none;
     font-size: 18px;
+    color: var(--body-color);
 }
 
 .saved-text-tools-button:active {
@@ -57,6 +58,7 @@
     box-sizing: border-box;
     margin: 3% var(--notes-margin) 3% var(--notes-margin);
     border: none;
-    color: gray;
+    color: var(--subtext-color);
     font-family: "Varela Round", sans-serif;
+    background-color: transparent
 }

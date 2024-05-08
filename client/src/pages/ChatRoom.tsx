@@ -80,6 +80,10 @@ export default function ChatRoom() {
   function closeSettings() {
     document.getElementById("chatroom")!.style.visibility = "visible";
     document.getElementById("settings")!.style.visibility = "hidden";
+
+    if (autostt) {
+      handleDictation();
+    }
   }
 
   // Generate the conversation list
@@ -103,6 +107,10 @@ export default function ChatRoom() {
                   setConversations([...conversations]);
                 } catch (error) {
                   console.error(error);
+
+                  if (error.message === "Must have at least one chat open") {
+                    alert("Must have at least one chat open");
+                  }
                 }
               }
             }}>
@@ -189,7 +197,7 @@ export default function ChatRoom() {
           <p>Toggle automatic speech-to-text: </p>
           <label className="switch">
             <input id="setting-stt" type="checkbox" />
-            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState); setTimeout(() => { toggleDictation(); }, 5000); }}></span>
+            <span className="slider round" onClick={() => { setAutostt(prevState => !prevState) }}></span>
           </label>
         </div>
         <span className="setting-description">If on, your mic will always pick up what you say when it's your turn to send a message!</span>
@@ -238,6 +246,11 @@ export default function ChatRoom() {
                 required-minlength="1"
                 placeholder={dictationActive ? "Say something..." : "Type something..."}
                 value={inputMessage}
+                onKeyDown={(e) => {
+                  if (e.key === "NumpadEnter" || e.key === "Enter") {
+                    handleFormSubmit(e);
+                  }
+                }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
               <button type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={dictationActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={toggleDictation} /></button>

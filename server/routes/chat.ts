@@ -103,11 +103,11 @@ router.patch("/", async (req, res) => {
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     // Check if conversation was found
     if (conversation === null) {
-        res.status(404).send("Conversation not found").end();
+        return res.status(404).send("Conversation not found").end();
     }
     // Ensure that the client is the owner of the conversation to be modified
     if (conversation.userId !== req.oidc.user.sub) {
-        res.status(401).send("Unauthorized access").end();
+        return res.status(401).send("Unauthorized access").end();
     }
     try {
         if (req.body.hasOwnProperty("nickname") && req.body.nickname !== conversation.nickname) {
@@ -129,12 +129,19 @@ router.delete("/", async (req, res) => {
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     // Check if conversation exists
     if (conversation === null) {
-        res.status(404).send("Conversation not found").end();
+        return res.status(404).send("Conversation not found").end();
     }
     // Ensure that the client is the owner of the conversation to be deleted
     if (conversation.userId !== req.oidc.user.sub) {
-        res.status(401).send("Unauthorized access").end();
+        return res.status(401).send("Unauthorized access").end();
     }
+
+    let conversationsCount = (await ChatDatabase.fetchChats(req.oidc.user.sub)).length;
+
+    if (conversationsCount === 1) {
+        return res.status(406).send("Must have at least one chat open").end();
+    }
+
     await conversation.delete();
     res.status(200).end();
 });
@@ -165,10 +172,10 @@ router.get("/:conversationId/messages", async (req, res) => {
     // Check that the conversation exists and that it belongs to the client
     let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
     if (conversation === null) {
-        res.status(404).send("No such conversation found").end();
+        return res.status(404).send("No such conversation found").end();
     }
     if (conversation.userId !== req.oidc.user.sub) {
-        res.status(401).send("Unauthorized access").end();
+        return res.status(401).send("Unauthorized access").end();
     }
     let mustHaveStar = req.query.starred ?? false;
     let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
@@ -184,10 +191,10 @@ router.post("/message", async (req, res, next) => {
     // Check that the corresponding conversation both exists and belongs to the client
     let conversation = await ChatDatabase.fetchChat(req.body.chatId);
     if (conversation === null) {
-        res.status(404).send("No such conversation found").end();
+        return res.status(404).send("No such conversation found").end();
     }
     if (conversation.userId !== req.oidc.user.sub) {
-        res.status(401).send("Unauthorized access").end();
+        return res.status(401).send("Unauthorized access").end();
     }
     res.json(await createMessage(req.body.chatId, req.body.content, req.body.role, next));
 });
@@ -201,16 +208,16 @@ router.patch("/message", async (req, res) => {
     let message = await MessageDatabase.fetchMessage(req.body.messageId);
     // Check if message was found
     if (message === null) {
-        res.status(404).send("Message not found").end();
+        return res.status(404).send("Message not found").end();
     }
     // Check that message belongs to the client
     try {
         if (await message.getUserId() !== req.oidc.user.sub) {
-            res.status(401).send("Unauthorized access").end();
+            return res.status(401).send("Unauthorized access").end();
         }
     }
     catch (error) {
-        res.status(404).send(error.message).end();
+        return res.status(404).send(error.message).end();
     }
     // Proceed with message modifications
     try {
@@ -222,7 +229,7 @@ router.patch("/message", async (req, res) => {
         }
         if (req.body.hasOwnProperty("content") && req.body.content !== message.content) {
             if (message.role !== "user") {
-                res.status(403).send("Cannot update content of non-user message").end();
+                return res.status(403).send("Cannot update content of non-user message").end();
             }
 
             await message.setContent(req.body.content);
@@ -243,20 +250,20 @@ router.delete("/message", async (req, res) => {
     let message = await MessageDatabase.fetchMessage(req.body.messageId);
     // Check if message was found
     if (message === null) {
-        res.status(404).send("Message not found").end();
+        return res.status(404).send("Message not found").end();
     }
     // Check that message belongs to the client
     try {
         if (await message.getUserId() !== req.oidc.user.sub) {
-            res.status(401).send("Unauthorized access").end();
+            return res.status(401).send("Unauthorized access").end();
         }
     }
     catch (error) {
-        res.status(404).send(error.message).end();
+        return res.status(404).send(error.message).end();
     }
 
     if (message.role !== "user") {
-        res.status(403).send("Cannot delete non-user message").end();
+        return res.status(403).send("Cannot delete non-user message").end();
     }
 
     // Proceed with message deletion
