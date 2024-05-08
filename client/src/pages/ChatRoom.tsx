@@ -6,12 +6,12 @@ import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, f
 import Message from "../components/Message";
 import { useState, useRef } from "react";
 import Conversation from "../types/Conversation";
-import { useNavigate } from "react-router-dom";
 import messagetools from "../utilities/messagetools";
 import { Language } from "../types/Language";
 import useDictation from "../hooks/useDictation";
 import useFetchUserData from "../hooks/useFetchUserData";
 import useFetchConversationData from "../hooks/useFetchConversationData";
+import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
 export default function ChatRoom() {
   const [autotts, setAutotts] = useState(false);
@@ -24,7 +24,7 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
-  const navigateTo = useNavigate();
+  useRegistrationCheck();
 
   // Performing text-to-speech
   function speak(message: string) {

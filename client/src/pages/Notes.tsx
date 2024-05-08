@@ -4,8 +4,10 @@ import "../css/Notes.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeHigh, faLanguage, faX } from "@fortawesome/free-solid-svg-icons";
 import messagetools from "../utilities/messagetools";
+import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
 export default function Notes() {
+    useRegistrationCheck();
     // Update unique notes onchange
     function saveNewNote() {
         return;
