@@ -1,5 +1,6 @@
 // Home component
 import "../css/Home.css"
+import "../css/index.css"
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'

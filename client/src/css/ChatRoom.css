@@ -1,27 +1,25 @@
-:root {
-    --text-blue: #4478ac;
-    --transparent-triangle-side: 10px solid transparent;
-    --gray-triangle-side: 10px solid #c4c4c4;
-    --white-traingle-side: 10px solid var(--white);
-    --blue-traingle-side: 10px solid var(--text-blue);
-}
-
 /* Sidebar */
 #sidebar {
     margin: 0;
     padding: 0;
     width: 20%;
     height: 100vh;
-    color: var(--white);
-    background-color: var(--blue);
-    box-shadow: 1px 0 2px 1px gray;
+    color: var(--main-white);
+    background-color: var(--main-blue);
+    box-shadow: 1px 0 2px 1px var(--main-blue);
     position: fixed;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+select#chat-lang-select {
+    height: 40px;
 }
 
 #sidebar-addchat,
-.chat-overview {
+.chat-overview,
+#chat-lang-select {
     width: 90%;
     padding-left: 25px;
     padding-right: 20px;
@@ -33,7 +31,7 @@
 
 #sidebar-addchat {
     height: auto;
-    background-color: var(--blue);
+    background-color: var(--main-blue);
     border: 1px solid var(--white);
     border-radius: 5px;
     color: var(--white);
@@ -52,7 +50,7 @@
 
 .chat-delete {
     display: flex;
-    color: #4b4b4b;
+    color: var(--main-black);
     background-color: initial;
     border: none;
     font-size: 12px;
@@ -74,7 +72,7 @@
 
 .sidebar-nav-link {
     font-size: 18px;
-    color: var(--white);
+    color: var(--main-white);
     text-decoration: none;
     position: relative;
     display: inline-block;
@@ -83,8 +81,8 @@
 
 .tooltiptext {
     width: max-content;
-    color: var(--white);
-    background-color: black;
+    color: var(--main-white);
+    background-color: #1b1b1b;
     text-align: center;
     font-size: 12px;
     padding: 10px;
@@ -103,7 +101,7 @@
     margin-left: -9px;
     border-width: 5px;
     border-style: solid;
-    border-color: black transparent transparent transparent;
+    border-color: #1b1b1b transparent transparent transparent;
 }
 
 #toolkit-home {
@@ -127,6 +125,9 @@
 }
 
 #sidebar-chat-list {
+    width: 90%;
+    margin-left: 10px;
+    padding-right: 10px;
     flex: 1 1 auto;
     margin-bottom: 70px;
     overflow-y: scroll;
@@ -155,13 +156,14 @@
 
 .chat-overview {
     align-items: center;
-    background-color: var(--white);
-    border: 1px solid var(--white);
-    color: #4b4b4b;
+    background-color: var(--main-white);
+    border: none;
+    color: black;
     display: flex;
     height: fit-content;
     margin-bottom: 10px;
     min-height: 40px;
+    width: 100%;
 }
 
 .chat-nickname {
@@ -179,8 +181,9 @@ button:hover {
 
 #active-chat {
     background-color: var(--text-blue);
-    color: var(--white);
-    border: 2px solid var(--white);
+    color: var(--main-white);
+    border: 2px solid var(--main-white);
+    width: 100%;
 }
 
 #active-chat .chat-delete {
@@ -197,7 +200,7 @@ button:hover {
 #chat-text {
     height: 45px;
     border-radius: 5px;
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--body-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -215,6 +218,8 @@ button:hover {
     resize: none;
     font-family: "Varela Round", sans-serif;
     outline: 0;
+    background-color: transparent;
+    color: var(--body-color);
 }
 
 textarea::placeholder {
@@ -227,14 +232,14 @@ textarea::placeholder {
     font-size: 16px;
     background-color: transparent;
     border: none;
-    color: var(--dark-gray);
+    color: var(--black-contrast);
 }
 
 #user-text-send-icon {
     display: flex;
-    filter: opacity(0.8);
     width: 25px;
     height: 20px;
+    filter: var(--send-text-icon);
 }
 
 #speech-to-text-icon,
@@ -247,10 +252,7 @@ textarea::placeholder {
 #user-text-send:active,
 .translation-active,
 .speaking-active {
-    color: red !important;
-}
-
-#user-text-send:active {
+    color: var(--text-blue) !important;
     cursor: default;
 }
 
@@ -284,7 +286,7 @@ textarea::placeholder {
 }
 
 #chat-messages::-webkit-scrollbar-thumb {
-    background: var(--blue);
+    background: var(--main-blue);
     border-radius: 10px;
 }
 
@@ -310,6 +312,8 @@ textarea::placeholder {
     box-shadow: -1px 1px 2px 1px gray;
     position: relative;
     right: -10px;
+    background-color: var(--main-white);
+    color: var(--main-black)
 }
 
 /* Outer triangle that creates the gray outline*/
@@ -318,10 +322,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--gray-triangle-side);
-    border-left: var(--gray-triangle-side);
-    border-right: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid #c4c4c4;
+    border-left: 10px solid #c4c4c4;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     top: 5px;
     right: -19px;
 }
@@ -332,10 +336,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--white-traingle-side);
-    border-left: var(--white-traingle-side);
-    border-right: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid var(--main-white);
+    border-left: 10px solid var(--main-white);
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     right: -15px;
     top: 6px;
 }
@@ -343,8 +347,8 @@ textarea::placeholder {
 .bot-text {
     margin: 0;
     float: left;
-    color: var(--white);
-    background-color: #1d5c9bd3;
+    color: var(--main-white);
+    background-color: var(--text-blue);
     box-shadow: 1px 1px 2px 1px gray;
     position: relative;
 }
@@ -355,10 +359,10 @@ textarea::placeholder {
     width: 0px;
     height: 0px;
     position: absolute;
-    border-top: var(--blue-traingle-side);
-    border-right: var(--blue-traingle-side);
-    border-left: var(--transparent-triangle-side);
-    border-bottom: var(--transparent-triangle-side);
+    border-top: 10px solid var(--text-blue);
+    border-right: 10px solid var(--text-blue);
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
     top: 6px;
     left: -19px;
 }
@@ -399,7 +403,7 @@ textarea::placeholder {
 #message-tools-bot {
     width: 115px;
     height: 40px;
-    background-color: #171717e0;
+    background-color: var(--black-contrast);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -410,15 +414,9 @@ textarea::placeholder {
     width: 35px;
     height: 35px;
     background-color: transparent;
-    color: var(--white);
+    color: var(--white-contrast);
     border: none;
     font-size: 14px;
-}
-
-.message-tools-listen:active,
-.message-tools-translate:active {
-    color: #2d95fcd3;
-    cursor: default;
 }
 
 /* Settings */
@@ -489,12 +487,10 @@ textarea::placeholder {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
 }
 
 input:checked+.slider {
-    background-color: var(--blue);
+    background-color: var(--main-blue);
 }
 
 input:focus+.slider {
