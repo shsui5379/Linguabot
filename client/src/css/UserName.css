@@ -31,6 +31,10 @@
     border-radius: 10px;
 }
 
+input::placeholder {
+    color: var(--subtext-color);
+}
+
 #name-form-continue {
     background-color: var(--main-blue);
     border: none;
