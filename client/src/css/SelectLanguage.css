@@ -79,7 +79,7 @@
 }
 
 #Japanese-flag, #Korean-flag {
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--main-black);
 }
 
 /* Continue button */
