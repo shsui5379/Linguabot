@@ -10,6 +10,7 @@
     --black-contrast: var(--main-black);
     --subtext-color: #757575;
     --send-text-icon: invert(0);
+    --lang-select-button: var(--main-blue);
 }
 
 .dark-mode {
@@ -24,6 +25,7 @@
     --black-contrast: var(--main-white);
     --subtext-color: #b5b5b5;
     --send-text-icon: invert(1);
+    --lang-select-button: var(--accent-blue);
 }
 
 body {

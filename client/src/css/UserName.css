@@ -23,12 +23,12 @@
     box-sizing: border-box;
     min-width: 175px;
     border: 1px solid #000;
-    border-radius: 10px;
     font-size: 14px;
     height: 50px;
     margin-bottom: 20px;
     padding-left: 20px;
     width: 25%;
+    border-radius: 10px;
 }
 
 #name-form-continue {
@@ -43,4 +43,5 @@
     text-decoration: none;
     width: 25%;
     min-width: 150px;
+    border-radius: 10px;
 }
