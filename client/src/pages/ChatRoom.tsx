@@ -168,6 +168,8 @@ export default function ChatRoom() {
     else {
       [targetLanguages[0], targetLanguages[index]] = [targetLanguages[index], targetLanguages[0]];
     }
+    setConversations([]);
+    setSelectedConversation(0);
     setUser(await user.setTargetLanguages(targetLanguages));
   }
 

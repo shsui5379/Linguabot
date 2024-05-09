@@ -8,9 +8,18 @@ export default function useFetchConversationData(language: Language | "", onlySt
         if (language === "") {
             return;
         }
-
+        
         Conversation.fetchConversations(language, onlyStarredMessages)
-            .then((conversations) => setConversations(conversations));
+            .then((conversations) => {
+                if (conversations.length === 0) {
+                    Conversation.createConversation(language, "new conversation")
+                        .then((conversation) => setConversations([conversation]))
+                        .catch((error) => console.error(error.message));
+                }
+                else {
+                    setConversations(conversations);
+                }
+            });
     }, [language, onlyStarredMessages]);
     return [conversations, setConversations];
 }
