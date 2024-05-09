@@ -4,19 +4,13 @@ import "../css/index.css"
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from "react-router-dom";
-import User from "../types/User";
+import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
 export default function Home() {
+  useRegistrationCheck();
+
   // Used to display flags of supported languages 
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
-  const navigateTo = useNavigate();
-
-  User.fetchUser().catch((error) => {
-    if (error.message === "User doesn't exist") {
-      navigateTo("/register");
-    }
-  });
 
   let displayedLanguages = languages.map((item) =>
     <p className="language" id={item + "-home"}>

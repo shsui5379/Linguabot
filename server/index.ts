@@ -14,6 +14,7 @@ import "dotenv/config";
 
 const app = express();
 const { auth, requiresAuth } = require('express-openid-connect');
+const boolParser = require("express-query-boolean");
 
 app.set('view engine', 'ejs');
 
@@ -32,6 +33,7 @@ const config = {
 
 app.use(auth(config));
 app.use(express.json());
+app.use(boolParser());
 app.use('/', authRouter);
 app.use("/api/chat", chat);
 app.use("/api/user", user);

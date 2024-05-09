@@ -181,6 +181,7 @@ class User {
 
         this.#targetLanguages = newLanguages;
         await this.updateUser();
+        return new User(this.#userId, this.#firstName, this.#lastName, this.#userLanguage, this.#targetLanguages);
     }
 
     async delete() {

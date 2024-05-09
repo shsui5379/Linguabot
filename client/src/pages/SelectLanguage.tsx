@@ -36,11 +36,15 @@ export default function SelectLanguage({ selected, setSelected, setFlowState }) 
 
   return (
     <>
-      <p id="lang-select-instruction-title">Please select your target language.</p>
-      <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
+      <div id="lang-select-wrapper">
+        <p id="lang-select-instruction-title">Please select your target language.</p>
+        <p id="lang-select-instruction-subtitle">Linguabot will communicate with you in this language!</p>
 
-      <div id="lang-select">{rendered_languages}</div>
-      <button id="continue-lang-select" onClick={handleSubmit}>CONTINUE</button>
+        <div id="lang-select">{rendered_languages}</div>
+        <div id="continue-lang-select-wrapper">
+          <button id="continue-lang-select" onClick={handleSubmit}>CONTINUE</button>
+        </div>
+      </div>
     </>
   );
 }
