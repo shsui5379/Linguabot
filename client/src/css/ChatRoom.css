@@ -15,6 +15,7 @@
 
 select#chat-lang-select {
     height: 40px;
+    margin-top: 25px;
 }
 
 #sidebar-addchat,
@@ -132,6 +133,8 @@ select#chat-lang-select {
     margin-bottom: 70px;
     overflow-y: scroll;
     overflow-x: hidden;
+    scrollbar-width: 5px;
+    scrollbar-color: var(--white);
 }
 
 #sidebar-chat-list::-webkit-scrollbar {
@@ -192,9 +195,7 @@ button:hover {
 
 /* Right section: send messages */
 #chat-text-wrapper {
-    margin-bottom: 30px;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin: 10px 10% 30px 10%;
 }
 
 #chat-text {
@@ -224,6 +225,7 @@ button:hover {
 
 textarea::placeholder {
     line-height: 35px;
+    color: var(--subtext-color);
 }
 
 #user-text-send,
@@ -252,7 +254,7 @@ textarea::placeholder {
 #user-text-send:active,
 .translation-active,
 .speaking-active {
-    color: var(--text-blue) !important;
+    color: var(--accent-blue) !important;
     cursor: default;
 }
 
@@ -274,6 +276,8 @@ textarea::placeholder {
     flex-direction: column-reverse;
     overflow-x: hidden;
     overflow-y: scroll;
+    scrollbar-width: 10px;
+    scrollbar-color: var(--accent-blue);
 }
 
 #chat-messages::-webkit-scrollbar {
@@ -286,7 +290,7 @@ textarea::placeholder {
 }
 
 #chat-messages::-webkit-scrollbar-thumb {
-    background: var(--main-blue);
+    background: var(--accent-blue);
     border-radius: 10px;
 }
 
@@ -490,7 +494,7 @@ textarea::placeholder {
 }
 
 input:checked+.slider {
-    background-color: var(--main-blue);
+    background-color: var(--accent-blue);
 }
 
 input:focus+.slider {

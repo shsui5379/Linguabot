@@ -1,11 +1,35 @@
+/* Large Screen */
+@media screen and (min-width: 1020px ) {
+    #lang-select {
+        display: grid;
+        grid-template-columns: 45% 45%;
+        height: 450px;
+        justify-content: space-between;
+    }
+}
+
+/* Small Screen */
+@media screen and (max-width: 1020px) {
+    #lang-select {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .lang-unique-button {
+        margin-bottom: 30px;
+    }
+}
+
 /* Buttons with a unique language */
 .lang-unique-button {
-    height: 95px;
+    height: 60%;
+    max-height: 100px;
+    min-height: 75px;
     border-radius: 10px;
     border: none;
     font-size: 16px;
     font-weight: bold;
-    color: var(--dark-gray);
+    color: var(--main-black);
     letter-spacing: 1px;
     text-align: left;
     padding-left: 30px; 
@@ -18,30 +42,31 @@
 }
 
 .active {
-    border: 5px solid var(--blue);
+    border: 5px solid var(--lang-select-button);
     box-shadow: none;
-    color: var(--blue);
+    color: var(--text-blue);
     background: 50% / cover no-repeat rgba(240, 241, 255, 0.9);
 }
 
-#lang-select {
-    display: grid;
-    grid-template-columns: 24vw 24vw;
-    column-gap: 5%;
-    height: 450px;
-    justify-content: center;
+#lang-select-wrapper {
+    margin-right: 20%;
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 /* Instructions */
 #lang-select-instruction-title {
     font-size: 28px;
     font-weight: bold;
-    margin: 5% auto 10px auto;
+    margin-bottom: 10px;
 }
 
 #lang-select-instruction-subtitle {
     font-size: 16px;
-    margin-bottom: 5%;
+    margin-bottom: 25px;
 }
 
 /* Flags of country */
@@ -54,26 +79,26 @@
 }
 
 #Japanese-flag, #Korean-flag {
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--main-black);
 }
 
 /* Continue button */
+#continue-lang-select-wrapper {
+    display: flex;
+    justify-content: right;
+}
+
 #continue-lang-select {
-    color: var(--white);
-    background-color: var(--blue);
-    width: 12vw;
-    height: 45px;
+    background-color: var(--main-blue);
     border: none;
     border-radius: 10px;
-    margin: auto 23% 5% auto;
-    float: right;
+    color: var(--main-white);
+    cursor: pointer;
     font-size: 14px;
+    height: 45px;
     letter-spacing: 1px;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    width: 150px;
 }
 
 
