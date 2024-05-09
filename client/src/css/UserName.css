@@ -1,3 +1,10 @@
+#name-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 #name-instruction {
     font-size: 30px;
     font-weight: bold;
@@ -11,31 +18,29 @@
 }
 
 #name-form input {
-    width: 25%;
-    height: 45px;
-    border: 1px solid black;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-width: 175px;
+    border: 1px solid #000;
     border-radius: 10px;
-    padding-left: 20px;
     font-size: 14px;
+    height: 50px;
     margin-bottom: 20px;
+    padding-left: 20px;
+    width: 25%;
 }
 
 #name-form-continue {
-    margin-top: 3%;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: var(--white);
-    background-color: var(--blue);
-    width: 25%;
-    height: 45px;
+    background-color: var(--main-blue);
     border: none;
-    border-radius: 10px;
     box-shadow: var(--shadow);
+    color: var(--main-white);
     font-size: 14px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+    height: 45px;
     justify-content: center;
-    cursor: pointer;
+    margin-top: 3%;
+    text-decoration: none;
+    width: 25%;
+    min-width: 150px;
 }
