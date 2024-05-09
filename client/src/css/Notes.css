@@ -76,3 +76,18 @@
 textarea::placeholder {
     color: var(--subtext-color);
 }
+
+#notes-lang {
+    width: 60%;
+}
+
+#notes-lang-select {
+    float: right;
+    height: 40px;
+    margin-bottom: 50px;
+    max-width: 250px;
+    min-width: 200px;
+    width: 25%;
+    border-radius: 5px;
+    padding-left: 15px;
+}

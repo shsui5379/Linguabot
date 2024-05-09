@@ -36,7 +36,7 @@ export default function Notes() {
       function getNewLanguage() {
         const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
         return (
-          <select title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
+          <select title="Select Language" id="notes-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
             {languages_supported.map((lang, index) =>
               <option value={lang}>{lang}</option>)
             }
@@ -56,8 +56,10 @@ export default function Notes() {
         <>
             <NavigationBar />
             <div id="notes-wrapper">
+              <div id="notes-lang">
                 {getNewLanguage()}
-                {notes}
+              </div>
+              {notes}
             </div>
         </>
     );
