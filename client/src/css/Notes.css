@@ -3,10 +3,11 @@
 }
 
 #notes-wrapper {
-    width: 100%;
     display: flex;
-    justify-content: center;
     margin-top: 50px;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
 }
 
 .saved-message {
@@ -25,6 +26,7 @@
     align-items: center;
     padding-left: var(--notes-margin);
     border-bottom: 1px solid gray;
+    margin-bottom: 50px;
 }
 
 .saved-text-tools {

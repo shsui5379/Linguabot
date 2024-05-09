@@ -24,7 +24,7 @@ export default function useDictation(selectedLanguage: Language | "", handleSetI
             return;
         }
 
-        dictation.current = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+        dictation.current = new (window.speechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
         if (dictation.current === null) {
             return;
         }
