@@ -176,7 +176,7 @@ export default function ChatRoom() {
   function getNewLanguage() {
     const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
     return (
-      <select id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
+      <select title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
         {languages_supported.map((lang, index) =>
           <option value={lang}>{lang}</option>)
         }
