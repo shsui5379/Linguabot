@@ -61,11 +61,16 @@ export default function ChatRoom() {
     let conversation;
     try {
       conversation = await Conversation.createConversation(user.targetLanguages[0], "new conversation");
+      setConversations([...conversations, conversation]);
     }
     catch (error) {
-      console.error(error.message);
+      if (error.message === "reached max chat limit") {
+        alert("You cannot have more than 10 conversations!");
+      }
+      else {
+        console.error(error.message);
+      }
     }
-    setConversations([...conversations, conversation]);
   }
 
   function handleLogout() {
