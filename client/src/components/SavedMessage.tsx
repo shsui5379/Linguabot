@@ -4,7 +4,7 @@ import { useState } from "react";
 import useTranslation from "../hooks/useTranslation";
 import messagetools from "../utilities/messagetools";
 
-export default function SavedMessage({ message, selectedLanguage, userLanguage }) {
+export default function SavedMessage({ message, selectedLanguage, userLanguage, onDelete }) {
     const [noteInput, setNoteInput] = useState(message.note);
     const [showTranslation, translatedText, toggleTranslation] = useTranslation(message.content, selectedLanguage, userLanguage);
 
@@ -27,7 +27,7 @@ export default function SavedMessage({ message, selectedLanguage, userLanguage }
                 <div className="saved-text-tools">
                     <button className="saved-text-tools-button saved-text-listen" title="Listen" onClick={speak}>{<FontAwesomeIcon icon={faVolumeHigh} />}</button>
                     <button className="saved-text-tools-button saved-text-translate" title="Translate" onClick={toggleTranslation}>{<FontAwesomeIcon icon={faLanguage} />}</button>
-                    <button className="saved-text-tools-button saved-text-delete" title="Delete">{<FontAwesomeIcon icon={faX} />}</button>
+                    <button className="saved-text-tools-button saved-text-delete" title="Delete" onClick={onDelete}>{<FontAwesomeIcon icon={faX} />}</button>
                 </div>
             </div>
             <form className="saved-message-notes">
