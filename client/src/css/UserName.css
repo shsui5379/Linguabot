@@ -20,6 +20,10 @@
     margin-bottom: 20px;
 }
 
+input::placeholder {
+    color: var(--subtext-color);
+}
+
 #name-form-continue {
     margin-top: 3%;
     padding-left: 10px;

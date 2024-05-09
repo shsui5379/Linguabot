@@ -133,6 +133,8 @@ select#chat-lang-select {
     margin-bottom: 70px;
     overflow-y: scroll;
     overflow-x: hidden;
+    scrollbar-width: 5px;
+    scrollbar-color: var(--white);
 }
 
 #sidebar-chat-list::-webkit-scrollbar {
@@ -225,6 +227,7 @@ button:hover {
 
 textarea::placeholder {
     line-height: 35px;
+    color: var(--subtext-color);
 }
 
 #user-text-send,
