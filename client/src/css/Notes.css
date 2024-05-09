@@ -46,8 +46,9 @@
     color: var(--body-color);
 }
 
-.saved-text-tools-button:active {
-    color: #2d95fcd3;
+.saved-text-listen:active,
+.saved-text-translate:active {
+    color: var(--accent-blue);
     cursor: default;
 }
 
