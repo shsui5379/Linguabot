@@ -17,20 +17,26 @@
     flex-direction: column;
     border: 1px solid var(--body-color);
     border-radius: 5px;
-}
-
-.saved-message-text {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: var(--notes-margin);
-    border-bottom: 1px solid gray;
     margin-bottom: 50px;
 }
 
+.saved-message-text {
+    border-bottom: 1px solid gray;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 25px;
+}
+
+.saved-text {
+    flex: 0 1 auto;
+    margin: 0;
+    text-align: left;
+}
+
 .saved-text-tools {
-    padding-right: var(--notes-margin);
+    flex: 1 0 auto;
+    text-align: right;
+    margin-bottom: 10px;
 }
 
 .saved-text-tools-button {
@@ -52,6 +58,7 @@
 
 .notes-input {
     display: inline-block;
+    line-height: 30px;
     max-width: 90%;
     min-width: 90%;
     min-height: 25px;
