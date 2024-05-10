@@ -546,6 +546,47 @@ test("fetching Message array where filters hit nothing", async () => {
     expect(messages.length).toBe(0);
 });
 
+test("sort last modified", async () => {
+    let messages = await MessageDatabase.fetchMessages("some-messagedb-test-user-id", ".*", ".*", false, true);
+
+    await messages[1].setStarred(false);
+    await messages[0].setNote("modified");
+    await messages[2].setStarred(true);
+
+    messages = await MessageDatabase.fetchMessages("some-messagedb-test-user-id", ".*", ".*", false, true, true);
+
+    expect(messages[0].toJSON()).toMatchObject({
+        chatId: "sample-chat-3-id",
+        messageId: "c3,m3",
+        note: "2w",
+        starred: true,
+        content: "hola todos",
+        role: "user",
+        timestamp: messages[0].timestamp
+    });
+
+    expect(await messages[1].toJSON()).toMatchObject({
+        chatId: "sample-chat-2-id",
+        messageId: "c2,m2",
+        note: "modified",
+        starred: false,
+        content: "hello there again",
+        role: "user",
+        timestamp: messages[1].timestamp
+    });
+
+    expect(messages[2].toJSON()).toMatchObject({
+        chatId: "sample-chat-3-id",
+        messageId: "c3,m1",
+        note: "1w",
+        starred: false,
+        content: "hola",
+        role: "user",
+        timestamp: messages[2].timestamp
+    });
+
+});
+
 test("deleting message", async () => {
     let message = await MessageDatabase.fetchMessage("c1,m1");
     await message.delete();
