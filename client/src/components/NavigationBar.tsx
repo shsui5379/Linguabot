@@ -1,9 +1,12 @@
 import { useState, useEffect  } from 'react';
 import { Link } from "react-router-dom";
 import "../css/NavigationBar.css";  
+import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Navigation bar component
 export default function NavigationBar() {
+  const [isLinkShown, setIsLinkShown] = useState(false);
   // Determine the correct things to display on the right side of the navigation bar
   let navRight = null; 
 
@@ -67,12 +70,22 @@ export default function NavigationBar() {
     );
   }
 
+  function toggleLinks() {
+    setIsLinkShown(prevState => !prevState);
+    if(isLinkShown && window.innerWidth < 1020){
+      document.getElementById("nav-right")!.style.display = "none";
+    } else {
+      document.getElementById("nav-right")!.style.display = "block";
+    }
+  }
+
   return (
     <div className="navigation-menu">
       <Link id="logo" to="/">
         Linguabot
       </Link>
-      {navRight}
+      <div id="navbar-hamburger" onClick={toggleLinks}><FontAwesomeIcon id="hamburger-icon" icon={isLinkShown ? faX : faBars} /></div>
+      <div id="nav-right">{navRight}</div>
     </div>
   );
 }
