@@ -1,14 +1,17 @@
-import { useEffect } from "react";
 import User from "../types/User";
-import { useNavigate } from "react-router-dom";
 
-export default function useRegistrationCheck() {
-    const navigateTo = useNavigate();
-    useEffect(() => {
-        User.fetchUser().catch((error) => {
-            if (error.message === "User doesn't exist") {
-                navigateTo("/register");
-            }
-        });
-    }, [navigateTo]);
+
+export default async function useRegistrationCheck() {
+    try {
+        const user = await User.fetchUser();
+        if (!user) {
+            window.location.href = '/signup';
+        }
+    } catch (error) {
+        if (error.message === 'Not authenticated') {
+            window.location.href = '/signup';
+        } else {
+            console.error('Error:', error);
+        }
+    }
 }
