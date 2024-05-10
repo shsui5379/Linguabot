@@ -57,7 +57,7 @@
 
     #chat-box-close {
         position: fixed;
-        right: -90%;
+        right: -85%;
         width: 100%;
     }
 
@@ -65,7 +65,7 @@
         display: flex;
         margin: 0;
         padding: 0;
-        width: 90%;
+        width: 85%;
         height: 100vh;
         color: var(--main-white);
         background-color: var(--main-blue);
@@ -342,16 +342,35 @@ textarea::placeholder {
 
 /* Header w/ chat name and side arrow */
 #chatroom-header {
+    line-height: 50px;
     border-bottom: 1px solid gray;
-    display: flex;
-    height: 220px;
-    flex-direction: row;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+#open-sidebar {
+    margin-left: 25px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    position: absolute;
     align-items: center;
-    justify-content: space-evenly;
+    display: flex;
+    color: var(--black-contrast);
+}
+
+#open-sidebar-icon {
+    padding: 10px;
 }
 
 #open-sidebar-icon:hover {
     cursor: pointer;
+}
+
+#chat-name {
+    display: inline-block;
+    color: var(--black-contrast);
 }
 
 /* Text messages */

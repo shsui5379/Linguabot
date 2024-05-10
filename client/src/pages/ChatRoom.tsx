@@ -241,8 +241,10 @@ export default function ChatRoom() {
 
         <div id={isSideOpen ? "chat-box-open" : "chat-box-close"}>
           <div id="chatroom-header">
-            <FontAwesomeIcon id="open-sidebar-icon" onClick={() => {setIsSideOpen(prevState => !prevState)}} icon={isSideOpen ? faAngleRight : faAngleLeft}/>
-            some name
+            <button title={isSideOpen ? "Open Sidebar" : "Close Sidebar"} id="open-sidebar" onClick={() => {setIsSideOpen(prevState => !prevState)}} >
+              <FontAwesomeIcon icon={isSideOpen ? faAngleRight : faAngleLeft}/>
+            </button>
+            <span id="chat-name">some name</span>
           </div>
           {/** Text messages */}
           <div id="chat-messages">
