@@ -4,7 +4,8 @@ import "../css/index.css"
 import NavigationBar from "../components/NavigationBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faLanguage, faRobot, faUser } from '@fortawesome/free-solid-svg-icons'
-import useRegistrationCheck from "../hooks/useRegistrationCheck";
+import useRegistrationCheck from "../hooks/useRegistrationCheck"; 
+import handleGetStartedCheck from "../hooks/useGetStartedButton"; 
 
 export default function Home() {
   useRegistrationCheck();
@@ -106,7 +107,7 @@ export default function Home() {
         <h1>Improve your fluency with Linguabot!</h1>
         <p>Don't wait any longer to find a language partner.</p>
         <button id="get-started-button"
-          onClick={() => window.location.href = '/signup'}>
+          onClick={handleGetStartedCheck}>
           GET STARTED   
         </button>
       </div>
