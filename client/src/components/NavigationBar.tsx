@@ -91,10 +91,12 @@ export default function NavigationBar() {
 
   return (
     <div className="navigation-menu">
-      <Link id="logo" to="/">
-        Linguabot
-      </Link>
-      <div id="navbar-hamburger" onClick={toggleLinks}><FontAwesomeIcon id="hamburger-icon" icon={isLinkShown ? faX : faBars} /></div>
+      <div id="nav-background">
+        <Link id="logo" to="/">
+          Linguabot
+        </Link>
+        <div id="navbar-hamburger" onClick={toggleLinks}><FontAwesomeIcon id="hamburger-icon" icon={isLinkShown ? faX : faBars} /></div>
+      </div>
       <div id="nav-right">{navRight}</div>
     </div>
   );
