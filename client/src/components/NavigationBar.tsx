@@ -45,6 +45,16 @@ export default function NavigationBar() {
     fetchLoginStatus();
   }, []); 
 
+
+  useEffect(() => {
+    async function toggle() {
+      if(window.innerWidth < 1020){
+        document.getElementById("nav-right")!.style.display = "none";
+      } 
+    }
+    toggle();
+  }, []);
+
   
   if (!isLoggedIn) {
     navRight = (
