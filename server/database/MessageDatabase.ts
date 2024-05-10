@@ -52,7 +52,7 @@ function init(sequelize: Sequelize.Sequelize) {
  * @param language Language of the Messages to fetch. Omit or ".*" to select all.
  * @param mustHaveStar Whether the Messages fetched must be starred messages
  * @param mustHaveNote Whether the Messages fetched must have a Note
- * @param sortLastModified If true, will return the messages sorted descending by last modified time
+ * @param sortLastModified If true, will return the messages sorted descending by last modified time. If omitted, will be ascending by message creation time.
  * @returns Array of Messages matching the filtering criteria.
  */
 async function fetchMessages(userId: string, chatId: string = ".*", language: Language | ".*" = ".*", mustHaveStar: boolean, mustHaveNote: boolean, sortLastModified?: boolean): Promise<Message[]> {
