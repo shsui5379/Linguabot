@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
 import { useState, useRef } from "react";
 import Conversation from "../types/Conversation";
@@ -25,6 +25,7 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
+  const [isSideOpen, setIsSideOpen] = useState(false);
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -212,7 +213,7 @@ export default function ChatRoom() {
 
       {/** Side panel for saved chats and creating a new chat */}
       <div id="chatroom">
-        <div id="sidebar">
+        <div id={isSideOpen ? "sidebar-close" : "sidebar-open"}>
           {getNewLanguage()}
           <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
           <div id="sidebar-chat-list">
@@ -238,7 +239,11 @@ export default function ChatRoom() {
           </div>
         </div>
 
-        <div id="chat-box">
+        <div id={isSideOpen ? "chat-box-open" : "chat-box-close"}>
+          <div id="chatroom-header">
+            <FontAwesomeIcon id="open-sidebar-icon" onClick={() => {setIsSideOpen(prevState => !prevState)}} icon={isSideOpen ? faAngleRight : faAngleLeft}/>
+            some name
+          </div>
           {/** Text messages */}
           <div id="chat-messages">
             {getMessageHistory()}
