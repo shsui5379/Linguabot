@@ -71,6 +71,7 @@
     font-family: "Varela Round", sans-serif;
     background-color: transparent;
     line-height: 30px;
+    max-height: 200px;
 }
 
 textarea::placeholder {
