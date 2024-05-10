@@ -14,8 +14,11 @@ export default function Notes() {
     const [selectedConversation, setSelectedConversation] = useState(0);
 
     function handleDelete(message) {
+      const confirmDelete = window.confirm('Are you sure you want to unsave this note?');
+      if (confirmDelete) {
         message.setStarred(false);
-        setConversations([...conversations]);
+        setConversations([...conversations]); 
+      };
     } 
 
     async function handleNewLang(e) {
