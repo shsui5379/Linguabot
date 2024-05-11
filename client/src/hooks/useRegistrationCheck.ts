@@ -8,6 +8,8 @@ export default function useRegistrationCheck() {
         User.fetchUser().catch((error) => {
             if (error.message === "User doesn't exist") {
                 navigateTo("/register");
+            } else if (error.message === "Not authenticated") {
+                window.location.href = '/signup';
             }
         });
     }, [navigateTo]);
