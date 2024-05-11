@@ -72,7 +72,7 @@ export default function Home() {
               <h1>Chat with Your Language Partner</h1>
               <p className="gray-text">
                 Linguabot will respond to your messages in your target language, regardless of any mistakes.
-                Talk about any topic and ask it any questions! 
+                You can also <b>switch between languages</b>! All of your messages will be saved.
               </p>
             </div>
         </div>
@@ -88,18 +88,30 @@ export default function Home() {
               </p>
             </div> 
         </div>
-        {/* <div className="feature-highlight-overview">
-          <img className="feature-image-left"
-               src="https://ps.w.org/replace-image/assets/icon-256x256.png?rev=2587356"
+        <div className="feature-highlight-overview left">
+          <img className="feature-image"
+               src={require("../assets/features/chat.png")}
                alt="Feature"></img>
-          <div className="feature-highlight-right">
-            <div className="inner-feature-highlight">
-              <p className="feature-highlight-title">Save Messages and Add Notes</p>
-              <p className="feature-highlight-description">Want to save a message Linguabot sent? Add it to your favorites list
-                and include a note if you'd like. You can go to your Notes page to look back at it later!</p>
+            <div className="feature-highlight">
+              <h1>Save Messages and Add Notes</h1>
+              <p className="gray-text">
+                Want to save a message Linguabot sent? Add it to your favorites list
+                and include a note if you'd like. You can go to your Notes page to look back at it later!
+              </p>
+            </div>
+        </div>
+        <div className="feature-highlight-overview right">
+          <img className="feature-image" 
+                src={require("../assets/features/saved-conversations.png")}
+                alt="Feature"></img>
+            <div className="feature-highlight">
+              <h1>Listen, Translate, Speak</h1>
+              <p className="gray-text">
+                Hear a live reading of Linguabot's messages, translate it to your native language, and practice speaking back to Linguabot! 
+                You can also have Linguabot read aloud every one of his messages automatically, and you can speak back to him right away too!
+              </p>
             </div> 
-          </div>
-        </div> */}
+        </div>
       </div>
 
       {/** Register */}
