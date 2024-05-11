@@ -48,6 +48,7 @@ html {
     flex: 0 1 auto;
     margin: 0;
     text-align: left;
+    font-size: 17px;
 }
 
 .saved-text-tools {
@@ -89,6 +90,7 @@ html {
     background-color: transparent;
     line-height: 30px;
     max-height: 200px;
+    font-size: 15px;
 }
 
 textarea::placeholder {
