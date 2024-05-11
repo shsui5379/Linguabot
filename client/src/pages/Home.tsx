@@ -90,7 +90,7 @@ export default function Home() {
         </div>
         <div className="feature-highlight-overview left">
           <img className="feature-image"
-               src={require("../assets/features/chat.png")}
+               src={require("../assets/features/save.png")}
                alt="Feature"></img>
             <div className="feature-highlight">
               <h1>Save Messages and Add Notes</h1>
