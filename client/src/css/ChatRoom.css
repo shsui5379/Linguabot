@@ -43,6 +43,10 @@
         flex-direction: column;
         align-items: center;
     }
+
+    #sidebar-nav {
+        width: 20%;
+    }
 }
 
 /* Small Screen */
@@ -86,6 +90,10 @@
         position: fixed;
         flex-direction: column;
         align-items: center;
+    }
+
+    #sidebar-nav {
+        width: 85%;
     }
 }
 
@@ -146,7 +154,6 @@ select#chat-lang-select {
     left: 0;
     margin-bottom: 30px;
     position: fixed;
-    width: 20%;
 }
 
 .sidebar-nav-link {
