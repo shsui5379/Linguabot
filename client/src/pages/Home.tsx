@@ -8,7 +8,7 @@ import useRegistrationCheck from "../hooks/useRegistrationCheck";
 import handleGetStartedCheck from "../hooks/useGetStartedButton"; 
 
 export default function Home() {
-  //useRegistrationCheck();
+  useRegistrationCheck();
 
   // Used to display flags of supported languages 
   const languages = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
