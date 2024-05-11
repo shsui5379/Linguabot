@@ -19,6 +19,7 @@
     }
 
     #sidebar-open {
+        left: 0%;
         display: flex;
         margin: 0;
         padding: 0;
@@ -67,6 +68,7 @@
         margin: 0;
         padding: 0;
         width: 85%;
+        left: 0%;
         height: 100vh;
         color: var(--main-white);
         background-color: var(--main-blue);
