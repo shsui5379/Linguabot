@@ -1,5 +1,5 @@
 /* Large Screen */
-@media screen and (min-width: 1020px ) {
+@media screen and (min-width: 1020px) {
     #lang-select {
         display: grid;
         grid-template-columns: 45% 45%;
@@ -32,12 +32,12 @@
     color: var(--main-black);
     letter-spacing: 1px;
     text-align: left;
-    padding-left: 30px; 
+    padding-left: 30px;
     box-shadow: 0 2px 2px 2px #3c3c3cdc;
     cursor: pointer;
     display: flex;
     align-items: center;
-    background: 50% / cover no-repeat rgba(255,255,255,0.9);
+    background: 50% / cover no-repeat rgba(255, 255, 255, 0.9);
     background-blend-mode: lighten;
 }
 
@@ -78,7 +78,8 @@
     margin-right: 20px;
 }
 
-#Japanese-flag, #Korean-flag {
+#Japanese-flag,
+#Korean-flag {
     border: 1px solid var(--main-black);
 }
 
@@ -89,7 +90,7 @@
 }
 
 #continue-lang-select {
-    background-color: var(--main-blue);
+    background-color: var(--text-blue);
     border: none;
     border-radius: 10px;
     color: var(--main-white);
@@ -100,5 +101,3 @@
     text-decoration: none;
     width: 150px;
 }
-
-
