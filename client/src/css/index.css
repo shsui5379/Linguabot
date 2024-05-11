@@ -8,7 +8,7 @@
     --body-color: #3c3c3c;
     --white-contrast: var(--main-white);
     --black-contrast: var(--main-black);
-    --subtext-color: #757575;
+    --subtext-color: #656565;
     --send-text-icon: invert(0);
     --lang-select-button: var(--main-blue);
 }

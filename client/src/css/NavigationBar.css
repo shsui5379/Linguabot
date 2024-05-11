@@ -1,5 +1,52 @@
+/* Full Screen Desktop */
+@media screen and (min-width: 1020px ) {
+    #nav-right {
+        display: block !important;
+        position: relative;
+    }
+
+    #navbar-hamburger {
+        display: none;
+    }
+
+    .navbar-button {
+        margin: 0;
+    }
+
+    .navlink {
+        margin: 0 5% 0 5px;
+        float: right;
+        height: 55px;
+    }
+}
+
+/* Small Screen */
+@media screen and (max-width: 1020px ) {
+    #nav-right {
+        padding-top: 55px;
+    }
+
+    #navbar-hamburger {
+        display: flex;
+    }
+
+    .navlink {
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+        margin: 0;
+        background-color: #1e2637;
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .navbar-button {
+        margin: 10px;
+    }
+}
+
 .navigation-menu {
-    height: 55px;
+    height: fit-content;
     background-color: var(--main-blue);
     letter-spacing: 1px;
 }
@@ -15,10 +62,30 @@
     text-decoration: none;
 }
 
-.navlink {
-    margin: 0 5% 0 5px;
+#navbar-hamburger {
+    height: 55px;
     float: right;
-    height: 55px;;
+    margin-right: 5%;
+    align-items: center;
+    color: var(--main-white);
+}
+
+#nav-background {
+    background-color: var(--main-blue);
+    height: 55px;
+    width: 100%;
+    position: absolute;
+}
+
+#hamburger-icon {
+    height: 22px;
+}
+
+#hamburger-icon:hover {
+    cursor: pointer;
+}
+
+.navlink {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,11 +98,14 @@
     font-size: 13px;
     cursor: pointer;
     border: none;
-    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
+}
+
+#logout-button-text {
+    margin: 0;
 }
 
 #notes-button, #chat-button, #login-button {
@@ -48,4 +118,8 @@
     background-color: var(--white); 
     color: var(--main-blue);
     border-radius: 5px;
+}
+
+.navigation-menu {
+    display: block;
 }
