@@ -2,6 +2,7 @@
 @media screen and (min-width: 1020px ) {
     #nav-right {
         display: block !important;
+        position: relative;
     }
 
     #navbar-hamburger {
@@ -21,6 +22,10 @@
 
 /* Small Screen */
 @media screen and (max-width: 1020px ) {
+    #nav-right {
+        padding-top: 55px;
+    }
+
     #navbar-hamburger {
         display: flex;
     }
@@ -69,6 +74,7 @@
     background-color: var(--main-blue);
     height: 55px;
     width: 100%;
+    position: absolute;
 }
 
 #hamburger-icon {
