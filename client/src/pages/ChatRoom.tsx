@@ -177,7 +177,7 @@ export default function ChatRoom() {
   function getNewLanguage() {
     const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
     return (
-      <select title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
+      <select className={isSideOpen ? "sidetools-close" : "sidetools-open"} title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
         {languages_supported.map((lang, index) =>
           <option value={lang}>{lang}</option>)
         }
@@ -215,11 +215,11 @@ export default function ChatRoom() {
       <div id="chatroom">
         <div id={isSideOpen ? "sidebar-close" : "sidebar-open"}>
           {getNewLanguage()}
-          <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
-          <div id="sidebar-chat-list">
+          <button className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
+          <div className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-chat-list">
             {getConversationList()}
           </div>
-          <div id="sidebar-nav">
+          <div className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-nav">
             <Link className="sidebar-nav-link" to="/">
               <FontAwesomeIcon icon={faHouse} />
               <span className="tooltiptext" id="toolkit-home">Return Home</span>
