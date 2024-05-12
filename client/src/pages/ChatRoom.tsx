@@ -83,12 +83,16 @@ export default function ChatRoom() {
   }
 
   function openSettings() {
-    document.getElementById("chatroom")!.style.visibility = "hidden";
+    document.getElementById("chatroom")!.style.setProperty("transition", "0s", "important");
+    document.getElementById("chatroom")!.style.setProperty("display", "none", "important");
+    document.getElementById("sidebar-open")!.style.setProperty("display", "none", "important");
     document.getElementById("settings")!.style.visibility = "visible";
   }
 
   function closeSettings() {
-    document.getElementById("chatroom")!.style.visibility = "visible";
+    document.getElementById("chatroom")!.style.setProperty("display", "flex", "important");
+    document.getElementById("sidebar-open")!.style.setProperty("display", "flex", "important");
+    document.getElementById("chatroom")!.style.setProperty("transition", "1s", "important");
     document.getElementById("settings")!.style.visibility = "hidden";
 
     if (autostt) {
