@@ -6,6 +6,7 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+        transition: 1s;
     }
 
     #chat-box-close {
@@ -14,9 +15,11 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+        transition: 1s;
     }
 
     #sidebar-open {
+        left: 0%;
         display: flex;
         margin: 0;
         padding: 0;
@@ -24,28 +27,15 @@
         height: 100vh;
         color: var(--main-white);
         background-color: var(--main-blue);
-        box-shadow: 1px 0 2px 1px var(--main-blue);
         position: fixed;
         flex-direction: column;
         align-items: center;
-    }
-
-    #sidebar-close {
-        display: none;
-        margin: 0;
-        padding: 0;
-        width: 20%;
-        height: 100vh;
-        color: var(--main-white);
-        background-color: var(--main-blue);
-        box-shadow: 1px 0 2px 1px var(--main-blue);
-        position: fixed;
-        flex-direction: column;
-        align-items: center;
+        transition: 1s;
     }
 
     #sidebar-nav {
         width: 20%;
+        transition: 1s;
     }
 }
 
@@ -57,12 +47,20 @@
         display: flex;
         flex-direction: column;
         height: 100vh;
+        transition: 1s;
+        right: 0;
+        position: fixed;
     }
 
     #chat-box-close {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+        height: 100vh;
         position: fixed;
-        right: -85%;
+        transition: 1s;
         width: 100%;
+        right: -85%;
     }
 
     #sidebar-open {
@@ -70,6 +68,7 @@
         margin: 0;
         padding: 0;
         width: 85%;
+        left: 0%;
         height: 100vh;
         color: var(--main-white);
         background-color: var(--main-blue);
@@ -77,43 +76,53 @@
         position: fixed;
         flex-direction: column;
         align-items: center;
-    }
-
-    #sidebar-close {
-        display: none;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        color: var(--main-white);
-        background-color: var(--main-blue);
-        box-shadow: 1px 0 2px 1px var(--main-blue);
-        position: fixed;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    #sidebar-nav {
-        width: 85%;
+        transition: 1s;
     }
 }
 
 /* Sidebar */
+#sidebar-close {
+    margin: 0;
+    padding: 0;
+    width: 0%;
+    height: 100vh;
+    color: var(--main-white);
+    background-color: var(--main-blue);
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    transition: 1s;
+}
 
-select#chat-lang-select {
+.sidetools-open {
+    visibility: visible;
+    padding-left: 25px;
+    padding-right: 20px;
+    transition: 1s;
+    width: 90%;
+}
+
+.sidetools-close {
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    padding: 0;
+}
+
+#chat-lang-select {
     height: 40px;
     margin-top: 25px;
+    flex: 0 0 40px;
 }
 
 #sidebar-addchat,
 .chat-overview,
 #chat-lang-select {
-    width: 90%;
-    padding-left: 25px;
-    padding-right: 20px;
+    word-wrap: break-word;
     border-radius: 5px;
     font-size: 12px;
     text-align: left;
-    word-wrap: break-word;
+    width: 90%;
 }
 
 #sidebar-addchat {
@@ -141,19 +150,21 @@ select#chat-lang-select {
     background-color: initial;
     border: none;
     font-size: 12px;
+    padding-right: 20px;
 }
 
 /* Navigation links at bottom of sidebar */
 
 #sidebar-nav {
-    flex: 0 1 300px;
-    margin-top: 30px;
     bottom: 0;
     display: flex;
+    flex: 0 1 30px;
     justify-content: space-evenly;
-    left: 0;
     margin-bottom: 30px;
-    position: fixed;
+    margin-top: 30px;
+    position: absolute;
+    width: 90%;
+    transition: 0s;
 }
 
 .sidebar-nav-link {
@@ -211,11 +222,10 @@ select#chat-lang-select {
 }
 
 #sidebar-chat-list {
-    width: 90%;
     margin-left: 10px;
+    padding-left: 0;
     padding-right: 10px;
     flex: 1 1 auto;
-    margin-bottom: 70px;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: 5px;
@@ -261,6 +271,7 @@ select#chat-lang-select {
     text-overflow: ellipsis;
     font-size: 12px;
     width: 100px;
+    padding-left: 25px;
 }
 
 input:focus {
