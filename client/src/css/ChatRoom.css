@@ -98,7 +98,7 @@
     visibility: visible;
     padding-left: 25px;
     padding-right: 20px;
-    transition: 1s;
+    transition: 1s !important;
     width: 90%;
 }
 
@@ -163,7 +163,7 @@
     margin-bottom: 30px;
     margin-top: 30px;
     position: absolute;
-    width: 90%;
+    width: 80%;
     transition: 0s;
 }
 
@@ -265,13 +265,21 @@
     justify-content: space-between;
 }
 
-.chat-nickname {
-    white-space: nowrap;
+.chat-edit-nickname {
+    background-color: transparent;
+    border: none;
+}
+
+.chat-nickname-input {
+    border: none;
+    resize: none;
+    height: 15px;
+    font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
+    white-space: nowrap;
     width: 100px;
-    padding-left: 25px;
+    background-color: transparent;
 }
 
 input:focus {

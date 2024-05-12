@@ -109,19 +109,19 @@ export default function ChatRoom() {
           onClick={() => setSelectedConversation(index)}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
           <form className="chat-nickname"> 
-          <textarea
-                    name="note"
-                    placeholder="Add a note..."
-                    className="notes-input"
-                    onBlur={handleBlur}
-                    maxLength={144}
-                    readOnly = {!editChatNickname && currentNicknameIndex !== index}
-                >
-            {conversation.nickname} 
+            <textarea
+                  name="chat-nickname"
+                  className="chat-nickname-input"
+                  onBlur={handleBlur}
+                  maxLength={24}
+                  disabled = {!editChatNickname && currentNicknameIndex !== index}
+              >
+              {conversation.nickname} 
             </textarea>
-            </form>
+          </form>
           <button className="chat-edit-nickname" title="Edit chat name" 
-            onClick={ () => {
+            onClick={ (e) => {
+              e.stopPropagation();
               if (currentNicknameIndex !== index) {
                 setEditChatNickname(prevValue => !prevValue); 
               }
