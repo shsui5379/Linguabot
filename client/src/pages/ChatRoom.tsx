@@ -100,6 +100,7 @@ export default function ChatRoom() {
   const handleBlur =(event)=> { 
     if(editChatNickname) {
       setEditChatNickname(prevValue => !prevValue); 
+      setCurrentNicknameIndex(-1); 
     };
     conversations[currentNicknameIndex].setNickname(event.target.value); 
     setNicknameValue(event.target.value);
