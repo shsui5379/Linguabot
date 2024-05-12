@@ -98,7 +98,7 @@ export default function ChatRoom() {
   //Handle name change
   const handleBlur =(event)=> { 
     if(editChatNickname) {
-    setEditChatNickname(prevValue => !prevValue); 
+      setEditChatNickname(prevValue => !prevValue); 
     };
     conversations[currentNicknameIndex].setNickname(event.target.value); 
   } 
@@ -111,15 +111,15 @@ export default function ChatRoom() {
           onClick={() => {setSelectedConversation(index); setNicknameValue(conversation.nickname);}}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
           <form className="chat-nickname"> 
-            <textarea
-                  name="chat-nickname"
-                  className="chat-nickname-input"
-                  onBlur={handleBlur}
-                  maxLength={24}
-                  disabled = {!editChatNickname && currentNicknameIndex !== index}
-              >
-              {conversation.nickname} 
-            </textarea>
+            <input type="text"
+                   name="chat-nickname"
+                   className="chat-nickname-input"
+                   minLength={1}
+                   maxLength={24}
+                   readOnly = {!editChatNickname && currentNicknameIndex !== index}
+                   onBlur={handleBlur}
+                   placeholder={conversation.nickname}
+            />
           </form>
           <button className="chat-edit-nickname" title="Edit chat name" 
             onClick={ (e) => {
@@ -136,6 +136,7 @@ export default function ChatRoom() {
             } }> 
             <FontAwesomeIcon icon={faPencil} />
           </button>
+          
           <button className="chat-delete" title="Delete chat"
             onClick={async (e) => {
               e.stopPropagation();

@@ -270,6 +270,10 @@
     border: none;
 }
 
+.chat-nickname {
+    margin-left: 20px;
+}
+
 .chat-nickname-input {
     border: none;
     resize: none;
@@ -278,11 +282,19 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 100px;
+    width: 80px;
     background-color: transparent;
 }
 
-input:focus {
+.chat-nickname-input:hover { 
+    cursor: pointer;
+}
+
+.chat-nickname-input::placeholder {
+    color: var(--main-black);
+}
+
+input:focus, .chat-nickname-input:focus {
     outline: none;
 }
 
@@ -297,7 +309,10 @@ button:hover {
     width: 100%;
 }
 
-#active-chat .chat-delete {
+#active-chat .chat-delete,
+#active-chat .chat-edit-nickname,
+#active-chat .chat-nickname-input, 
+#active-chat .chat-nickname-input::placeholder {
     color: var(--white);
 }
 
