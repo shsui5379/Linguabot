@@ -28,6 +28,7 @@ export default function ChatRoom() {
   const [isSideOpen, setIsSideOpen] = useState(false); 
   const [editChatNickname, setEditChatNickname] = useState(false);
   const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
+  const [nicknameValue, setNicknameValue] = useState('');
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -94,19 +95,20 @@ export default function ChatRoom() {
     }
   } 
 
-  function handleBlur() { 
+  //Handle name change
+  const handleBlur =(event)=> { 
     if(editChatNickname) {
     setEditChatNickname(prevValue => !prevValue); 
     };
-    console.log(editChatNickname);
-  }
+    conversations[currentNicknameIndex].setNickname(event.target.value); 
+  } 
 
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
         <button className="chat-overview"
-          onClick={() => setSelectedConversation(index)}
+          onClick={() => {setSelectedConversation(index); setNicknameValue(conversation.nickname);}}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
           <form className="chat-nickname"> 
             <textarea
@@ -278,7 +280,7 @@ export default function ChatRoom() {
             <button title={isSideOpen ? "Open Sidebar" : "Close Sidebar"} id="open-sidebar" onClick={() => {setIsSideOpen(prevState => !prevState)}} >
               <FontAwesomeIcon icon={isSideOpen ? faAngleRight : faAngleLeft}/>
             </button>
-            <span id="chat-name">some name</span>
+            <span id="chat-name">{nicknameValue}</span>
           </div>
           {/** Text messages */}
           <div id="chat-messages">
