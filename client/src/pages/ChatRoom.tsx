@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
 import { useState, useRef } from "react";
 import Conversation from "../types/Conversation";
@@ -13,10 +13,10 @@ import useFetchUserData from "../hooks/useFetchUserData";
 import useFetchConversationData from "../hooks/useFetchConversationData";
 import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
-export default function ChatRoom() {
+export default function ChatRoom() { 
+  useRegistrationCheck();
   const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
-  useRegistrationCheck();
   const [user, setUser] = useFetchUserData();
   const [conversations, setConversations] = useFetchConversationData((user === null) ? "" : user.targetLanguages[0], false);
   const [selectedConversation, setSelectedConversation] = useState(0);
@@ -25,7 +25,9 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
-  const [isSideOpen, setIsSideOpen] = useState(false);
+  const [isSideOpen, setIsSideOpen] = useState(false); 
+  const [editChatNickname, setEditChatNickname] = useState(false);
+  const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -90,6 +92,13 @@ export default function ChatRoom() {
     if (autostt) {
       toggleDictation();
     }
+  } 
+
+  function handleBlur() { 
+    if(editChatNickname) {
+    setEditChatNickname(prevValue => !prevValue); 
+    };
+    console.log(editChatNickname);
   }
 
   // Generate the conversation list
@@ -99,7 +108,32 @@ export default function ChatRoom() {
         <button className="chat-overview"
           onClick={() => setSelectedConversation(index)}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
-          <p className="chat-nickname">{conversation.nickname}</p>
+          <form className="chat-nickname"> 
+          <textarea
+                    name="note"
+                    placeholder="Add a note..."
+                    className="notes-input"
+                    onBlur={handleBlur}
+                    maxLength={144}
+                    readOnly = {!editChatNickname && currentNicknameIndex !== index}
+                >
+            {conversation.nickname} 
+            </textarea>
+            </form>
+          <button className="chat-edit-nickname" title="Edit chat name" 
+            onClick={ () => {
+              if (currentNicknameIndex !== index) {
+                setEditChatNickname(prevValue => !prevValue); 
+              }
+              if (currentNicknameIndex === index) {
+                setCurrentNicknameIndex(-1);
+              } else { 
+                setCurrentNicknameIndex(index);
+              };
+              console.log(editChatNickname,currentNicknameIndex,index);
+            } }> 
+            <FontAwesomeIcon icon={faPencil} />
+          </button>
           <button className="chat-delete" title="Delete chat"
             onClick={async (e) => {
               e.stopPropagation();
