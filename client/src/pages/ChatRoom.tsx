@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Conversation from "../types/Conversation";
 import messagetools from "../utilities/messagetools";
 import { Language } from "../types/Language";
@@ -28,7 +28,7 @@ export default function ChatRoom() {
   const [isSideOpen, setIsSideOpen] = useState(false); 
   const [editChatNickname, setEditChatNickname] = useState(false);
   const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
-  const [nicknameValue, setNicknameValue] = useState('');
+  let [nicknameValue, setNicknameValue] = useState('');
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -66,6 +66,7 @@ export default function ChatRoom() {
     try {
       conversation = await Conversation.createConversation(user.targetLanguages[0], "new conversation");
       setConversations([...conversations, conversation]);
+      setNicknameValue('new conversation'); 
     }
     catch (error) {
       if (error.message === "reached max chat limit") {
@@ -101,6 +102,7 @@ export default function ChatRoom() {
     setEditChatNickname(prevValue => !prevValue); 
     };
     conversations[currentNicknameIndex].setNickname(event.target.value); 
+    setNicknameValue(event.target.value);
   } 
 
   // Generate the conversation list
@@ -132,7 +134,6 @@ export default function ChatRoom() {
               } else { 
                 setCurrentNicknameIndex(index);
               };
-              console.log(editChatNickname,currentNicknameIndex,index);
             } }> 
             <FontAwesomeIcon icon={faPencil} />
           </button>
@@ -161,7 +162,7 @@ export default function ChatRoom() {
         </button>
       </div>
     );
-  }
+  } 
 
   // Generate the message history
   function getMessageHistory() {
@@ -169,7 +170,7 @@ export default function ChatRoom() {
       return [];
     }
 
-    let lastIndex = conversations[selectedConversation].messages.length - 1;
+    let lastIndex = conversations[selectedConversation].messages.length - 1;  
 
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
       if (index === 0) {
@@ -177,6 +178,9 @@ export default function ChatRoom() {
       }
 
       if (index === lastIndex) {
+        if (nicknameValue !== conversations[selectedConversation].nickname) {
+          setNicknameValue(conversations[selectedConversation].nickname);
+        }
         return <Message key={message.messageId} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} mostRecent={true} />;
       }
 
