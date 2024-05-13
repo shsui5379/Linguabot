@@ -322,6 +322,12 @@ button:hover {
     color: var(--white);
 }
 
+.chat-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 /* Right section: send messages */
 #chat-text-wrapper {
     margin: 10px 10% 30px 10%;

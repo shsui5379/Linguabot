@@ -128,44 +128,46 @@ export default function ChatRoom() {
                    placeholder={conversation.nickname}
             />
           </form>
-          <button className="chat-edit-nickname" title="Edit chat name" 
-            onClick={ (e) => {
-              e.stopPropagation();
-              if (currentNicknameIndex !== index) {
-                setEditChatNickname(prevValue => !prevValue); 
-              }
-              if (currentNicknameIndex === index) {
-                setCurrentNicknameIndex(-1);
-              } else { 
-                setCurrentNicknameIndex(index);
-              };
-            } }> 
-            <FontAwesomeIcon icon={faPencil} />
-          </button>
-          
-          <button className="chat-delete" title="Delete chat"
-            onClick={async (e) => {
-              e.stopPropagation();
-              if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
-                try {
-                  await conversation.delete();
-                  if (selectedConversation > 0) {
-                    setSelectedConversation(selectedConversation - 1);
-                  }
-                  conversations.splice(index, 1);
-                  setConversations([...conversations]);
-                } catch (error) {
-                  console.error(error);
+          <div className="chat-buttons">
+            <button className="chat-edit-nickname" title="Edit chat name" 
+              onClick={ (e) => {
+                e.stopPropagation();
+                if (currentNicknameIndex !== index) {
+                  setEditChatNickname(prevValue => !prevValue); 
+                }
+                if (currentNicknameIndex === index) {
+                  setCurrentNicknameIndex(-1);
+                } else { 
+                  setCurrentNicknameIndex(index);
+                };
+              } }> 
+              <FontAwesomeIcon icon={faPencil} />
+            </button>
+            
+            <button className="chat-delete" title="Delete chat"
+              onClick={async (e) => {
+                e.stopPropagation();
+                if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
+                  try {
+                    await conversation.delete();
+                    if (selectedConversation > 0) {
+                      setSelectedConversation(selectedConversation - 1);
+                    }
+                    conversations.splice(index, 1);
+                    setConversations([...conversations]);
+                  } catch (error) {
+                    console.error(error);
 
-                  if (error.message === "Must have at least one chat open") {
-                    alert("Must have at least one chat open");
+                    if (error.message === "Must have at least one chat open") {
+                      alert("Must have at least one chat open");
+                    }
                   }
                 }
-              }
-            }}>
-            <FontAwesomeIcon icon={faX} />
-          </button>
-        </button>
+              }}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          </div>
+        </button>  
       </div>
     );
   } 
