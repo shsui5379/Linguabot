@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil, faDiceThree } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
 import { useState, useRef, useEffect } from "react";
 import Conversation from "../types/Conversation";
@@ -22,6 +22,7 @@ export default function ChatRoom() {
   const [selectedConversation, setSelectedConversation] = useState(0);
   const [inputMessage, setInputMessage] = useState("");
   const [dictationActive, toggleDictation] = useDictation((user === null) ? "" : user.targetLanguages[0], setInputMessage);
+  const [luckyActive, setLucky] = useState(false);
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
@@ -125,7 +126,7 @@ export default function ChatRoom() {
                    maxLength={24}
                    readOnly = {!editChatNickname && currentNicknameIndex !== index}
                    onBlur={handleBlur}
-                   placeholder={conversation.nickname}
+                   value={conversation.nickname}
             />
           </form>
           <div className="chat-buttons">
@@ -318,6 +319,7 @@ export default function ChatRoom() {
                 }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
+              <button disabled={conversations.length === 0} type="button" title="Feeling Lucky!" id="feeling-lucky"><FontAwesomeIcon icon={faDiceThree} id={luckyActive ? "feeling-lucky-icon-active" : "feeling-lucky-icon"} onClick={() => setLucky(prevState => !prevState)}/></button>
               <button disabled={conversations.length === 0} type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={dictationActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={toggleDictation} /></button>
               <button disabled={conversations.length === 0} title="Send Text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
             </form>
