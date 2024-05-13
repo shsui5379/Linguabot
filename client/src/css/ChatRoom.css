@@ -294,6 +294,11 @@
     color: var(--main-black);
 }
 
+.chat-nickname-input.edit {
+    outline: 2px solid white; 
+    background-color: darkgrey;
+}
+
 input:focus, .chat-nickname-input:focus {
     outline: none;
 }

@@ -120,7 +120,7 @@ export default function ChatRoom() {
           <form className="chat-nickname"> 
             <input type="text"
                    name="chat-nickname"
-                   className="chat-nickname-input"
+                   className={`chat-nickname-input ${editChatNickname && currentNicknameIndex === index ? 'edit' : ''}`}
                    minLength={1}
                    maxLength={24}
                    readOnly = {!editChatNickname && currentNicknameIndex !== index}
