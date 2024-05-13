@@ -126,7 +126,7 @@ export default function ChatRoom() {
                    maxLength={24}
                    readOnly = {!editChatNickname && currentNicknameIndex !== index}
                    onBlur={handleBlur}
-                   value={conversation.nickname}
+                   placeholder={conversation.nickname}
             />
           </form>
           <div className="chat-buttons">
