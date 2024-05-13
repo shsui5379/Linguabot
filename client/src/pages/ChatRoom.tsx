@@ -13,7 +13,7 @@ import useFetchUserData from "../hooks/useFetchUserData";
 import useFetchConversationData from "../hooks/useFetchConversationData";
 import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
-export default function ChatRoom() { 
+export default function ChatRoom() {
   useRegistrationCheck();
   const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
@@ -25,7 +25,7 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
-  const [isSideOpen, setIsSideOpen] = useState(false); 
+  const [isSideOpen, setIsSideOpen] = useState(false);
   const [editChatNickname, setEditChatNickname] = useState(false);
   const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
   let [nicknameValue, setNicknameValue] = useState('');
@@ -66,7 +66,7 @@ export default function ChatRoom() {
     try {
       conversation = await Conversation.createConversation(user.targetLanguages[0], "new conversation");
       setConversations([...conversations, conversation]);
-      setNicknameValue('new conversation'); 
+      setNicknameValue('new conversation');
     }
     catch (error) {
       if (error.message === "reached max chat limit") {
@@ -98,34 +98,40 @@ export default function ChatRoom() {
     if (autostt) {
       toggleDictation();
     }
-  } 
+  }
 
   //Handle name change
-  const handleBlur =(event)=> { 
-    if(editChatNickname) {
-      setEditChatNickname(prevValue => !prevValue); 
-      setCurrentNicknameIndex(-1); 
+  const handleBlur = (event) => {
+    if (editChatNickname) {
+      setEditChatNickname(prevValue => !prevValue);
+      setCurrentNicknameIndex(-1);
     };
-    conversations[currentNicknameIndex].setNickname(event.target.value); 
+    conversations[currentNicknameIndex].setNickname(event.target.value);
     setNicknameValue(event.target.value);
-  } 
+  }
 
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
         <button className="chat-overview"
-          onClick={() => {setSelectedConversation(index); setNicknameValue(conversation.nickname);}}
+          onClick={() => { setSelectedConversation(index); setNicknameValue(conversation.nickname); }}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
-          <form className="chat-nickname"> 
+          <form className="chat-nickname">
             <input type="text"
-                   name="chat-nickname"
-                   className={`chat-nickname-input ${editChatNickname && currentNicknameIndex === index ? 'edit' : ''}`}
-                   minLength={1}
-                   maxLength={24}
-                   readOnly = {!editChatNickname && currentNicknameIndex !== index}
-                   onBlur={handleBlur}
-                   placeholder={conversation.nickname}
+              name="chat-nickname"
+              className={`chat-nickname-input ${editChatNickname && currentNicknameIndex === index ? 'edit' : ''}`}
+              minLength={1}
+              maxLength={24}
+              readOnly={!editChatNickname && currentNicknameIndex !== index}
+              onBlur={handleBlur}
+              placeholder={conversation.nickname}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === "NumpadEnter") {
+                  e.preventDefault();
+                  handleBlur();
+                }
+              }}
             />
           </form>
           <div className="chat-buttons">
@@ -170,7 +176,7 @@ export default function ChatRoom() {
         </button>  
       </div>
     );
-  } 
+  }
 
   // Generate the message history
   function getMessageHistory() {
@@ -178,7 +184,7 @@ export default function ChatRoom() {
       return [];
     }
 
-    let lastIndex = conversations[selectedConversation].messages.length - 1;  
+    let lastIndex = conversations[selectedConversation].messages.length - 1;
 
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
       if (index === 0) {
@@ -289,8 +295,8 @@ export default function ChatRoom() {
 
         <div id={isSideOpen ? "chat-box-open" : "chat-box-close"}>
           <div id="chatroom-header">
-            <button title={isSideOpen ? "Open Sidebar" : "Close Sidebar"} id="open-sidebar" onClick={() => {setIsSideOpen(prevState => !prevState)}} >
-              <FontAwesomeIcon icon={isSideOpen ? faAngleRight : faAngleLeft}/>
+            <button title={isSideOpen ? "Open Sidebar" : "Close Sidebar"} id="open-sidebar" onClick={() => { setIsSideOpen(prevState => !prevState) }} >
+              <FontAwesomeIcon icon={isSideOpen ? faAngleRight : faAngleLeft} />
             </button>
             <span id="chat-name">{nicknameValue}</span>
           </div>
