@@ -298,7 +298,13 @@
     box-shadow: 0 0 0 2px var(--main-black);
     border-radius: 2px;
     background-color: var(--main-blue);
+    color: var(--main-white);
 }
+
+.chat-nickname-input.edit::placeholder {
+    color: var(--main-white);
+}
+
 
 input:focus, .chat-nickname-input:focus {
     outline: none;
