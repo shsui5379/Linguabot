@@ -36,7 +36,7 @@ input::placeholder {
 }
 
 #name-form-continue {
-    background-color: var(--main-blue);
+    background-color: var(--text-blue);
     border: none;
     box-shadow: var(--shadow);
     color: var(--main-white);

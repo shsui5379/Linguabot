@@ -42,8 +42,7 @@
     }
 
     .feature-image {
-        width: 35%;
-        height: 25%;
+        width: 45%;
     }
    
     #get-started-button {    
@@ -255,6 +254,7 @@ span {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 50px;
 }
 
 #get-started-button {

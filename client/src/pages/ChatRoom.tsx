@@ -2,9 +2,9 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Conversation from "../types/Conversation";
 import messagetools from "../utilities/messagetools";
 import { Language } from "../types/Language";
@@ -13,10 +13,10 @@ import useFetchUserData from "../hooks/useFetchUserData";
 import useFetchConversationData from "../hooks/useFetchConversationData";
 import useRegistrationCheck from "../hooks/useRegistrationCheck";
 
-export default function ChatRoom() {
+export default function ChatRoom() { 
+  useRegistrationCheck();
   const [autotts, setAutotts] = useState(false);
   const [autostt, setAutostt] = useState(false);
-  useRegistrationCheck();
   const [user, setUser] = useFetchUserData();
   const [conversations, setConversations] = useFetchConversationData((user === null) ? "" : user.targetLanguages[0], false);
   const [selectedConversation, setSelectedConversation] = useState(0);
@@ -25,6 +25,10 @@ export default function ChatRoom() {
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
+  const [isSideOpen, setIsSideOpen] = useState(false); 
+  const [editChatNickname, setEditChatNickname] = useState(false);
+  const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
+  let [nicknameValue, setNicknameValue] = useState('');
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -62,6 +66,7 @@ export default function ChatRoom() {
     try {
       conversation = await Conversation.createConversation(user.targetLanguages[0], "new conversation");
       setConversations([...conversations, conversation]);
+      setNicknameValue('new conversation'); 
     }
     catch (error) {
       if (error.message === "reached max chat limit") {
@@ -78,27 +83,66 @@ export default function ChatRoom() {
   }
 
   function openSettings() {
-    document.getElementById("chatroom")!.style.visibility = "hidden";
+    document.getElementById("chatroom")!.style.setProperty("transition", "0s", "important");
+    document.getElementById("chatroom")!.style.setProperty("display", "none", "important");
+    document.getElementById("sidebar-open")!.style.setProperty("display", "none", "important");
     document.getElementById("settings")!.style.visibility = "visible";
   }
 
   function closeSettings() {
-    document.getElementById("chatroom")!.style.visibility = "visible";
+    document.getElementById("chatroom")!.style.setProperty("display", "flex", "important");
+    document.getElementById("sidebar-open")!.style.setProperty("display", "flex", "important");
+    document.getElementById("chatroom")!.style.setProperty("transition", "1s", "important");
     document.getElementById("settings")!.style.visibility = "hidden";
 
     if (autostt) {
       toggleDictation();
     }
-  }
+  } 
+
+  //Handle name change
+  const handleBlur =(event)=> { 
+    if(editChatNickname) {
+      setEditChatNickname(prevValue => !prevValue); 
+      setCurrentNicknameIndex(-1); 
+    };
+    conversations[currentNicknameIndex].setNickname(event.target.value); 
+    setNicknameValue(event.target.value);
+  } 
 
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
       <div className="chat">
         <button className="chat-overview"
-          onClick={() => setSelectedConversation(index)}
+          onClick={() => {setSelectedConversation(index); setNicknameValue(conversation.nickname);}}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
-          <p className="chat-nickname">{conversation.nickname}</p>
+          <form className="chat-nickname"> 
+            <input type="text"
+                   name="chat-nickname"
+                   className={`chat-nickname-input ${editChatNickname && currentNicknameIndex === index ? 'edit' : ''}`}
+                   minLength={1}
+                   maxLength={24}
+                   readOnly = {!editChatNickname && currentNicknameIndex !== index}
+                   onBlur={handleBlur}
+                   placeholder={conversation.nickname}
+            />
+          </form>
+          <button className="chat-edit-nickname" title="Edit chat name" 
+            onClick={ (e) => {
+              e.stopPropagation();
+              if (currentNicknameIndex !== index) {
+                setEditChatNickname(prevValue => !prevValue); 
+              }
+              if (currentNicknameIndex === index) {
+                setCurrentNicknameIndex(-1);
+              } else { 
+                setCurrentNicknameIndex(index);
+              };
+            } }> 
+            <FontAwesomeIcon icon={faPencil} />
+          </button>
+          
           <button className="chat-delete" title="Delete chat"
             onClick={async (e) => {
               e.stopPropagation();
@@ -124,7 +168,7 @@ export default function ChatRoom() {
         </button>
       </div>
     );
-  }
+  } 
 
   // Generate the message history
   function getMessageHistory() {
@@ -132,7 +176,7 @@ export default function ChatRoom() {
       return [];
     }
 
-    let lastIndex = conversations[selectedConversation].messages.length - 1;
+    let lastIndex = conversations[selectedConversation].messages.length - 1;  
 
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
       if (index === 0) {
@@ -140,6 +184,9 @@ export default function ChatRoom() {
       }
 
       if (index === lastIndex) {
+        if (nicknameValue !== conversations[selectedConversation].nickname) {
+          setNicknameValue(conversations[selectedConversation].nickname);
+        }
         return <Message key={message.messageId} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} mostRecent={true} />;
       }
 
@@ -176,7 +223,7 @@ export default function ChatRoom() {
   function getNewLanguage() {
     const languages_supported = ["English", "Spanish", "French", "Mandarin", "Japanese", "Korean"];
     return (
-      <select title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
+      <select className={isSideOpen ? "sidetools-close" : "sidetools-open"} title="Select Language" id="chat-lang-select" value={(user === null) ? "" : user.targetLanguages[0]} onChange={handleNewLang}>
         {languages_supported.map((lang, index) =>
           <option value={lang}>{lang}</option>)
         }
@@ -212,13 +259,13 @@ export default function ChatRoom() {
 
       {/** Side panel for saved chats and creating a new chat */}
       <div id="chatroom">
-        <div id="sidebar">
+        <div id={isSideOpen ? "sidebar-close" : "sidebar-open"}>
           {getNewLanguage()}
-          <button id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
-          <div id="sidebar-chat-list">
+          <button className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-addchat" onClick={handleCreateNewChat}><FontAwesomeIcon icon={faPlus} id="sidebar-plus" /> Create New Chat</button>
+          <div className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-chat-list">
             {getConversationList()}
           </div>
-          <div id="sidebar-nav">
+          <div className={isSideOpen ? "sidetools-close" : "sidetools-open"} id="sidebar-nav">
             <Link className="sidebar-nav-link" to="/">
               <FontAwesomeIcon icon={faHouse} />
               <span className="tooltiptext" id="toolkit-home">Return Home</span>
@@ -238,7 +285,13 @@ export default function ChatRoom() {
           </div>
         </div>
 
-        <div id="chat-box">
+        <div id={isSideOpen ? "chat-box-open" : "chat-box-close"}>
+          <div id="chatroom-header">
+            <button title={isSideOpen ? "Open Sidebar" : "Close Sidebar"} id="open-sidebar" onClick={() => {setIsSideOpen(prevState => !prevState)}} >
+              <FontAwesomeIcon icon={isSideOpen ? faAngleRight : faAngleLeft}/>
+            </button>
+            <span id="chat-name">{nicknameValue}</span>
+          </div>
           {/** Text messages */}
           <div id="chat-messages">
             {getMessageHistory()}
