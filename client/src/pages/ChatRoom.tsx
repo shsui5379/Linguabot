@@ -29,7 +29,7 @@ export default function ChatRoom() {
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [editChatNickname, setEditChatNickname] = useState(false);
   const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
-  let [nicknameValue, setNicknameValue] = useState('');
+  let [nicknameValue, setNicknameValue] = useState(''); 
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -109,7 +109,22 @@ export default function ChatRoom() {
     };
     conversations[currentNicknameIndex].setNickname(event.target.value);
     setNicknameValue(event.target.value);
-  }
+  }  
+
+  //handle cursor on button clicked 
+  useEffect(() => {
+    if (editChatNickname) {
+      inputRef.current.focus();
+    }
+  }, [editChatNickname]);
+
+  const inputRef = useRef(null); 
+  const handleButtonClick = () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      } 
+      console.log(inputRef.current);
+    };
 
   // Generate the conversation list
   function getConversationList() {
@@ -127,6 +142,7 @@ export default function ChatRoom() {
               readOnly={!editChatNickname && currentNicknameIndex !== index}
               onBlur={handleBlur}
               placeholder={conversation.nickname}
+              ref={editChatNickname && currentNicknameIndex === index ? inputRef : null}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === "NumpadEnter") {
                   e.preventDefault();
@@ -139,6 +155,7 @@ export default function ChatRoom() {
             <button className="chat-edit-nickname" title="Edit chat name" 
               onClick={ (e) => {
                 e.stopPropagation();
+                handleButtonClick(); 
                 if (currentNicknameIndex !== index) {
                   setEditChatNickname(prevValue => !prevValue); 
                 }
