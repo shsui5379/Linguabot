@@ -298,7 +298,13 @@
     box-shadow: 0 0 0 2px var(--main-black);
     border-radius: 2px;
     background-color: var(--main-blue);
+    color: var(--main-white);
 }
+
+.chat-nickname-input.edit::placeholder {
+    color: var(--main-white);
+}
+
 
 input:focus, .chat-nickname-input:focus {
     outline: none;
@@ -320,6 +326,12 @@ button:hover {
 #active-chat .chat-nickname-input, 
 #active-chat .chat-nickname-input::placeholder {
     color: var(--white);
+}
+
+.chat-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 /* Right section: send messages */
@@ -358,12 +370,32 @@ textarea::placeholder {
 }
 
 #user-text-send,
-#speech-to-text {
+#speech-to-text,
+#feeling-lucky {
     margin-right: 20px;
     font-size: 16px;
     background-color: transparent;
     border: none;
     color: var(--black-contrast);
+    display: flex;
+    align-items: center;    
+}
+
+#feeling-lucky {
+    font-size: 20px;
+}
+
+#feeling-lucky-icon-active {
+    animation: shake 0.4s 2;
+    color: var(--accent-blue);
+}
+  
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(25deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-25deg); }
+    100% { transform: rotate(0deg); }
 }
 
 #user-text-send-icon {
@@ -381,6 +413,7 @@ textarea::placeholder {
 
 #speech-to-text-icon-active,
 #user-text-send:active,
+#feeling-lucky-icon-active,
 .translation-active,
 .speaking-active {
     color: var(--accent-blue) !important;
