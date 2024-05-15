@@ -132,7 +132,6 @@ class Conversation {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         conversationId: this.#conversationId,
-        disallowedTopics: this.#disallowedTopics
       })
     });
 
@@ -140,9 +139,8 @@ class Conversation {
       console.error(await response.text());
     }
 
-    let { message, topic } = await response.json();
+    let message = await response.json();
     this.#messages.push(new Message(message.messageId, message.note, message.starred, message.content, message.role, message.timestamp));
-    this.#disallowedTopics.push(topic);
   }
 
   async delete() {
@@ -193,7 +191,6 @@ class Conversation {
   #language: Language;
   #nickname: string;
   #messages: Message[];
-  #disallowedTopics: string[] = [];
   #timestamp: number;
 };
 

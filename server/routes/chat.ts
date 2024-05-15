@@ -63,7 +63,7 @@ router.post("/", async (req, res, next) => {
         }
     } while (retry);
 
-    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively simple.`;
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively short and simple.`;
     let greetingMessage;
     switch (req.body.language) {
         case "English":
@@ -147,7 +147,7 @@ router.delete("/", async (req, res) => {
 /**
  * Generate a topic for a conversation
  * 
- * Expects conversationId and disallowedTopics in the request body
+ * Expects conversationId in the request body
  */
 router.post("/generate-topic", async (req, res, next) => {
     // Check that the conversation exists and that it belongs to the client
@@ -159,12 +159,18 @@ router.post("/generate-topic", async (req, res, next) => {
         return res.status(401).send("Unauthorized access").end();
     }
 
+    // Fetch the messages for the conversation
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.body.conversationId, ".*", false, false);
+    // Remove configuration prompt message before passing message history to generate a new topic
+    let [, ...messagesWithoutConfig] = messages;
     // Fetch a random topic in the language of the chat
-    let disallowedTopics = (req.body.disallowedTopics.length === 0) ? "" : ` Do not suggest ${req.body.disallowedTopics.join(", ")}`;
     let completions;
     try {
         completions = await OpenAIClient.chat.completions.create({
-            messages: [{role: "user", content: `In one word and in ${conversation.language}, generate a simple topic to talk about. Do not include any English in your response.${disallowedTopics}`}],
+            messages: [
+                ...messagesWithoutConfig.map((message) => ({role: message.role, content: message.content})),
+                {role: "user", content: `In one word and in ${conversation.language}, generate a simple topic to talk about. Do not include any English in your response. Do not suggest a topic that has already been talked about.`}
+            ],
             model: "gpt-3.5-turbo"
         });
     }
@@ -173,10 +179,8 @@ router.post("/generate-topic", async (req, res, next) => {
     }
     let topic = completions.choices[0].message.content;
 
-    // Fetch the messages for the conversation
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.body.conversationId, ".*", false, false);
-    // Reconfigure the chatbot to only talk about the generated topic going forward
-    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively simple. Respond by talking about ${topic}.`);
+    // Reconfigure the chatbot to talk about the newly generated topic
+    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively short and simple. Respond by talking about ${topic}.`);
     // Fetch a response for the new topic
     try {
         completions = await OpenAIClient.chat.completions.create({
@@ -193,10 +197,7 @@ router.post("/generate-topic", async (req, res, next) => {
         next(error);
     }
     let message = await createMessage(req.body.conversationId, completions.choices[0].message.content, "assistant", next);
-    res.json({
-        message: message,
-        topic: topic
-    });
+    res.json(message);
 });
 
 /**
