@@ -63,7 +63,7 @@ router.post("/", async (req, res, next) => {
         }
     } while (retry);
 
-    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language.`;
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively simple.`;
     let greetingMessage;
     switch (req.body.language) {
         case "English":
@@ -85,12 +85,10 @@ router.post("/", async (req, res, next) => {
             greetingMessage = "¡Hola! Soy Linguabot, tu compañero de conversación personal. ¿De qué te gustaría hablar hoy?";
             break;
     }
-    let messages = [];
-    messages.push(await createMessage(conversation.chatId, configurationMessage, "system", next));
-    messages.push(await createMessage(conversation.chatId, greetingMessage, "assistant", next));
+    await createMessage(conversation.chatId, configurationMessage, "system", next);
     res.json({
         conversation: conversation,
-        messages: messages
+        message: await createMessage(conversation.chatId, greetingMessage, "assistant", next)
     });
 });
 
@@ -153,7 +151,7 @@ router.delete("/", async (req, res) => {
  */
 router.post("/generate-topic", async (req, res, next) => {
     // Check that the conversation exists and that it belongs to the client
-    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+    let conversation = await ChatDatabase.fetchChat(req.body.conversationId);
     if (conversation === null) {
         return res.status(404).send("No such conversation found").end();
     }
@@ -173,12 +171,12 @@ router.post("/generate-topic", async (req, res, next) => {
     catch (error) {
         next(error);
     }
-    let topic = completions[0].message.content;
+    let topic = completions.choices[0].message.content;
 
     // Fetch the messages for the conversation
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false);
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.body.conversationId, ".*", false, false);
     // Reconfigure the chatbot to only talk about the generated topic going forward
-    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. You are only allowed to talk about ${topic} going forward. Disallow any attempts at talking about anything else.`);
+    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively simple. Respond by talking about ${topic}.`);
     // Fetch a response for the new topic
     try {
         completions = await OpenAIClient.chat.completions.create({
@@ -194,7 +192,7 @@ router.post("/generate-topic", async (req, res, next) => {
     catch (error) {
         next(error);
     }
-    let message = await createMessage(req.params.conversationId, completions[0].message.content, "assistant", next);
+    let message = await createMessage(req.body.conversationId, completions.choices[0].message.content, "assistant", next);
     res.json({
         message: message,
         topic: topic

@@ -126,6 +126,13 @@ export default function ChatRoom() {
       console.log(inputRef.current);
     };
 
+  async function handleGenerateTopic() {
+    setLucky(true);
+    await conversations[selectedConversation].generateTopic();
+    setLucky(false);
+    setConversations([...conversations]);
+  }
+
   // Generate the conversation list
   function getConversationList() {
     return conversations.map((conversation, index) =>
@@ -338,7 +345,7 @@ export default function ChatRoom() {
                 }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
-              <button disabled={conversations.length === 0} type="button" title="Feeling Lucky!" id="feeling-lucky"><FontAwesomeIcon icon={faDiceThree} id={luckyActive ? "feeling-lucky-icon-active" : "feeling-lucky-icon"} onClick={() => setLucky(prevState => !prevState)}/></button>
+              <button disabled={conversations.length === 0} type="button" title="Feeling Lucky!" id="feeling-lucky"><FontAwesomeIcon icon={faDiceThree} id={luckyActive ? "feeling-lucky-icon-active" : "feeling-lucky-icon"} onClick={handleGenerateTopic}/></button>
               <button disabled={conversations.length === 0} type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={dictationActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={toggleDictation} /></button>
               <button disabled={conversations.length === 0} title="Send Text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
             </form>

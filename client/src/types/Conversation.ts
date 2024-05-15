@@ -58,16 +58,14 @@ class Conversation {
       throw new Error(await response.text());
     }
 
-    let { conversation, messages } = await response.json();
-    let messageInstances = messages.map((message) => new Conversation.Message(
-      message.messageId,
-      message.note,
-      message.starred,
-      message.content,
-      message.role,
-      message.timestamp
-    ));
-    return new Conversation(conversation.chatId, conversation.language, conversation.nickname, messageInstances, conversation.timestamp);
+    let { conversation, message } = await response.json();
+    return new Conversation(
+      conversation.chatId,
+      conversation.language,
+      conversation.nickname,
+      [new Conversation.Message(message.messageId, message.note, message.starred, message.content, message.role, message.timestamp)],
+      conversation.timestamp
+    );
   }
 
   async configure(configurationMessage: string) {
