@@ -490,7 +490,7 @@ textarea::placeholder {
     overflow-wrap: break-word;
     height: fit-content;
     text-align: left;
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 10px;
     font-size: 14px;
     margin: 0;
@@ -504,20 +504,6 @@ textarea::placeholder {
     right: -10px;
     background-color: var(--main-white);
     color: var(--main-black)
-}
-
-/* Outer triangle that creates the gray outline*/
-.user-text:before {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-top: 10px solid #c4c4c4;
-    border-left: 10px solid #c4c4c4;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    top: 5px;
-    right: -19px;
 }
 
 /* Inner white triangle */
@@ -553,7 +539,7 @@ textarea::placeholder {
     border-right: 10px solid var(--text-blue);
     border-left: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    top: 6px;
+    top: 9px;
     left: -19px;
 }
 
