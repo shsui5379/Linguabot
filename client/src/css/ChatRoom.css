@@ -302,9 +302,8 @@
 }
 
 .chat-nickname-input.edit::placeholder {
-    color: var(--main-white);
+    color: #3c3c3c;
 }
-
 
 input:focus, .chat-nickname-input:focus {
     outline: none;
