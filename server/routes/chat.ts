@@ -149,7 +149,7 @@ router.delete("/", async (req, res) => {
 /**
  * Generate a topic for a conversation
  * 
- * Expects a conversationId and alreadyGenerated in the request body
+ * Expects conversationId and disallowedTopics in the request body
  */
 router.post("/generate-topic", async (req, res, next) => {
     // Check that the conversation exists and that it belongs to the client
@@ -160,18 +160,45 @@ router.post("/generate-topic", async (req, res, next) => {
     if (conversation.userId !== req.oidc.user.sub) {
         return res.status(401).send("Unauthorized access").end();
     }
+
+    // Fetch a random topic in the language of the chat
+    let disallowedTopics = (req.body.disallowedTopics.length === 0) ? "" : ` Do not suggest ${req.body.disallowedTopics.join(", ")}`;
+    let completions;
+    try {
+        completions = await OpenAIClient.chat.completions.create({
+            messages: [{role: "user", content: `In one word and in ${conversation.language}, generate a simple topic to talk about. Do not include any English in your response.${disallowedTopics}`}],
+            model: "gpt-3.5-turbo"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+    let topic = completions[0].message.content;
+
     // Fetch the messages for the conversation
     let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false);
-    // See if a new bot message needs to be created, of if the most current bot message needs to be modified
-    if (!req.params.alreadyGenerated) {
-        // modify config
-        return await createMessage(req.params.conversationId, "Lets talk about something!", "assistant", next);
+    // Reconfigure the chatbot to only talk about the generated topic going forward
+    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. You are only allowed to talk about ${topic} going forward. Disallow any attempts at talking about anything else.`);
+    // Fetch a response for the new topic
+    try {
+        completions = await OpenAIClient.chat.completions.create({
+            messages: messages.map((message) => {
+                return {
+                    role: message.role,
+                    content: message.content
+                };
+            }),
+            model: "gpt-3.5-turbo"
+        });
     }
-    else {
-        // modify config
-
+    catch (error) {
+        next(error);
     }
-    res.json(messages.map((message) => message.toJSON()));
+    let message = await createMessage(req.params.conversationId, completions[0].message.content, "assistant", next);
+    res.json({
+        message: message,
+        topic: topic
+    });
 });
 
 /**
