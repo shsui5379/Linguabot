@@ -183,17 +183,28 @@ router.post("/completions", async (req, res, next) => {
  * Get the messages for a conversation
  */
 router.get("/:conversationId/messages", async (req, res) => {
-    // Check that the conversation exists and that it belongs to the client
-    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
-    if (conversation === null) {
-        return res.status(404).send("No such conversation found").end();
+    // Determine whether the request is a single chat message retrieval or a retrieval of every message
+    if (req.params.conversationId === "all") {
+        let mustHaveStar = req.query.starred ?? false;
+        let sortByLastModified = req.query.sortByLastModified ?? false;
+        let language = req.query.language ?? ".*";
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, ".*", language, mustHaveStar, false, sortByLastModified);
+        res.json(messages.map((message) => message.toJSON()));
     }
-    if (conversation.userId !== req.oidc.user.sub) {
-        return res.status(401).send("Unauthorized access").end();
+    // Handle the case of message retrieval for a single chat
+    else {
+        // Check that the conversation exists and that it belongs to the client
+        let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+        if (conversation === null) {
+            return res.status(404).send("No such conversation found").end();
+        }
+        if (conversation.userId !== req.oidc.user.sub) {
+            return res.status(401).send("Unauthorized access").end();
+        }
+        let mustHaveStar = req.query.starred ?? false;
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
+        res.json(messages.map((message) => message.toJSON()));
     }
-    let mustHaveStar = req.query.starred ?? false;
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
-    res.json(messages.map((message) => message.toJSON()));
 });
 
 /**
