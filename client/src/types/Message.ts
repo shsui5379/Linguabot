@@ -1,3 +1,5 @@
+import { Language } from "./Language";
+
 class Message {
     constructor(messageId: string, note: string, starred: boolean, content: string, 
                         role: "system" | "assistant" | "user", timestamp: number) {
@@ -26,9 +28,9 @@ class Message {
         }
     }
 
-    static async fetchMessages(conversationId: string, isStarred: boolean = false): Promise<Message[]> {
-        let query = `?starred=${isStarred}`;
-        let response = await fetch(`/api/chat/${conversationId}/messages${query}`);
+    static async fetchMessages(conversationId: string, isStarred: boolean = false, sortByLastModified: boolean = false, fetchAll: boolean = false, language: Language | ".*" = ".*"): Promise<Message[]> {
+        let query = `?starred=${isStarred}&sortByLastModified=${sortByLastModified}&language=${language}`;
+        let response = await fetch(`/api/chat/${fetchAll ? "all" : conversationId}/messages${query}`);
         if (response.status !== 200) {
             throw new Error(await response.text());
         }

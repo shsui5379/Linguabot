@@ -63,7 +63,7 @@ router.post("/", async (req, res, next) => {
         }
     } while (retry);
 
-    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language.`;
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches languages. Keep your responses short and simple.`;
     let greetingMessage;
     switch (req.body.language) {
         case "English":
@@ -85,12 +85,10 @@ router.post("/", async (req, res, next) => {
             greetingMessage = "¡Hola! Soy Linguabot, tu compañero de conversación personal. ¿De qué te gustaría hablar hoy?";
             break;
     }
-    let messages = [];
-    messages.push(await createMessage(conversation.chatId, configurationMessage, "system", next));
-    messages.push(await createMessage(conversation.chatId, greetingMessage, "assistant", next));
+    await createMessage(conversation.chatId, configurationMessage, "system", next);
     res.json({
         conversation: conversation,
-        messages: messages
+        message: await createMessage(conversation.chatId, greetingMessage, "assistant", next)
     });
 });
 
@@ -147,6 +145,44 @@ router.delete("/", async (req, res) => {
 });
 
 /**
+ * Generate a topic for a conversation
+ * 
+ * Expects conversationId in the request body
+ */
+router.post("/generate-topic", async (req, res, next) => {
+    // Check that the conversation exists and that it belongs to the client
+    let conversation = await ChatDatabase.fetchChat(req.body.conversationId);
+    if (conversation === null) {
+        return res.status(404).send("No such conversation found").end();
+    }
+    if (conversation.userId !== req.oidc.user.sub) {
+        return res.status(401).send("Unauthorized access").end();
+    }
+
+    // Fetch the messages for the conversation
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.body.conversationId, ".*", false, false);
+    // Remove configuration prompt message before passing message history to generate a new topic
+    let [, ...messagesWithoutConfig] = messages;
+    // Fetch a random topic in the language of the chat
+    let completions;
+    try {
+        completions = await OpenAIClient.chat.completions.create({
+            messages: [
+                {role: "system", content: `You only respond in ${conversation.language}. Keep your responses short and simple.`},
+                ...messagesWithoutConfig.filter((message) => message.role === "assistant").map((message) => ({role: message.role, content: message.content})),
+                {role: "user", content: "Suggest a new topic that has not already been mentioned or talked about."}
+            ],
+            model: "gpt-3.5-turbo"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+    let message = await createMessage(req.body.conversationId, completions.choices[0].message.content, "assistant", next);
+    res.json(message);
+});
+
+/**
  * Get a response for a conversation
  * 
  * Expects a Chat ID, and returns the Message of response
@@ -183,17 +219,31 @@ router.post("/completions", async (req, res, next) => {
  * Get the messages for a conversation
  */
 router.get("/:conversationId/messages", async (req, res) => {
-    // Check that the conversation exists and that it belongs to the client
-    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
-    if (conversation === null) {
-        return res.status(404).send("No such conversation found").end();
+    // Determine whether the request is a single chat message retrieval or a retrieval of every message
+    if (req.params.conversationId === "all") {
+        let mustHaveStar = req.query.starred ?? false;
+        let sortByLastModified = req.query.sortByLastModified ?? false;
+        let language = req.query.language ?? ".*";
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, ".*", language, mustHaveStar, false, sortByLastModified);
+        // Filter out configuration messages so that they aren't sent
+        res.json(messages.filter((message) => message.role !== "system").map((message) => message.toJSON()));
     }
-    if (conversation.userId !== req.oidc.user.sub) {
-        return res.status(401).send("Unauthorized access").end();
+    // Handle the case of message retrieval for a single chat
+    else {
+        // Check that the conversation exists and that it belongs to the client
+        let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+        if (conversation === null) {
+            return res.status(404).send("No such conversation found").end();
+        }
+        if (conversation.userId !== req.oidc.user.sub) {
+            return res.status(401).send("Unauthorized access").end();
+        }
+        let mustHaveStar = req.query.starred ?? false;
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
+        // Remove configuration message and prevent it from being sent
+        messages.shift();
+        res.json(messages.map((message) => message.toJSON()));
     }
-    let mustHaveStar = req.query.starred ?? false;
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
-    res.json(messages.map((message) => message.toJSON()));
 });
 
 /**
