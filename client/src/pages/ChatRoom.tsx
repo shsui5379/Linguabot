@@ -2,7 +2,7 @@
 import "../css/ChatRoom.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faHouse, faRightFromBracket, faNoteSticky, faMicrophone, faX, faGear, faAngleLeft, faAngleRight, faPencil, faDiceThree } from "@fortawesome/free-solid-svg-icons";
 import Message from "../components/Message";
 import { useState, useRef, useEffect } from "react";
 import Conversation from "../types/Conversation";
@@ -22,13 +22,14 @@ export default function ChatRoom() {
   const [selectedConversation, setSelectedConversation] = useState(0);
   const [inputMessage, setInputMessage] = useState("");
   const [dictationActive, toggleDictation] = useDictation((user === null) ? "" : user.targetLanguages[0], setInputMessage);
+  const [luckyActive, setLucky] = useState(false);
   const [justSent, setJustSent] = useState(false);
   const sentMessageBuffer = useRef("");
   const [loading, setLoading] = useState(false);
   const [isSideOpen, setIsSideOpen] = useState(false);
   const [editChatNickname, setEditChatNickname] = useState(false);
   const [currentNicknameIndex, setCurrentNicknameIndex] = useState(-1);
-  let [nicknameValue, setNicknameValue] = useState('');
+  let [nicknameValue, setNicknameValue] = useState(''); 
 
   // Performing text-to-speech
   function speak(message: string) {
@@ -108,6 +109,28 @@ export default function ChatRoom() {
     };
     conversations[currentNicknameIndex].setNickname(event.target.value);
     setNicknameValue(event.target.value);
+  }  
+
+  //handle cursor on button clicked 
+  useEffect(() => {
+    if (editChatNickname) {
+      inputRef.current.focus();
+    }
+  }, [editChatNickname]);
+
+  const inputRef = useRef(null); 
+  const handleButtonClick = () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      } 
+      console.log(inputRef.current);
+    };
+
+  async function handleGenerateTopic() {
+    setLucky(true);
+    await conversations[selectedConversation].generateTopic();
+    setLucky(false);
+    setConversations([...conversations]);
   }
 
   // Generate the conversation list
@@ -126,6 +149,7 @@ export default function ChatRoom() {
               readOnly={!editChatNickname && currentNicknameIndex !== index}
               onBlur={handleBlur}
               placeholder={conversation.nickname}
+              ref={editChatNickname && currentNicknameIndex === index ? inputRef : null}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === "NumpadEnter") {
                   e.preventDefault();
@@ -134,44 +158,47 @@ export default function ChatRoom() {
               }}
             />
           </form>
-          <button className="chat-edit-nickname" title="Edit chat name"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (currentNicknameIndex !== index) {
-                setEditChatNickname(prevValue => !prevValue);
-              }
-              if (currentNicknameIndex === index) {
-                setCurrentNicknameIndex(-1);
-              } else {
-                setCurrentNicknameIndex(index);
-              };
-            }}>
-            <FontAwesomeIcon icon={faPencil} />
-          </button>
+          <div className="chat-buttons">
+            <button className="chat-edit-nickname" title="Edit chat name" 
+              onClick={ (e) => {
+                e.stopPropagation();
+                handleButtonClick(); 
+                if (currentNicknameIndex !== index) {
+                  setEditChatNickname(prevValue => !prevValue); 
+                }
+                if (currentNicknameIndex === index) {
+                  setCurrentNicknameIndex(-1);
+                } else { 
+                  setCurrentNicknameIndex(index);
+                };
+              } }> 
+              <FontAwesomeIcon icon={faPencil} />
+            </button>
+            
+            <button className="chat-delete" title="Delete chat"
+              onClick={async (e) => {
+                e.stopPropagation();
+                if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
+                  try {
+                    await conversation.delete();
+                    if (selectedConversation > 0) {
+                      setSelectedConversation(selectedConversation - 1);
+                    }
+                    conversations.splice(index, 1);
+                    setConversations([...conversations]);
+                  } catch (error) {
+                    console.error(error);
 
-          <button className="chat-delete" title="Delete chat"
-            onClick={async (e) => {
-              e.stopPropagation();
-              if (window.confirm("Do you want to delete chat " + conversation.nickname + "?")) {
-                try {
-                  await conversation.delete();
-                  if (selectedConversation > 0) {
-                    setSelectedConversation(selectedConversation - 1);
-                  }
-                  conversations.splice(index, 1);
-                  setConversations([...conversations]);
-                } catch (error) {
-                  console.error(error);
-
-                  if (error.message === "Must have at least one chat open") {
-                    alert("Must have at least one chat open");
+                    if (error.message === "Must have at least one chat open") {
+                      alert("Must have at least one chat open");
+                    }
                   }
                 }
-              }
-            }}>
-            <FontAwesomeIcon icon={faX} />
-          </button>
-        </button>
+              }}>
+              <FontAwesomeIcon icon={faX} />
+            </button>
+          </div>
+        </button>  
       </div>
     );
   }
@@ -185,10 +212,6 @@ export default function ChatRoom() {
     let lastIndex = conversations[selectedConversation].messages.length - 1;
 
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
-      if (index === 0) {
-        return <></>;
-      }
-
       if (index === lastIndex) {
         if (nicknameValue !== conversations[selectedConversation].nickname) {
           setNicknameValue(conversations[selectedConversation].nickname);
@@ -322,6 +345,7 @@ export default function ChatRoom() {
                 }}
                 onChange={(event) => setInputMessage(event.target.value)}>
               </textarea>
+              <button disabled={conversations.length === 0} type="button" title="Feeling Lucky!" id="feeling-lucky"><FontAwesomeIcon icon={faDiceThree} id={luckyActive ? "feeling-lucky-icon-active" : "feeling-lucky-icon"} onClick={handleGenerateTopic}/></button>
               <button disabled={conversations.length === 0} type="button" title="Speech to Text" id="speech-to-text"><FontAwesomeIcon icon={faMicrophone} id={dictationActive ? "speech-to-text-icon-active" : "speech-to-text-icon"} onClick={toggleDictation} /></button>
               <button disabled={conversations.length === 0} title="Send Text" id="user-text-send"><img id="user-text-send-icon" src="https://img.icons8.com/ios-glyphs/90/paper-plane.png" alt="paper-plane" /></button>
             </form>

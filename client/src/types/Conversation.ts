@@ -58,16 +58,14 @@ class Conversation {
       throw new Error(await response.text());
     }
 
-    let { conversation, messages } = await response.json();
-    let messageInstances = messages.map((message) => new Conversation.Message(
-      message.messageId,
-      message.note,
-      message.starred,
-      message.content,
-      message.role,
-      message.timestamp
-    ));
-    return new Conversation(conversation.chatId, conversation.language, conversation.nickname, messageInstances, conversation.timestamp);
+    let { conversation, message } = await response.json();
+    return new Conversation(
+      conversation.chatId,
+      conversation.language,
+      conversation.nickname,
+      [new Conversation.Message(message.messageId, message.note, message.starred, message.content, message.role, message.timestamp)],
+      conversation.timestamp
+    );
   }
 
   async configure(configurationMessage: string) {
@@ -126,6 +124,23 @@ class Conversation {
     catch (error) {
       console.error(error.message);
     }
+  }
+
+  async generateTopic() {
+    let response = await fetch("/api/chat/generate-topic", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        conversationId: this.#conversationId,
+      })
+    });
+
+    if (response.status !== 200) {
+      console.error(await response.text());
+    }
+
+    let message = await response.json();
+    this.#messages.push(new Message(message.messageId, message.note, message.starred, message.content, message.role, message.timestamp));
   }
 
   async delete() {

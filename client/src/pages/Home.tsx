@@ -101,7 +101,7 @@ export default function Home() {
         </div>
         <div className="feature-highlight-overview right">
           <img className="feature-image" 
-                src={require("../assets/features/saved-conversations.png")}
+                src={require("../assets/features/tools.png")}
                 alt="Feature"></img>
             <div className="feature-highlight">
               <h1>Listen, Translate, Speak</h1>

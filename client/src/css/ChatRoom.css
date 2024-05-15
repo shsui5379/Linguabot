@@ -298,6 +298,12 @@
     box-shadow: 0 0 0 2px var(--main-black);
     border-radius: 2px;
     background-color: var(--main-blue);
+    color: var(--main-white);
+}
+
+#active-chat .chat-nickname-input.edit::placeholder,
+.chat-nickname-input.edit::placeholder {
+    color: #919191;
 }
 
 input:focus, .chat-nickname-input:focus {
@@ -320,6 +326,12 @@ button:hover {
 #active-chat .chat-nickname-input, 
 #active-chat .chat-nickname-input::placeholder {
     color: var(--white);
+}
+
+.chat-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 /* Right section: send messages */
@@ -358,12 +370,32 @@ textarea::placeholder {
 }
 
 #user-text-send,
-#speech-to-text {
+#speech-to-text,
+#feeling-lucky {
     margin-right: 20px;
     font-size: 16px;
     background-color: transparent;
     border: none;
     color: var(--black-contrast);
+    display: flex;
+    align-items: center;    
+}
+
+#feeling-lucky {
+    font-size: 20px;
+}
+
+#feeling-lucky-icon-active {
+    animation: shake 0.4s 2;
+    color: var(--accent-blue);
+}
+  
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(25deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-25deg); }
+    100% { transform: rotate(0deg); }
 }
 
 #user-text-send-icon {
@@ -381,6 +413,7 @@ textarea::placeholder {
 
 #speech-to-text-icon-active,
 #user-text-send:active,
+#feeling-lucky-icon-active,
 .translation-active,
 .speaking-active {
     color: var(--accent-blue) !important;
@@ -458,7 +491,7 @@ textarea::placeholder {
     overflow-wrap: break-word;
     height: fit-content;
     text-align: left;
-    border-radius: 5px;
+    border-radius: 15px;
     padding: 10px;
     font-size: 14px;
     margin: 0;
@@ -472,20 +505,6 @@ textarea::placeholder {
     right: -10px;
     background-color: var(--main-white);
     color: var(--main-black)
-}
-
-/* Outer triangle that creates the gray outline*/
-.user-text:before {
-    content: "";
-    width: 0px;
-    height: 0px;
-    position: absolute;
-    border-top: 10px solid #c4c4c4;
-    border-left: 10px solid #c4c4c4;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    top: 5px;
-    right: -19px;
 }
 
 /* Inner white triangle */
@@ -521,7 +540,7 @@ textarea::placeholder {
     border-right: 10px solid var(--text-blue);
     border-left: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    top: 6px;
+    top: 9px;
     left: -19px;
 }
 
