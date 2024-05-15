@@ -147,6 +147,34 @@ router.delete("/", async (req, res) => {
 });
 
 /**
+ * Generate a topic for a conversation
+ * 
+ * Expects a conversationId and alreadyGenerated in the request body
+ */
+router.post("/generate-topic", async (req, res, next) => {
+    // Check that the conversation exists and that it belongs to the client
+    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+    if (conversation === null) {
+        return res.status(404).send("No such conversation found").end();
+    }
+    if (conversation.userId !== req.oidc.user.sub) {
+        return res.status(401).send("Unauthorized access").end();
+    }
+    // Fetch the messages for the conversation
+    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", false, false);
+    // See if a new bot message needs to be created, of if the most current bot message needs to be modified
+    if (!req.params.alreadyGenerated) {
+        // modify config
+        return await createMessage(req.params.conversationId, "Lets talk about something!", "assistant", next);
+    }
+    else {
+        // modify config
+
+    }
+    res.json(messages.map((message) => message.toJSON()));
+});
+
+/**
  * Get a response for a conversation
  * 
  * Expects a Chat ID, and returns the Message of response
@@ -183,17 +211,31 @@ router.post("/completions", async (req, res, next) => {
  * Get the messages for a conversation
  */
 router.get("/:conversationId/messages", async (req, res) => {
-    // Check that the conversation exists and that it belongs to the client
-    let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
-    if (conversation === null) {
-        return res.status(404).send("No such conversation found").end();
+    // Determine whether the request is a single chat message retrieval or a retrieval of every message
+    if (req.params.conversationId === "all") {
+        let mustHaveStar = req.query.starred ?? false;
+        let sortByLastModified = req.query.sortByLastModified ?? false;
+        let language = req.query.language ?? ".*";
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, ".*", language, mustHaveStar, false, sortByLastModified);
+        // Filter out configuration messages so that they aren't sent
+        res.json(messages.filter((message) => message.role !== "system").map((message) => message.toJSON()));
     }
-    if (conversation.userId !== req.oidc.user.sub) {
-        return res.status(401).send("Unauthorized access").end();
+    // Handle the case of message retrieval for a single chat
+    else {
+        // Check that the conversation exists and that it belongs to the client
+        let conversation = await ChatDatabase.fetchChat(req.params.conversationId);
+        if (conversation === null) {
+            return res.status(404).send("No such conversation found").end();
+        }
+        if (conversation.userId !== req.oidc.user.sub) {
+            return res.status(401).send("Unauthorized access").end();
+        }
+        let mustHaveStar = req.query.starred ?? false;
+        let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
+        // Remove configuration message and prevent it from being sent
+        messages.shift();
+        res.json(messages.map((message) => message.toJSON()));
     }
-    let mustHaveStar = req.query.starred ?? false;
-    let messages = await MessageDatabase.fetchMessages(req.oidc.user.sub, req.params.conversationId, ".*", mustHaveStar, false);
-    res.json(messages.map((message) => message.toJSON()));
 });
 
 /**

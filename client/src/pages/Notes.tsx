@@ -3,21 +3,19 @@ import NavigationBar from "../components/NavigationBar";
 import "../css/Notes.css";
 import useRegistrationCheck from "../hooks/useRegistrationCheck";
 import useFetchUserData from "../hooks/useFetchUserData";
-import useFetchConversationData from "../hooks/useFetchConversationData";
+import useFetchNotes from "../hooks/useFetchNotes";
 import SavedMessage from "../components/SavedMessage";
-import { useState } from "react";
 
 export default function Notes() {
     useRegistrationCheck();
     const [user, setUser] = useFetchUserData();
-    const [conversations, setConversations] = useFetchConversationData((user === null) ? "" : user.targetLanguages[0], true);
-    const [selectedConversation, setSelectedConversation] = useState(0);
+    const [messages, setMessages] = useFetchNotes((user === null) ? "" : user.targetLanguages[0]);
 
     function handleDelete(message) {
       const confirmDelete = window.confirm('Are you sure you want to unsave this note?');
       if (confirmDelete) {
         message.setStarred(false);
-        setConversations([...conversations]); 
+        setMessages([...messages]);
       };
     } 
 
@@ -31,8 +29,7 @@ export default function Notes() {
         else {
           [targetLanguages[0], targetLanguages[index]] = [targetLanguages[index], targetLanguages[0]];
         }
-        setConversations([]);
-        setSelectedConversation(0);
+        setMessages([]);
         setUser(await user.setTargetLanguages(targetLanguages));
       }
     
@@ -49,11 +46,9 @@ export default function Notes() {
 
     // Display the saved messages with their notes
     let notes: any = [];
-    conversations.forEach((conversation) => {
-        conversation.messages
-            .filter((message) => message.starred)
-            .forEach((message) => notes.push(<SavedMessage key={message.id} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} onDelete={() => handleDelete(message)} />));
-    });
+    messages
+      .filter((message) => message.starred)
+      .forEach((message) => notes.push(<SavedMessage key={message.id} message={message} selectedLanguage={user.targetLanguages[0]} userLanguage={user.userLanguage} onDelete={() => handleDelete(message)} />));
 
     return (
         <>
