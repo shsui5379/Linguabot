@@ -205,10 +205,6 @@ export default function ChatRoom() {
     let lastIndex = conversations[selectedConversation].messages.length - 1;
 
     let messageHistory = conversations[selectedConversation].messages.map((message, index) => {
-      if (index === 0) {
-        return <></>;
-      }
-
       if (index === lastIndex) {
         if (nicknameValue !== conversations[selectedConversation].nickname) {
           setNicknameValue(conversations[selectedConversation].nickname);
