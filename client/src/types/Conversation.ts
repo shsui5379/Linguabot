@@ -128,6 +128,25 @@ class Conversation {
     }
   }
 
+  async generateTopic() {
+    let response = await fetch("/api/chat/generate-topic", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        conversationId: this.#conversationId,
+        disallowedTopics: this.#disallowedTopics
+      })
+    });
+
+    if (response.status !== 200) {
+      console.error(await response.text());
+    }
+
+    let { message, topic } = await response.json();
+    this.#messages.push(new Message(message.messageId, message.note, message.starred, message.content, message.role, message.timestamp));
+    this.#disallowedTopics.push(topic);
+  }
+
   async delete() {
     let response = await fetch("/api/chat/", {
       method: "DELETE",
@@ -176,6 +195,7 @@ class Conversation {
   #language: Language;
   #nickname: string;
   #messages: Message[];
+  #disallowedTopics: string[] = [];
   #timestamp: number;
 };
 
