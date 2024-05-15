@@ -301,8 +301,9 @@
     color: var(--main-white);
 }
 
+#active-chat .chat-nickname-input.edit::placeholder,
 .chat-nickname-input.edit::placeholder {
-    color: #3c3c3c;
+    color: #919191;
 }
 
 input:focus, .chat-nickname-input:focus {
