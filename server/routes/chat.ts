@@ -63,7 +63,7 @@ router.post("/", async (req, res, next) => {
         }
     } while (retry);
 
-    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively short and simple.`;
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches languages. Keep your responses short and simple.`;
     let greetingMessage;
     switch (req.body.language) {
         case "English":
@@ -168,28 +168,10 @@ router.post("/generate-topic", async (req, res, next) => {
     try {
         completions = await OpenAIClient.chat.completions.create({
             messages: [
-                ...messagesWithoutConfig.map((message) => ({role: message.role, content: message.content})),
-                {role: "user", content: `In one word and in ${conversation.language}, generate a simple topic to talk about. Do not include any English in your response. Do not suggest a topic that has already been talked about.`}
+                {role: "system", content: `You only respond in ${conversation.language}. Keep your responses short and simple.`},
+                ...messagesWithoutConfig.filter((message) => message.role === "assistant").map((message) => ({role: message.role, content: message.content})),
+                {role: "user", content: "Suggest a new topic that has not already been mentioned or talked about."}
             ],
-            model: "gpt-3.5-turbo"
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-    let topic = completions.choices[0].message.content;
-
-    // Reconfigure the chatbot to talk about the newly generated topic
-    await messages[0].setContent(`You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${conversation.language}. Do not ever respond back in another language even if the user switches language. Keep your responses relatively short and simple. Respond by talking about ${topic}.`);
-    // Fetch a response for the new topic
-    try {
-        completions = await OpenAIClient.chat.completions.create({
-            messages: messages.map((message) => {
-                return {
-                    role: message.role,
-                    content: message.content
-                };
-            }),
             model: "gpt-3.5-turbo"
         });
     }
