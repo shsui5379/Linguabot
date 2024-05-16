@@ -47,19 +47,24 @@ export default function ChatRoom() {
       setConversations([...conversations]);
       await conversations[selectedConversation].receive();
       setConversations([...conversations]);
-      let speaker;
-      if (autotts) {
-        let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
-        speaker = speak(readMsg);
-      }
-      if (autostt) {
-        if (autotts) { // wait until linguabot finishes speaking
-          speaker!.onend = toggleDictation;
-        } else {
-          toggleDictation();
-        }
+      autospeech();
+    }
+  }
+
+  function autospeech() {
+    let speaker;
+    if (autotts) {
+      let readMsg = conversations[selectedConversation].messages.slice(-1)[0]['content'];
+      speaker = speak(readMsg);
+    }
+    if (autostt) {
+      if (autotts) { // wait until linguabot finishes speaking
+        speaker!.onend = toggleDictation;
+      } else {
+        toggleDictation();
       }
     }
+
   }
 
   async function handleCreateNewChat() {
@@ -133,6 +138,7 @@ export default function ChatRoom() {
     await conversations[selectedConversation].generateTopic();
     setLucky(false);
     setConversations([...conversations]);
+    autospeech();
   }
 
   // Generate the conversation list
