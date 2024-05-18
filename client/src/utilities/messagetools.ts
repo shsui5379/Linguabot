@@ -27,6 +27,11 @@ function speak(message: string, language: Language) {
     if (speechSynthesis.speaking) return; // already speaking
 
     let voiceMessage = new SpeechSynthesisUtterance(message);
+    voiceMessage.onerror = (e) => {
+        if (e.error === "language-unavailable") {
+            return alert("Your browser does not support speaking " + language);
+        }
+    }
     voiceMessage.lang = locales[language as keyof typeof locales];
     voiceMessage.rate = 0.9;
     window.speechSynthesis.speak(voiceMessage);
