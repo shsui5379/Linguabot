@@ -41,6 +41,9 @@ export default function useDictation(selectedLanguage: Language | "", handleSetI
             dictation.current.stop();
         };
         dictation.current.onerror = (event) => {
+            if (event.error === "language-not-supported") {
+                return alert("Your browser doesn't support dictation for " + selectedLanguage);
+            }
             setActive(false);
         };
     }, [selectedLanguage, handleSetInputField]);
@@ -59,7 +62,7 @@ export default function useDictation(selectedLanguage: Language | "", handleSetI
         if (dictation.current === null) {
             return;
         }
-        
+
         setActive(false);
         dictation.current.stop();
     }
