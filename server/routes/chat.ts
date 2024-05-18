@@ -63,7 +63,7 @@ router.post("/", async (req, res, next) => {
         }
     } while (retry);
 
-    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches languages. Keep your responses short and simple.`;
+    let configurationMessage = `You are a conversational language partner. Your name is Linguabot. Only respond back to the user in ${req.body.language}. Do not ever respond back in another language even if the user switches languages. Keep your responses short and simple, at CEFR Level A1.`;
     let greetingMessage;
     switch (req.body.language) {
         case "English":
@@ -168,9 +168,9 @@ router.post("/generate-topic", async (req, res, next) => {
     try {
         completions = await OpenAIClient.chat.completions.create({
             messages: [
-                {role: "system", content: `You only respond in ${conversation.language}. Keep your responses short and simple.`},
-                ...messagesWithoutConfig.filter((message) => message.role === "assistant").map((message) => ({role: message.role, content: message.content})),
-                {role: "user", content: "Suggest a new topic that has not already been mentioned or talked about."}
+                { role: "system", content: `You only respond in ${conversation.language}. Keep your responses short and simple.` },
+                ...messagesWithoutConfig.filter((message) => message.role === "assistant").map((message) => ({ role: message.role, content: message.content })),
+                { role: "user", content: "Suggest a new topic that has not already been mentioned or talked about." }
             ],
             model: "gpt-3.5-turbo"
         });

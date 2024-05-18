@@ -146,7 +146,7 @@ export default function ChatRoom() {
     return conversations.map((conversation, index) =>
       <div className="chat">
         <button className="chat-overview"
-          onClick={() => { setSelectedConversation(index); setNicknameValue(conversation.nickname); }}
+          onClick={() => { setSelectedConversation(index); setNicknameValue(conversation.nickname); if (window.matchMedia('screen and (max-width: 1020px)').matches) { setIsSideOpen(prevState => !prevState); } }}
           id={`${index === selectedConversation ? "active-chat" : ""}`}>
           <form className="chat-nickname">
             <input type="text"
