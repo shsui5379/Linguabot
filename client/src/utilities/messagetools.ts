@@ -40,18 +40,16 @@ function speak(message: string, language: Language) {
 }
 
 async function translate(message: string, source: Language, target: Language) {
-    const response = await fetch("https://translate.terraprint.co/translate", {
+    const response = await fetch("/api/chat/translate", {
         method: "POST",
         body: JSON.stringify({
-            q: message,
+            text: message,
             source: localesShort[source as keyof typeof locales],
             target: localesShort[target as keyof typeof locales],
-            format: "text"
         }),
         headers: { "Content-Type": "application/json" }
     });
-    const data = await response.json();
-    return data.translatedText;
+    return await response.text();
 }
 
 export default { speak, translate }
