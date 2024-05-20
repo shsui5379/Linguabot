@@ -68,4 +68,6 @@ Deployed with Render at https://linguabot-8m6r.onrender.com/.
 2. Attach auto-deploy listener to a production branch on the repository
 3. Populate environment variables in the Web Service's settings
 4. Define build script to `npm run build` and start script to `npm run start`
+
+
 Note: After 06/05/2024, available by self-hosting only due to free plan limitations
