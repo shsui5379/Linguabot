@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
 
 /**
  * Create a conversation
- * 
+ *
  * Expects a nickname and language in the post request body. Returns information about the created conversation.
  */
 router.post("/", async (req, res, next) => {
@@ -94,7 +94,7 @@ router.post("/", async (req, res, next) => {
 
 /**
  * Modify a conversation
- * 
+ *
  * Expects a chatId and nickname in the patch request body
  */
 router.patch("/", async (req, res) => {
@@ -120,7 +120,7 @@ router.patch("/", async (req, res) => {
 
 /**
  * Delete a conversation
- * 
+ *
  * Expects a chatId in the delete request body
  */
 router.delete("/", async (req, res) => {
@@ -146,7 +146,7 @@ router.delete("/", async (req, res) => {
 
 /**
  * Generate a topic for a conversation
- * 
+ *
  * Expects conversationId in the request body
  */
 router.post("/generate-topic", async (req, res, next) => {
@@ -184,9 +184,9 @@ router.post("/generate-topic", async (req, res, next) => {
 
 /**
  * Get a response for a conversation
- * 
+ *
  * Expects a Chat ID, and returns the Message of response
- * 
+ *
  * Refer to https://platform.openai.com/docs/guides/error-codes/api-errors for error codes
  */
 router.post("/completions", async (req, res, next) => {
@@ -248,7 +248,7 @@ router.get("/:conversationId/messages", async (req, res) => {
 
 /**
  * Create a message
- * 
+ *
  * Expects arguments for chatId, and content in the post request body. Returns information about the created message.
  * Role is always user.
  */
@@ -266,7 +266,7 @@ router.post("/message", async (req, res, next) => {
 
 /**
  * Modify a message
- * 
+ *
  * Expects arguments for messageId, note, starred, and content in the patch request body
  */
 router.patch("/message", async (req, res) => {
@@ -308,7 +308,7 @@ router.patch("/message", async (req, res) => {
 
 /**
  * Delete a message
- * 
+ *
  * Expects a messageId in the delete request body
  */
 router.delete("/message", async (req, res) => {
@@ -355,5 +355,28 @@ async function createMessage(chatId: string, content: string, role: "system" | "
     } while (retry);
     return message;
 }
+
+router.post("/translate", async (req, res, next) => {
+    const supportedLanguage = ["es", "ko", "ja", "en", "zh", "fr"];
+
+    if (!supportedLanguage.includes(req.body.source) || !supportedLanguage.includes(req.body.target)) {
+        return res.status(422).send("Unsupported language").end()
+    }
+
+    let completions;
+    try {
+        completions = await OpenAIClient.chat.completions.create({
+            messages: [
+                { role: "system", content: `Translate the following text from ${req.body.source} to ${req.body.target}` },
+                { role: "user", content: req.body.text }
+            ],
+            model: "gpt-3.5-turbo"
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+    res.send(completions.choices[0].message.content).end();
+});
 
 export default router;
