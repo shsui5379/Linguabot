@@ -46,11 +46,12 @@ Below are some notable packages:
   - https://auth0.com/
 - A web browser
 
-## Installation
+## Installation/Configuration
 1. Obtain the resources described in the Dependencies section
 2. Clone the repository
 3. At the root directory of the local clone, run `npm run build`
    1. This will install all packages, and compile the code.
+   2. Development note: need to rerun after any time a source file (\*.ts/*.tsx) was updated 
 4. Create the `/server/.env` file. Define:
    1. `POSTGRES_URL` for the access URL to the database
    2. `SECRET`, `BASEURL`, `CLIENTID`, `ISSUERBASEURL` as provided by auth0's setup
