@@ -357,12 +357,18 @@ async function createMessage(chatId: string, content: string, role: "system" | "
 }
 
 router.post("/translate", async (req, res, next) => {
+    const supportedLanguage = ["es", "ko", "ja", "en", "zh", "fr"];
+
+    if (!supportedLanguage.includes(req.body.source) || !supportedLanguage.includes(req.body.target)) {
+        return res.status(422).send("Unsupported language").end()
+    }
+
     let completions;
     try {
         completions = await OpenAIClient.chat.completions.create({
             messages: [
-                {role: "system", content: `Translate the following text from ${req.body.source} to ${req.body.target}`},
-                {role: "user", content: req.body.text}
+                { role: "system", content: `Translate the following text from ${req.body.source} to ${req.body.target}` },
+                { role: "user", content: req.body.text }
             ],
             model: "gpt-3.5-turbo"
         });
