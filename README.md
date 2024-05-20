@@ -38,11 +38,11 @@ Below are some notable packages:
 ## Dependencies
 - Node.js program: JavaScript runtime to host the app
   - https://nodejs.org/
-- A PostgreSQL server & it's access credentials: to hold persistent data
+- A PostgreSQL server & its access credentials: to hold persistent data
   - https://www.postgresql.org/download/
 - OpenAI GPT 3.5 Turbo API keys: to access the LLM
   - https://openai.com/api/
-- An auth0 tenant and it's access details: to connect with authentication
+- An auth0 tenant and its access details: to connect with authentication
   - https://auth0.com/
 - A web browser
 
