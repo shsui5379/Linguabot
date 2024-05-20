@@ -1,7 +1,7 @@
 # Linguabot - A Language Chatbot
 
 ## Description
-Web app that makes use of a Large Language Model (LLM) as a chatbot to help users practice languages through conversation. Also provides other learning amenities such as note-taking.
+Full-stack web app that makes use of a Large Language Model (LLM) as a chatbot to help users practice languages through conversation (written and spoken). Also provides other learning amenities such as note-taking.
 
 ## Technologies Used
 - React.js: client-side framework
